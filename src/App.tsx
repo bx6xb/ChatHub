@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import "./App.css"
 import { Header } from "./components/Header/Header"
 import { Navbar } from "./components/Navbar/Navbar"
@@ -13,12 +13,18 @@ type AppPropsType = {
 
 function App(props: AppPropsType) {
   return (
-    <div className="App">
+    <div className="app-wrapper">
       <Header />
       <Navbar state={props.state.sidebar} />
       <div className="app-wrapper-content">
-        <Route path="/dialogs" Component={() => <Dialogs state={props.state.dialogsPage} />} />
-        <Route path="/profile" Component={() => <Profile state={props.state.profilePage} addPost={props.addPost} />} />
+        <Routes>
+          <Route path="/" element={<Navigate to="/dialogs" />} />
+          <Route path="/dialogs" Component={() => <Dialogs state={props.state.dialogsPage} />} />
+          <Route
+            path="/profile"
+            Component={() => <Profile state={props.state.profilePage} addPost={props.addPost} />}
+          />
+        </Routes>
       </div>
     </div>
   )
