@@ -8,7 +8,8 @@ import { StateType } from "./redux/state"
 
 type AppPropsType = {
   state: StateType
-  addPost: (postMessage: string) => void
+  addPost: () => void
+  updateNewPostText: (text: string) => void
 }
 
 function App(props: AppPropsType) {
@@ -19,10 +20,10 @@ function App(props: AppPropsType) {
       <div className="app-wrapper-content">
         <Routes>
           <Route path="/" element={<Navigate to="/dialogs" />} />
-          <Route path="/dialogs" Component={() => <Dialogs state={props.state.dialogsPage} />} />
+          <Route path="/dialogs" element={<Dialogs state={props.state.dialogsPage} />} />
           <Route
             path="/profile"
-            Component={() => <Profile state={props.state.profilePage} addPost={props.addPost} />}
+            element={<Profile state={props.state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText} />}
           />
         </Routes>
       </div>

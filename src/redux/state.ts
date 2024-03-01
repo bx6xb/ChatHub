@@ -1,3 +1,9 @@
+let renderEntireTree: (
+  state: StateType,
+  addPost: () => void,
+  updateNewPostText: (text: string) => void
+) => void
+
 export type FriendsType = {
   id: number
   name: string
@@ -30,6 +36,7 @@ export type PostType = {
 
 export type ProfilePageType = {
   posts: PostType[]
+  newPostText: string
 }
 
 export type StateType = {
@@ -46,6 +53,7 @@ export const state: StateType = {
       { id: 3, message: "Blabla", likesCount: 10 },
       { id: 4, message: "Dada", likesCount: 9 },
     ],
+    newPostText: "Yan Turnt",
   },
   dialogsPage: {
     dialogs: [
@@ -83,12 +91,22 @@ export const state: StateType = {
   },
 }
 
-export let addPost = (postMessage: string) => {
-  console.log(state.profilePage.posts)
+export let addPost = () => {
   let newPost = {
     id: 5,
-    message: postMessage,
+    message: state.profilePage.newPostText,
     likesCount: 0,
   }
-  state.profilePage.posts.push(newPost)
+  state.profilePage.posts.unshift(newPost)
+  renderEntireTree(state, addPost, updateNewPostText)
+  state.profilePage.newPostText = ""
+}
+
+export const updateNewPostText = (text: string) => {
+  state.profilePage.newPostText = text
+  renderEntireTree(state, addPost, updateNewPostText)
+}
+
+export const subscribe = (observer: any) => {
+  renderEntireTree = observer
 }
