@@ -42,11 +42,20 @@ export type StateType = {
 export type StoreType = {
   _state: StateType
   getState: () => StateType
-  _callSubscriber: () => void
-  addPost: () => void
-  updateNewPostText: (text: string) => void
   subscribe: (observer: (store: StoreType) => void) => void
+  dispatch: (action: ActionType) => void
 }
+
+export type AddPostActionType = {
+  type: "ADD-POST"
+}
+
+export type UpdateNewPostTextActionType = {
+  type: "UPDATE-NEW-POST-TEXT"
+  text: string
+}
+
+export type ActionType = AddPostActionType | UpdateNewPostTextActionType
 
 let renderEntireTree: (store: StoreType) => void
 
@@ -101,27 +110,28 @@ export const store: StoreType = {
     return this._state
   },
 
-  _callSubscriber() {
-    console.log("zenow")
-  },
-
-  addPost() {
-    let newPost = {
-      id: 5,
-      message: this._state.profilePage.newPostText,
-      likesCount: 0,
-    }
-    this._state.profilePage.posts.unshift(newPost)
-    renderEntireTree(this)
-    this._state.profilePage.newPostText = ""
-  },
-
-  updateNewPostText(text: string) {
-    this._state.profilePage.newPostText = text
-    renderEntireTree(this)
-  },
-
   subscribe(observer: (store: StoreType) => void) {
     renderEntireTree = observer
+  },
+
+  dispatch(action: ActionType) {
+    switch (action.type) {
+      case "ADD-POST":
+        let newPost = {
+          id: 5,
+          message: this._state.profilePage.newPostText,
+          likesCount: 0,
+        }
+        this._state.profilePage.posts.unshift(newPost)
+        renderEntireTree(this)
+        this._state.profilePage.newPostText = ""
+        break
+      case "UPDATE-NEW-POST-TEXT":
+        this._state.profilePage.newPostText = action.text
+        renderEntireTree(this)
+        break
+      default:
+        throw new Error("Bad action")
+    }
   },
 }

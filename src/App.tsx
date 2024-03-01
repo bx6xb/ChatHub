@@ -4,12 +4,11 @@ import { Header } from "./components/Header/Header"
 import { Navbar } from "./components/Navbar/Navbar"
 import { Dialogs } from "./components/Dialogs/Dialogs"
 import { Profile } from "./components/Profile/Profile"
-import { StateType } from "./redux/state"
+import { ActionType, StateType } from "./redux/state"
 
 type AppPropsType = {
   state: StateType
-  addPost: () => void
-  updateNewPostText: (text: string) => void
+  dispatch: (action: ActionType) => void
 }
 
 function App(props: AppPropsType) {
@@ -23,13 +22,7 @@ function App(props: AppPropsType) {
           <Route path="/dialogs" element={<Dialogs state={props.state.dialogsPage} />} />
           <Route
             path="/profile"
-            element={
-              <Profile
-                state={props.state.profilePage}
-                addPost={props.addPost}
-                updateNewPostText={props.updateNewPostText}
-              />
-            }
+            element={<Profile state={props.state.profilePage} dispatch={props.dispatch} />}
           />
         </Routes>
       </div>
