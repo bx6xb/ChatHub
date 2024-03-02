@@ -1,3 +1,7 @@
+import { dialogsReducer } from "./dialogsReducer"
+import { profileReducer } from "./profileReducer"
+import { sidebarReducer } from "./sidebarReducer"
+
 export type FriendsType = {
   id: number
   name: string
@@ -20,6 +24,7 @@ export type DialogType = {
 export type DialogsPageType = {
   dialogs: DialogType[]
   messages: MessageType[]
+  newMessageText: string
 }
 
 export type PostType = {
@@ -39,10 +44,13 @@ export type StateType = {
   sidebar: SidebarType
 }
 
+export type ObserverType = (store: StoreType) => void
+
 export type StoreType = {
   _state: StateType
+  _subscriber: ObserverType
   getState: () => StateType
-  subscribe: (observer: (store: StoreType) => void) => void
+  subscribe: (observer: ObserverType) => void
   dispatch: (action: ActionType) => void
 }
 
@@ -55,9 +63,20 @@ export type UpdateNewPostTextActionType = {
   text: string
 }
 
-export type ActionType = AddPostActionType | UpdateNewPostTextActionType
+export type AddMessageActionType = {
+  type: "ADD-MESSAGE"
+}
 
-let renderEntireTree: (store: StoreType) => void
+export type UpdateNewMessageTextActionType = {
+  type: "UPDATE-NEW-MESSAGE-TEXT"
+  text: string
+}
+
+export type ActionType =
+  | AddPostActionType
+  | UpdateNewPostTextActionType
+  | AddMessageActionType
+  | UpdateNewMessageTextActionType
 
 export const store: StoreType = {
   _state: {
@@ -87,6 +106,7 @@ export const store: StoreType = {
         { id: 5, message: "Yo" },
         { id: 6, message: "Yo!" },
       ],
+      newMessageText: "Zenow Turnt",
     },
     sidebar: {
       friends: [
@@ -106,39 +126,21 @@ export const store: StoreType = {
     },
   },
 
+  _subscriber: () => {},
+
   getState() {
     return this._state
   },
 
   subscribe(observer: (store: StoreType) => void) {
-    renderEntireTree = observer
+    this._subscriber = observer
   },
 
   dispatch(action: ActionType) {
-    switch (action.type) {
-      case "ADD-POST":
-        let newPost = {
-          id: 5,
-          message: this._state.profilePage.newPostText,
-          likesCount: 0,
-        }
-        this._state.profilePage.posts.unshift(newPost)
-        renderEntireTree(this)
-        this._state.profilePage.newPostText = ""
-        break
-      case "UPDATE-NEW-POST-TEXT":
-        this._state.profilePage.newPostText = action.text
-        renderEntireTree(this)
-        break
-      default:
-        throw new Error("Bad action")
-    }
+    this._state.profilePage = profileReducer(this._state.profilePage, action)
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+
+    this._subscriber(this)
   },
 }
-
-export const addPostAC = (): AddPostActionType => ({ type: "ADD-POST" })
-
-export const updateNewPostAC = (text: string): UpdateNewPostTextActionType => ({
-  type: "UPDATE-NEW-POST-TEXT",
-  text,
-})
