@@ -1,7 +1,7 @@
 import { createRef } from "react"
 import s from "./MyPosts.module.css"
 import { Post } from "./Post/Post"
-import { ActionType, PostType, UpdateNewPostTextActionType } from "../../../redux/state"
+import { ActionType, PostType, addPostAC, updateNewPostAC } from "../../../redux/state"
 
 type MyPostsPropsType = {
   posts: PostType[]
@@ -15,7 +15,8 @@ const MyPosts = (props: MyPostsPropsType) => {
   const onClickButtonHandler = () => {
     let text = newPostElement.current?.value
     if (text) {
-      props.dispatch({ type: "ADD-POST" })
+      let action = addPostAC()
+      props.dispatch(action)
     }
   }
 
@@ -26,7 +27,8 @@ const MyPosts = (props: MyPostsPropsType) => {
   const onPostChange = () => {
     let text = newPostElement.current?.value
     if (text) {
-      props.dispatch({ type: "UPDATE-NEW-POST-TEXT", text })
+      let action = updateNewPostAC(text)
+      props.dispatch(action)
     }
   }
 

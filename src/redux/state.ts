@@ -135,3 +135,10 @@ export const store: StoreType = {
     }
   },
 }
+
+export const addPostAC = (): AddPostActionType => ({ type: "ADD-POST" })
+
+export const updateNewPostAC = (text: string): UpdateNewPostTextActionType => ({
+  type: "UPDATE-NEW-POST-TEXT",
+  text,
+})
