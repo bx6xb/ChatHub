@@ -1,19 +1,18 @@
-import { ChangeEvent, createRef } from "react"
+import { ChangeEvent } from "react"
 import s from "./MyPosts.module.css"
 import { Post } from "./Post/Post"
-import { ActionType, PostType } from "../../../redux/state"
-import { addPostAC, updateNewPostAC } from "../../../redux/profileReducer"
+import { PostType } from "../../../redux/state"
 
 type MyPostsPropsType = {
   posts: PostType[]
-  dispatch: (action: ActionType) => void
   newPostText: string
+  addPost: () => void
+  updateNewPostText: (text: string) => void
 }
 
-const MyPosts = (props: MyPostsPropsType) => {
+export const MyPosts = (props: MyPostsPropsType) => {
   const onClickButtonHandler = () => {
-    let action = addPostAC()
-    props.dispatch(action)
+    props.addPost()
   }
 
   let postsElements = props.posts.map((p) => (
@@ -23,8 +22,7 @@ const MyPosts = (props: MyPostsPropsType) => {
   const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let text = e.currentTarget.value
     if (text.trim()) {
-      let action = updateNewPostAC(text.trim())
-      props.dispatch(action)
+      props.updateNewPostText(text)
     }
   }
 
@@ -43,5 +41,3 @@ const MyPosts = (props: MyPostsPropsType) => {
     </div>
   )
 }
-
-export default MyPosts
