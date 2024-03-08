@@ -1,9 +1,4 @@
-import {
-  ActionType,
-  AddPostActionType,
-  ProfilePageType,
-  UpdateNewPostTextActionType,
-} from "./state"
+import { ActionType, ProfilePageType } from "./stateTypes"
 
 const initialState: ProfilePageType = {
   posts: [
@@ -43,11 +38,17 @@ export const profileReducer = (
   }
 }
 
-export const addPostAC = (): AddPostActionType => ({
-  type: "ADD-POST",
-})
+export type AddPostActionType = ReturnType<typeof addPostAC>
 
-export const updateNewPostAC = (text: string): UpdateNewPostTextActionType => ({
-  type: "UPDATE-NEW-POST-TEXT",
-  text,
-})
+export const addPostAC = () =>
+  ({
+    type: "ADD-POST",
+  } as const)
+
+export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
+
+export const updateNewPostAC = (text: string) =>
+  ({
+    type: "UPDATE-NEW-POST-TEXT",
+    text,
+  } as const)

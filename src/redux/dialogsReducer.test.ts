@@ -1,5 +1,5 @@
 import { addMessageAC, dialogsReducer, updateNewMessageAC } from "./dialogsReducer"
-import { DialogsPageType } from "./state"
+import { DialogsPageType } from "./stateTypes"
 
 let state: DialogsPageType
 
@@ -25,7 +25,7 @@ beforeEach(() => {
   }
 })
 
-test("new message should be added in state", () => {
+test("new message should be added in stateTypes", () => {
   const action = addMessageAC()
   const newState = dialogsReducer(state, action)
 

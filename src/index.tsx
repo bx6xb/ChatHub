@@ -1,17 +1,21 @@
 import "./index.css"
 import reportWebVitals from "./reportWebVitals"
-// import { StoreType, store } from "./redux/state"
+// import { StoreType, store } from "./redux/stateTypes"
 import { BrowserRouter } from "react-router-dom"
 import App from "./App"
 import ReactDOM from "react-dom/client"
-import { AppRootState, store } from "./redux/reduxStore"
+import { store } from "./redux/reduxStore"
+import { Provider } from "react-redux"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 
+// question store typing
 const renderEntireTree = (/* state: AppRootState */) => {
   root.render(
     <BrowserRouter>
-      <App store={store} state={store.getState()} dispatch={store.dispatch.bind(store)} />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   )
 }

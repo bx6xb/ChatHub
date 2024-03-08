@@ -1,4 +1,4 @@
-import { SidebarType } from "./state"
+import { SidebarType } from "./stateTypes"
 
 const initialState: SidebarType = {
   friends: [

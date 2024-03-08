@@ -1,0 +1,10 @@
+.friends-avatar {
+  width: 30px;
+  height: 30px;
+  background-color: rgb(81, 255, 0);
+  border-radius: 50%;
+}
+
+.friends-name {
+  font-size: 10px;
+}

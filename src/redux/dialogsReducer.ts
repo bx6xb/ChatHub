@@ -1,9 +1,4 @@
-import {
-  ActionType,
-  AddMessageActionType,
-  DialogsPageType,
-  UpdateNewMessageTextActionType,
-} from "./state"
+import { ActionType, DialogsPageType } from "./stateTypes"
 
 const initialState: DialogsPageType = {
   dialogs: [
@@ -52,11 +47,17 @@ export const dialogsReducer = (
   }
 }
 
-export const addMessageAC = (): AddMessageActionType => ({
-  type: "ADD-MESSAGE",
-})
+export type AddMessageActionType = ReturnType<typeof addMessageAC>
 
-export const updateNewMessageAC = (text: string): UpdateNewMessageTextActionType => ({
-  type: "UPDATE-NEW-MESSAGE-TEXT",
-  text,
-})
+export const addMessageAC = () =>
+  ({
+    type: "ADD-MESSAGE",
+  } as const)
+
+export type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageAC>
+
+export const updateNewMessageAC = (text: string) =>
+  ({
+    type: "UPDATE-NEW-MESSAGE-TEXT",
+    text,
+  } as const)

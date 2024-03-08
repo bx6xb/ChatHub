@@ -1,12 +1,8 @@
-import { SidebarType } from "../../redux/state"
 import s from "./Navbar.module.css"
 import { NavLink } from "react-router-dom"
+import { SidebarContainer } from "./Sidebar/SidebarContainer"
 
-type NavbarPropsType = {
-  state: SidebarType
-}
-
-export const Navbar = (props: NavbarPropsType) => {
+export const Navbar = () => {
   return (
     <nav className={s.nav}>
       <div className={s.item}>
@@ -28,14 +24,7 @@ export const Navbar = (props: NavbarPropsType) => {
       <div className={s.item}>
         <a>Settings</a>
       </div>
-      <aside className={s.item} style={{ display: "flex", justifyContent: "space-around", marginTop: "10px" }}>
-        {props.state.friends.map((fr) => (
-          <div key={fr.id} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div className={s["friends-avatar"]} />
-            <span className={s["friends-name"]}>{fr.name}</span>
-          </div>
-        ))}
-      </aside>
+      <SidebarContainer />
     </nav>
   )
 }
