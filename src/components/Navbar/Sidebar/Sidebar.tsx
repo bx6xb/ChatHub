@@ -1,4 +1,4 @@
-import { FriendsType } from "../../../redux/stateTypes"
+import { FriendsType } from "../../../redux/state"
 import s from "./Sidebar.module.css"
 
 type SidebarPropsType = {

@@ -1,6 +1,4 @@
-import { SidebarType } from "./stateTypes"
-
-const initialState: SidebarType = {
+const initialState = {
   friends: [
     {
       id: 1,
@@ -17,6 +15,6 @@ const initialState: SidebarType = {
   ],
 }
 
-export const sidebarReducer = (state: SidebarType = initialState, action: any) => {
+export const sidebarReducer = (state = initialState, action: any) => {
   return state
 }

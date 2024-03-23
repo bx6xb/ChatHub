@@ -1,7 +1,41 @@
-import { dialogsReducer } from "./dialogsReducer"
-import { profileReducer } from "./profileReducer"
-import { sidebarReducer } from "./sidebarReducer"
-import { StoreType, ActionType } from "./stateTypes"
+import {
+  DialogsPageType,
+  DialogsReducerActionType,
+  dialogsReducer,
+} from "./dialogsReducer/dialogsReducer"
+import {
+  ProfilePageType,
+  ProfileReducerActionType,
+  profileReducer,
+} from "./profileReducer/profileReducer"
+import { sidebarReducer } from "./sidebarReducer/sidebarReducer"
+
+export type FriendsType = {
+  id: number
+  name: string
+}
+
+export type SidebarType = {
+  friends: FriendsType[]
+}
+
+export type ObserverType = (store: StoreType) => void
+
+export type StateType = {
+  profilePage: ProfilePageType
+  dialogsPage: DialogsPageType
+  sidebar: SidebarType
+}
+
+export type ActionType = ProfileReducerActionType | DialogsReducerActionType
+
+export type StoreType = {
+  _state: ReturnType<typeof store.getState>
+  _subscriber: ObserverType
+  getState: () => StateType
+  subscribe: (observer: ObserverType) => void
+  dispatch: (action: ActionType) => void
+}
 
 export const store: StoreType = {
   _state: {
@@ -62,9 +96,9 @@ export const store: StoreType = {
   },
 
   dispatch(action: ActionType) {
-    this._state.profilePage = profileReducer(this._state.profilePage, action)
-    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-    this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+    // this._state.profilePage = profileReducer(this._state.profilePage, action)
+    // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+    // this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
     this._subscriber(this)
   },

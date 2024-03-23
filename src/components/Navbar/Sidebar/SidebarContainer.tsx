@@ -1,6 +1,6 @@
 import { connect } from "react-redux"
 import { Sidebar } from "./Sidebar"
-import { AppRootStateType } from "../../../redux/reduxStore"
+import { AppRootStateType } from "../../../redux/store"
 
 const mapStateToProps = (state: AppRootStateType) => ({
   friends: state.sidebar.friends,

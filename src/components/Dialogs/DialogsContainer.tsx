@@ -1,7 +1,7 @@
 import { Dialogs } from "./Dialogs"
-import { addMessageAC, updateNewMessageAC } from "../../redux/dialogsReducer"
+import { addMessageAC, updateNewMessageAC } from "../../redux/dialogsReducer/dialogsReducer"
 import { connect } from "react-redux"
-import { AppRootStateType, DispatchType } from "../../redux/reduxStore"
+import { AppRootStateType, DispatchType } from "../../redux/store"
 
 const mapStateToProps = (state: AppRootStateType) => ({
   dialogsPage: state.dialogsPage,

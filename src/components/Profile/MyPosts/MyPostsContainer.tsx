@@ -1,7 +1,7 @@
 import { connect } from "react-redux"
-import { addPostAC, updateNewPostAC } from "../../../redux/profileReducer"
+import { addPostAC, updateNewPostAC } from "../../../redux/profileReducer/profileReducer"
 import { MyPosts } from "./MyPosts"
-import { AppRootStateType, DispatchType } from "../../../redux/reduxStore"
+import { AppRootStateType, DispatchType } from "../../../redux/store"
 
 const mapStateToProps = (state: AppRootStateType) => ({
   posts: state.profilePage.posts,

@@ -1,4 +1,18 @@
-import { ActionType, DialogsPageType } from "./stateTypes"
+export type MessageType = {
+  id: number
+  message: string
+}
+
+export type DialogType = {
+  id: number
+  name: string
+}
+
+export type DialogsPageType = {
+  dialogs: DialogType[]
+  messages: MessageType[]
+  newMessageText: string
+}
 
 const initialState: DialogsPageType = {
   dialogs: [
@@ -20,9 +34,11 @@ const initialState: DialogsPageType = {
   newMessageText: "Zenow Turnt",
 }
 
+export type DialogsReducerActionType = AddMessageActionType | UpdateNewMessageTextActionType
+
 export const dialogsReducer = (
   state: DialogsPageType = initialState,
-  action: ActionType
+  action: DialogsReducerActionType
 ): DialogsPageType => {
   switch (action.type) {
     case "ADD-MESSAGE":
@@ -47,14 +63,14 @@ export const dialogsReducer = (
   }
 }
 
-export type AddMessageActionType = ReturnType<typeof addMessageAC>
+type AddMessageActionType = ReturnType<typeof addMessageAC>
 
 export const addMessageAC = () =>
   ({
     type: "ADD-MESSAGE",
   } as const)
 
-export type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageAC>
+type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageAC>
 
 export const updateNewMessageAC = (text: string) =>
   ({
