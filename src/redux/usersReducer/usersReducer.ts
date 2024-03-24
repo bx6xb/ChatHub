@@ -1,5 +1,3 @@
-import axios from "axios"
-
 type PhotosType = {
   small: null | string
   large: null | string
@@ -8,54 +6,33 @@ type PhotosType = {
 export type UserType = {
   name: string
   id: number
+  uniqueUrlName: null | string
   photos: PhotosType
-  status: string | null
+  status: null | string
   followed: boolean
 }
 
 export type UsersPageType = {
   users: UserType[]
+  pageSize: number
+  totalUsersCount: number
+  currentPage: number
 }
 
 export const initialState: UsersPageType = {
-  users: [
-    // {
-    //   id: 1,
-    //   fullname: "Yan",
-    //   status: "Stay turnt",
-    //   followed: true,
-    //   photoUrl: "https://avatar.iran.liara.run/public",
-    //   location: {
-    //     city: "Almaty",
-    //     country: "Kazakhstan",
-    //   },
-    // },
-    // {
-    //   id: 2,
-    //   fullname: "Pasha",
-    //   status: "Ahahaha gabar",
-    //   followed: false,
-    //   photoUrl: "https://avatar.iran.liara.run/public",
-    //   location: {
-    //     city: "Moscow",
-    //     country: "Russia",
-    //   },
-    // },
-    // {
-    //   id: 3,
-    //   fullname: "Firdavs",
-    //   status: "Go v mechet",
-    //   followed: false,
-    //   photoUrl: "https://avatar.iran.liara.run/public",
-    //   location: {
-    //     city: "Dushanbe",
-    //     country: "Tajikistan",
-    //   },
-    // },
-  ],
+  users: [],
+  pageSize: 6,
+  totalUsersCount: 28,
+  currentPage: 1,
 }
 
-type UsersReducerActionType = FollowActionType | UnfollowActionType | SetUsersActionType
+type UsersReducerActionType =
+  | FollowActionType
+  | UnfollowActionType
+  | SetUsersActionType
+  | ChangePageSizeActionType
+  | ChangeTotalUsersCountActionType
+  | ChangeCurrentPageActionType
 
 export const usersReducer = (
   state: UsersPageType = initialState,
@@ -75,7 +52,22 @@ export const usersReducer = (
     case "SET_USERS":
       return {
         ...state,
-        users: [...state.users, ...action.users],
+        users: [...action.users],
+      }
+    case "CHANGE_PAGE_SIZE":
+      return {
+        ...state,
+        pageSize: action.pageSize,
+      }
+    case "CHANGE_TOTAL_USERS_COUNT":
+      return {
+        ...state,
+        totalUsersCount: action.totalUsersCount,
+      }
+    case "CHANGE_CURRENT_PAGE":
+      return {
+        ...state,
+        currentPage: action.currentPage,
       }
     default:
       return state
@@ -104,4 +96,28 @@ export const setUsersAC = (users: UserType[]) =>
   ({
     type: "SET_USERS",
     users,
+  } as const)
+
+type ChangePageSizeActionType = ReturnType<typeof changePageSizeAC>
+
+export const changePageSizeAC = (pageSize: number) =>
+  ({
+    type: "CHANGE_PAGE_SIZE",
+    pageSize,
+  } as const)
+
+type ChangeTotalUsersCountActionType = ReturnType<typeof changeTotalUsersCountAC>
+
+export const changeTotalUsersCountAC = (totalUsersCount: number) =>
+  ({
+    type: "CHANGE_TOTAL_USERS_COUNT",
+    totalUsersCount,
+  } as const)
+
+type ChangeCurrentPageActionType = ReturnType<typeof changeCurrentPageAC>
+
+export const changeCurrentPageAC = (currentPage: number) =>
+  ({
+    type: "CHANGE_CURRENT_PAGE",
+    currentPage,
   } as const)
