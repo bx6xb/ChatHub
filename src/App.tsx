@@ -1,10 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import "./App.css"
-import { Header } from "./components/Header/Header"
-import { Navbar } from "./components/Navbar/Navbar"
-import { Profile } from "./components/Profile/Profile"
-import { DialogsContainer } from "./components/Dialogs/DialogsContainer"
-import { UsersContainer } from "./components/Users/UsersContainer"
+import { Header } from "./layout/Header/Header"
+import { Navbar } from "./pages/Navbar/Navbar"
+import { DialogsContainer } from "./pages/Dialogs/DialogsContainer"
+import { UsersContainer } from "./pages/Users/UsersContainer"
+import { ProfileContainer } from "./pages/Profile/ProfileContainer"
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <div className="app-wrapper-content">
         <Routes>
           <Route path="/" element={<Navigate to="/dialogs" />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/*" element={<ProfileContainer />} />
           <Route path="/dialogs" element={<DialogsContainer />} />
           <Route path="/users" element={<UsersContainer />} />
         </Routes>

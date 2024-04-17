@@ -17,6 +17,7 @@ export type UsersPageType = {
   pageSize: number
   totalUsersCount: number
   currentPage: number
+  isFetching: boolean
 }
 
 export const initialState: UsersPageType = {
@@ -24,15 +25,17 @@ export const initialState: UsersPageType = {
   pageSize: 6,
   totalUsersCount: 28,
   currentPage: 1,
+  isFetching: false,
 }
 
 type UsersReducerActionType =
-  | FollowActionType
-  | UnfollowActionType
-  | SetUsersActionType
-  | ChangePageSizeActionType
-  | ChangeTotalUsersCountActionType
-  | ChangeCurrentPageActionType
+  | ReturnType<typeof followAC>
+  | ReturnType<typeof unfollowAC>
+  | ReturnType<typeof setUsersAC>
+  | ReturnType<typeof changePageSizeAC>
+  | ReturnType<typeof changeTotalUsersCountAC>
+  | ReturnType<typeof changeCurrentPageAC>
+  | ReturnType<typeof changeIsFetchingAC>
 
 export const usersReducer = (
   state: UsersPageType = initialState,
@@ -69,12 +72,15 @@ export const usersReducer = (
         ...state,
         currentPage: action.currentPage,
       }
+    case "CHANGE_IS_FETCHING":
+      return {
+        ...state,
+        isFetching: action.isFetching,
+      }
     default:
       return state
   }
 }
-
-type FollowActionType = ReturnType<typeof followAC>
 
 export const followAC = (userId: number) =>
   ({
@@ -82,15 +88,11 @@ export const followAC = (userId: number) =>
     userId,
   } as const)
 
-type UnfollowActionType = ReturnType<typeof unfollowAC>
-
 export const unfollowAC = (userId: number) =>
   ({
     type: "UNFOLLOW",
     userId,
   } as const)
-
-type SetUsersActionType = ReturnType<typeof setUsersAC>
 
 export const setUsersAC = (users: UserType[]) =>
   ({
@@ -98,15 +100,11 @@ export const setUsersAC = (users: UserType[]) =>
     users,
   } as const)
 
-type ChangePageSizeActionType = ReturnType<typeof changePageSizeAC>
-
 export const changePageSizeAC = (pageSize: number) =>
   ({
     type: "CHANGE_PAGE_SIZE",
     pageSize,
   } as const)
-
-type ChangeTotalUsersCountActionType = ReturnType<typeof changeTotalUsersCountAC>
 
 export const changeTotalUsersCountAC = (totalUsersCount: number) =>
   ({
@@ -114,10 +112,14 @@ export const changeTotalUsersCountAC = (totalUsersCount: number) =>
     totalUsersCount,
   } as const)
 
-type ChangeCurrentPageActionType = ReturnType<typeof changeCurrentPageAC>
-
 export const changeCurrentPageAC = (currentPage: number) =>
   ({
     type: "CHANGE_CURRENT_PAGE",
     currentPage,
+  } as const)
+
+export const changeIsFetchingAC = (isFetching: boolean) =>
+  ({
+    type: "CHANGE_IS_FETCHING",
+    isFetching,
   } as const)

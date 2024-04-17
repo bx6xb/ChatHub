@@ -1,6 +1,7 @@
 import {
   UsersPageType,
   changeCurrentPageAC,
+  changeIsFetchingAC,
   changePageSizeAC,
   changeTotalUsersCountAC,
   followAC,
@@ -37,6 +38,7 @@ export const initialState: UsersPageType = {
   pageSize: 6,
   totalUsersCount: 28,
   currentPage: 1,
+  isFetching: false,
 }
 
 test("user should be followed", () => {
@@ -90,4 +92,11 @@ test("current page should be changed", () => {
   expect(newState).not.toBe(initialState)
   expect(newState.users).toBe(initialState.users)
   expect(newState.currentPage).toBe(currentPage)
+})
+
+test("property isFetching should be changed", () => {
+  const newState = usersReducer(initialState, changeIsFetchingAC(true))
+
+  expect(newState).not.toBe(initialState)
+  expect(newState.isFetching).toBeTruthy()
 })

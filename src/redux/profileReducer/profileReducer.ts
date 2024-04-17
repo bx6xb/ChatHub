@@ -1,13 +1,4 @@
-export type PostType = {
-  id: number
-  message: string
-  likesCount: number
-}
-
-export type ProfilePageType = {
-  posts: PostType[]
-  newPostText: string
-}
+import { UserProfileType } from "../../pages/Profile/ProfileContainer"
 
 const initialState: ProfilePageType = {
   posts: [
@@ -17,9 +8,8 @@ const initialState: ProfilePageType = {
     { id: 4, message: "Dada", likesCount: 9 },
   ],
   newPostText: "Yan Turnt",
+  userProfile: null,
 }
-
-export type ProfileReducerActionType = AddPostActionType | UpdateNewPostTextActionType
 
 export const profileReducer = (
   state: ProfilePageType = initialState,
@@ -44,22 +34,44 @@ export const profileReducer = (
         ...state,
         newPostText: action.text,
       }
+    case "SET-USER-PROFILE":
+      return {
+        ...state,
+        userProfile: action.userProfile,
+      }
     default:
       return state
   }
 }
 
-type AddPostActionType = ReturnType<typeof addPostAC>
-
+// action creators
 export const addPostAC = () =>
   ({
     type: "ADD-POST",
   } as const)
-
-type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostAC>
-
 export const updateNewPostAC = (text: string) =>
   ({
     type: "UPDATE-NEW-POST-TEXT",
     text,
   } as const)
+export const setUserProfileAC = (userProfile: UserProfileType) =>
+  ({
+    type: "SET-USER-PROFILE",
+    userProfile,
+  } as const)
+
+// types
+export type PostType = {
+  id: number
+  message: string
+  likesCount: number
+}
+export type ProfilePageType = {
+  posts: PostType[]
+  newPostText: string
+  userProfile: UserProfileType | null
+}
+export type ProfileReducerActionType =
+  | ReturnType<typeof addPostAC>
+  | ReturnType<typeof updateNewPostAC>
+  | ReturnType<typeof setUserProfileAC>

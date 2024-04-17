@@ -47,6 +47,7 @@ export const store: StoreType = {
         { id: 4, message: "Dada", likesCount: 9 },
       ],
       newPostText: "Yan Turnt",
+      userProfile: null,
     },
     dialogsPage: {
       dialogs: [
