@@ -1,10 +1,10 @@
 import {
-  DialogsPageType,
+  DialogsPageStateType,
   DialogsReducerActionType,
   dialogsReducer,
 } from "./dialogsReducer/dialogsReducer"
 import {
-  ProfilePageType,
+  ProfilePageStateType,
   ProfileReducerActionType,
   profileReducer,
 } from "./profileReducer/profileReducer"
@@ -22,8 +22,8 @@ export type SidebarType = {
 export type ObserverType = (store: StoreType) => void
 
 export type StateType = {
-  profilePage: ProfilePageType
-  dialogsPage: DialogsPageType
+  profilePage: ProfilePageStateType
+  dialogsPage: DialogsPageStateType
   sidebar: SidebarType
 }
 

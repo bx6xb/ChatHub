@@ -1,6 +1,6 @@
-import { ProfilePageType, addPostAC, profileReducer, updateNewPostAC } from "./profileReducer"
+import { ProfilePageStateType, addPostAC, profileReducer, updateNewPostAC } from "./profileReducer"
 
-let state: ProfilePageType
+let state: ProfilePageStateType
 
 beforeEach(() => {
   state = {

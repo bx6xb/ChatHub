@@ -12,7 +12,7 @@ export type UserType = {
   followed: boolean
 }
 
-export type UsersPageType = {
+export type UsersPageStateType = {
   users: UserType[]
   pageSize: number
   totalUsersCount: number
@@ -20,7 +20,7 @@ export type UsersPageType = {
   isFetching: boolean
 }
 
-export const initialState: UsersPageType = {
+export const initialState: UsersPageStateType = {
   users: [],
   pageSize: 6,
   totalUsersCount: 28,
@@ -38,9 +38,9 @@ type UsersReducerActionType =
   | ReturnType<typeof changeIsFetchingAC>
 
 export const usersReducer = (
-  state: UsersPageType = initialState,
+  state: UsersPageStateType = initialState,
   action: UsersReducerActionType
-): UsersPageType => {
+): UsersPageStateType => {
   switch (action.type) {
     case "FOLLOW":
       return {

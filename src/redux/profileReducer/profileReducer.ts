@@ -1,6 +1,6 @@
 import { UserProfileType } from "../../pages/Profile/ProfileContainer"
 
-const initialState: ProfilePageType = {
+const initialState: ProfilePageStateType = {
   posts: [
     { id: 1, message: "Hi, how are you?", likesCount: 12 },
     { id: 2, message: "It's my first post", likesCount: 11 },
@@ -12,9 +12,9 @@ const initialState: ProfilePageType = {
 }
 
 export const profileReducer = (
-  state: ProfilePageType = initialState,
+  state: ProfilePageStateType = initialState,
   action: ProfileReducerActionType
-): ProfilePageType => {
+): ProfilePageStateType => {
   switch (action.type) {
     case "ADD-POST":
       return {
@@ -66,7 +66,7 @@ export type PostType = {
   message: string
   likesCount: number
 }
-export type ProfilePageType = {
+export type ProfilePageStateType = {
   posts: PostType[]
   newPostText: string
   userProfile: UserProfileType | null

@@ -8,13 +8,13 @@ export type DialogType = {
   name: string
 }
 
-export type DialogsPageType = {
+export type DialogsPageStateType = {
   dialogs: DialogType[]
   messages: MessageType[]
   newMessageText: string
 }
 
-const initialState: DialogsPageType = {
+const initialState: DialogsPageStateType = {
   dialogs: [
     { id: 1, name: "Yan" },
     { id: 2, name: "Veronika" },
@@ -37,9 +37,9 @@ const initialState: DialogsPageType = {
 export type DialogsReducerActionType = AddMessageActionType | UpdateNewMessageTextActionType
 
 export const dialogsReducer = (
-  state: DialogsPageType = initialState,
+  state: DialogsPageStateType = initialState,
   action: DialogsReducerActionType
-): DialogsPageType => {
+): DialogsPageStateType => {
   switch (action.type) {
     case "ADD-MESSAGE":
       return {

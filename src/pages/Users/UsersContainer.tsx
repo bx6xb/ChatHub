@@ -53,7 +53,7 @@ export const UsersContainer = connect(mapStateToProps, {
 
 // import { useDispatch } from "react-redux"
 // import {
-//   UsersPageType,
+//   UsersPageStateType,
 //   changeCurrentPageAC,
 //   changeTotalUsersCountAC,
 //   followAC,
@@ -68,7 +68,7 @@ export const UsersContainer = connect(mapStateToProps, {
 
 // export const UsersContainer = () => {
 //   const dispatch = useDispatch()
-//   const state: UsersPageType = useSelector((state: AppRootStateType) => state.usersPage)
+//   const state: UsersPageStateType = useSelector((state: AppRootStateType) => state.usersPage)
 
 //   useEffect(() => {
 //     if (state.users.length === 0) {

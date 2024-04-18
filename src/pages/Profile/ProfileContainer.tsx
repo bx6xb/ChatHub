@@ -4,6 +4,8 @@ import axios from "axios"
 import { AppRootStateType } from "../../redux/store"
 import { setUserProfileAC } from "../../redux/profileReducer/profileReducer"
 import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { useParams } from "react-router-dom"
 
 // types
 export type UserProfileType = {
@@ -51,14 +53,22 @@ export type UserProfileType = {
 //   }
 // )
 
+type ProfilePageParamsType = {
+  id: string
+}
+
 export const ProfileContainer = () => {
   const userProfile = useSelector((state: AppRootStateType) => state.profilePage.userProfile)
+  const dispatch = useDispatch()
+
+  const urlParams = useParams<ProfilePageParamsType>()
+  const userId = urlParams.id || 2
 
   useEffect(() => {
     axios
-      .get<UserProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+      .get<UserProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
       .then((resp) => {
-        setUserProfileAC(resp.data)
+        dispatch(setUserProfileAC(resp.data))
       })
   }, [])
 

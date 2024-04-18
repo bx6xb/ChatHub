@@ -1,5 +1,5 @@
 import {
-  UsersPageType,
+  UsersPageStateType,
   changeCurrentPageAC,
   changeIsFetchingAC,
   changePageSizeAC,
@@ -10,7 +10,7 @@ import {
   usersReducer,
 } from "./usersReducer"
 
-export const initialState: UsersPageType = {
+export const initialState: UsersPageStateType = {
   users: [
     {
       name: "anastasiyaArkhipchuk",
