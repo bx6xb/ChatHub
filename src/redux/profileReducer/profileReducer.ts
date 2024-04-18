@@ -1,4 +1,20 @@
-import { UserProfileType } from "../../pages/Profile/ProfileContainer"
+import { UserProfileType } from "../../api/api"
+
+// types
+export type PostType = {
+  id: number
+  message: string
+  likesCount: number
+}
+export type ProfilePageStateType = {
+  posts: PostType[]
+  newPostText: string
+  userProfile: UserProfileType | null
+}
+export type ProfileReducerActionType =
+  | ReturnType<typeof addPostAC>
+  | ReturnType<typeof updateNewPostAC>
+  | ReturnType<typeof setUserProfileAC>
 
 const initialState: ProfilePageStateType = {
   posts: [
@@ -59,19 +75,3 @@ export const setUserProfileAC = (userProfile: UserProfileType) =>
     type: "SET-USER-PROFILE",
     userProfile,
   } as const)
-
-// types
-export type PostType = {
-  id: number
-  message: string
-  likesCount: number
-}
-export type ProfilePageStateType = {
-  posts: PostType[]
-  newPostText: string
-  userProfile: UserProfileType | null
-}
-export type ProfileReducerActionType =
-  | ReturnType<typeof addPostAC>
-  | ReturnType<typeof updateNewPostAC>
-  | ReturnType<typeof setUserProfileAC>

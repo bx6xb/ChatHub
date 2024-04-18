@@ -1,7 +1,7 @@
 import { Preloader } from "../../../components/Preloader/Preloader"
-import { UserProfileType } from "../ProfileContainer"
 import s from "./ProfileInfo.module.css"
 import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
+import { UserProfileType } from "../../../api/api"
 
 type ProfileInfoPropsType = {
   userProfile: UserProfileType

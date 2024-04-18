@@ -1,119 +1,66 @@
-import { connect } from "react-redux"
-import { UsersAPIComponent } from "./UsersAPIComponent"
+import { useDispatch } from "react-redux"
 import {
+  UsersPageStateType,
   changeCurrentPageAC,
-  changeIsFetchingAC,
   changeTotalUsersCountAC,
   followAC,
   setUsersAC,
   unfollowAC,
-  UserType,
 } from "../../redux/usersReducer/usersReducer"
-import { AppRootStateType, DispatchType } from "../../redux/store"
+import { useSelector } from "react-redux"
+import { AppRootStateType } from "../../redux/store"
+import { useEffect } from "react"
+import axios from "axios"
+import { Users } from "./Users"
 
-const mapStateToProps = (state: AppRootStateType) => ({
-  users: state.usersPage.users,
-  pageSize: state.usersPage.pageSize,
-  totalUsersCount: state.usersPage.totalUsersCount,
-  currentPage: state.usersPage.currentPage,
-  isFetching: state.usersPage.isFetching,
-})
+export const UsersContainer = () => {
+  const dispatch = useDispatch()
+  const state: UsersPageStateType = useSelector((state: AppRootStateType) => state.usersPage)
 
-// const mapDispatchToProps = (dispatch: DispatchType) => ({
-//   follow(userId: number) {
-//     dispatch(followAC(userId))
-//   },
-//   unfollow(userId: number) {
-//     dispatch(unfollowAC(userId))
-//   },
-//   setUsers(users: UserType[]) {
-//     dispatch(setUsersAC(users))
-//   },
-//   setCurrentPage(currentPage: number) {
-//     dispatch(changeCurrentPageAC(currentPage))
-//   },
-//   setTotalUsers(totalUsers: number) {
-//     dispatch(changeTotalUsersCountAC(totalUsers))
-//   },
-//   toggleIsFetching(isFetching: boolean) {
-//     dispatch(changeIsFetchingAC(isFetching))
-//   },
-// })
+  useEffect(() => {
+    if (state.users.length === 0) {
+      axios
+        .get(
+          `https://social-network.samuraijs.com/api/1.0/users?page=${state.currentPage}&count=${state.pageSize}`
+        )
+        .then((response) => {
+          dispatch(setUsersAC(response.data.items))
+          dispatch(changeTotalUsersCountAC(response.data.totalCount))
 
-export const UsersContainer = connect(mapStateToProps, {
-  follow: followAC,
-  unfollow: unfollowAC,
-  setUsers: setUsersAC,
-  setCurrentPage: changeCurrentPageAC,
-  setTotalUsers: changeTotalUsersCountAC,
-  toggleIsFetching: changeIsFetchingAC,
-})(UsersAPIComponent)
+          console.log(response)
+        })
+        .catch((err) => console.error(err))
+    }
+  }, [])
 
-// Functional component without using class component UsersAPIComponent.tsx
+  const onPageChange = (pageNumber: number) => {
+    dispatch(changeCurrentPageAC(pageNumber))
 
-// import { useDispatch } from "react-redux"
-// import {
-//   UsersPageStateType,
-//   changeCurrentPageAC,
-//   changeTotalUsersCountAC,
-//   followAC,
-//   setUsersAC,
-//   unfollowAC,
-// } from "../../redux/usersReducer/usersReducer"
-// import { useSelector } from "react-redux"
-// import { AppRootStateType } from "../../redux/store"
-// import { useEffect } from "react"
-// import axios from "axios"
-// import { Users } from "./Users"
+    axios
+      .get(
+        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${state.pageSize}`
+      )
+      .then((response) => dispatch(setUsersAC(response.data.items)))
+      .catch((err) => console.error(err))
+  }
 
-// export const UsersContainer = () => {
-//   const dispatch = useDispatch()
-//   const state: UsersPageStateType = useSelector((state: AppRootStateType) => state.usersPage)
+  const follow = (userId: number) => {
+    dispatch(followAC(userId))
+  }
 
-//   useEffect(() => {
-//     if (state.users.length === 0) {
-//       axios
-//         .get(
-//           `https://social-network.samuraijs.com/api/1.0/users?page=${state.currentPage}&count=${state.pageSize}`
-//         )
-//         .then((response) => {
-//           dispatch(setUsersAC(response.data.items))
-//           dispatch(changeTotalUsersCountAC(response.data.totalCount))
+  const unfollow = (userId: number) => {
+    dispatch(unfollowAC(userId))
+  }
 
-//           console.log(response)
-//         })
-//         .catch((err) => console.error(err))
-//     }
-//   }, [])
-
-//   const onPageChange = (pageNumber: number) => {
-//     dispatch(changeCurrentPageAC(pageNumber))
-
-//     axios
-//       .get(
-//         `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${state.pageSize}`
-//       )
-//       .then((response) => dispatch(setUsersAC(response.data.items)))
-//       .catch((err) => console.error(err))
-//   }
-
-//   const follow = (userId: number) => {
-//     dispatch(followAC(userId))
-//   }
-
-//   const unfollow = (userId: number) => {
-//     dispatch(unfollowAC(userId))
-//   }
-
-//   return (
-//     <Users
-//       currentPage={state.currentPage}
-//       follow={follow}
-//       unfollow={unfollow}
-//       onPageChange={onPageChange}
-//       pageSize={state.pageSize}
-//       totalUsersCount={state.totalUsersCount}
-//       users={state.users}
-//     />
-//   )
-// }
+  return (
+    <Users
+      currentPage={state.currentPage}
+      follow={follow}
+      unfollow={unfollow}
+      onPageChange={onPageChange}
+      pageSize={state.pageSize}
+      totalUsersCount={state.totalUsersCount}
+      users={state.users}
+    />
+  )
+}

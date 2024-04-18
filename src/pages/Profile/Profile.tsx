@@ -1,7 +1,7 @@
 import s from "./Profile.module.css"
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo"
 import { MyPostsContainer } from "./MyPosts/MyPostsContainer"
-import { UserProfileType } from "./ProfileContainer"
+import { UserProfileType } from "../../api/api"
 
 type ProfilePropsType = {
   userProfile: UserProfileType
