@@ -7,7 +7,6 @@ type PhotosType = {
   small: null | string
   large: null | string
 }
-
 export type UserType = {
   name: string
   id: number
@@ -16,7 +15,6 @@ export type UserType = {
   status: null | string
   followed: boolean
 }
-
 export type UsersPageStateType = {
   users: UserType[]
   pageSize: number
@@ -25,16 +23,6 @@ export type UsersPageStateType = {
   isFetching: boolean
   isFollowingInProgress: number[]
 }
-
-export const initialState: UsersPageStateType = {
-  users: [],
-  pageSize: 6,
-  totalUsersCount: 28,
-  currentPage: 1,
-  isFetching: false,
-  isFollowingInProgress: [],
-}
-
 export type UsersReducerActionType =
   | ReturnType<typeof followAC>
   | ReturnType<typeof unfollowAC>
@@ -44,6 +32,16 @@ export type UsersReducerActionType =
   | ReturnType<typeof changeCurrentPageAC>
   | ReturnType<typeof changeIsFetchingAC>
   | ReturnType<typeof changeIsFollowingInProgressAC>
+
+// initial state
+export const initialState: UsersPageStateType = {
+  users: [],
+  pageSize: 6,
+  totalUsersCount: 28,
+  currentPage: 1,
+  isFetching: false,
+  isFollowingInProgress: [],
+}
 
 // reducer
 export const usersReducer = (

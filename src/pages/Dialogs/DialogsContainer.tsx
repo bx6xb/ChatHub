@@ -1,20 +1,32 @@
 import { Dialogs } from "./Dialogs"
-import { addMessageAC, updateNewMessageAC } from "../../redux/dialogsReducer/dialogsReducer"
-import { connect } from "react-redux"
-import { AppRootStateType, DispatchType } from "../../redux/store"
+import {
+  DialogsPageStateType,
+  addMessageAC,
+  updateNewMessageAC,
+} from "../../redux/dialogsReducer/dialogsReducer"
+import { AppRootStateType } from "../../redux/store"
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
-const mapStateToProps = (state: AppRootStateType) => ({
-  dialogsPage: state.dialogsPage,
-})
+export const DialogsContainer = () => {
+  const dialogsPage = useSelector<AppRootStateType, DialogsPageStateType>(
+    (state) => state.dialogsPage
+  )
+  const dispatch = useDispatch()
 
-const mapDispatchToProps = (dispatch: DispatchType) => ({
-  sendMessage() {
+  const sendMessage = () => {
     dispatch(addMessageAC())
-  },
-  updateNewMessage(text: string) {
-    let action = updateNewMessageAC(text)
-    dispatch(action)
-  },
-})
+  }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+  const updateNewMessage = (text: string) => {
+    dispatch(updateNewMessageAC(text))
+  }
+
+  return (
+    <Dialogs
+      sendMessage={sendMessage}
+      updateNewMessage={updateNewMessage}
+      dialogsPage={dialogsPage}
+    />
+  )
+}
