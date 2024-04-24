@@ -42,7 +42,7 @@ const instance = axios.create({
 
 // api
 export const authAPI = {
-  getAuth() {
+  me() {
     return instance.get<ResponseType<UserDataAuthStateType>>("auth/me")
   },
 }

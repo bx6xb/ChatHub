@@ -5,14 +5,17 @@ import { getUserProfileTC } from "../../redux/profileReducer/profileReducer"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
+import { UserProfileType } from "../../api/api"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 
-// types
 type ProfilePageParamsType = {
   id: string
 }
 
-export const ProfileContainer = () => {
-  const userProfile = useSelector((state: AppRootStateType) => state.profilePage.userProfile)
+export const ProfileContainer = withAuthRedirect(() => {
+  const userProfile = useSelector<AppRootStateType, UserProfileType>(
+    (state) => state.profilePage.userProfile
+  )
   const dispatch = useDispatch()
 
   const urlParams = useParams<ProfilePageParamsType>()
@@ -23,4 +26,4 @@ export const ProfileContainer = () => {
   }, [])
 
   return <Profile userProfile={userProfile} />
-}
+})

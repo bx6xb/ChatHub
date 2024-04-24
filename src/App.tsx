@@ -5,6 +5,7 @@ import { DialogsContainer } from "./pages/Dialogs/DialogsContainer"
 import { UsersContainer } from "./pages/Users/UsersContainer"
 import { ProfileContainer } from "./pages/Profile/ProfileContainer"
 import { HeaderContainer } from "./layout/Header/HeaderContainer"
+import { Login } from "./pages/Login/Login"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/profile/:id?" element={<ProfileContainer />} />
           <Route path="/dialogs" element={<DialogsContainer />} />
           <Route path="/users" element={<UsersContainer />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </div>

@@ -44,7 +44,7 @@ export const setUserDataAC = (userData: UserDataAuthDomainType) =>
 
 // thunks
 export const setUserDataTC = (): ThunkType<AuthReducerActionType> => (dispatch) => {
-  authAPI.getAuth().then((res) => {
+  authAPI.me().then((res) => {
     if (res.data.resultCode === 0) {
       dispatch(setUserDataAC(res.data.data))
     }

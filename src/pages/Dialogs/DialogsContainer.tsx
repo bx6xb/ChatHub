@@ -7,8 +7,9 @@ import {
 import { AppRootStateType } from "../../redux/store"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 
-export const DialogsContainer = () => {
+export const DialogsContainer = withAuthRedirect(() => {
   const dialogsPage = useSelector<AppRootStateType, DialogsPageStateType>(
     (state) => state.dialogsPage
   )
@@ -29,4 +30,5 @@ export const DialogsContainer = () => {
       dialogsPage={dialogsPage}
     />
   )
-}
+})
+  
