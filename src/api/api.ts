@@ -1,11 +1,7 @@
 import axios from "axios"
 import { UserDataAuthStateType } from "../redux/authReducer/authReducer"
 
-const instance = axios.create({
-  baseURL: "https://social-network.samuraijs.com/api/1.0/",
-  withCredentials: true,
-})
-
+// types
 export type ResponseType<D = {}> = {
   resultCode: number
   messages: string[]
@@ -34,6 +30,13 @@ export type UserProfileType = {
   }
 } | null
 
+// axios instance
+const instance = axios.create({
+  baseURL: "https://social-network.samuraijs.com/api/1.0/",
+  withCredentials: true,
+})
+
+// api
 export const authAPI = {
   getAuth() {
     return instance.get<ResponseType<UserDataAuthStateType>>("auth/me")
@@ -65,10 +68,10 @@ export const profileAPI = {
 }
 
 export const followAPI = {
-  createFollow(userId: string | number) {
+  follow(userId: string | number) {
     return instance.post<ResponseType>(`follow/${userId}`)
   },
-  deleteFollow(userId: string | number) {
+  unfollow(userId: string | number) {
     return instance.delete<ResponseType>(`follow/${userId}`)
   },
 }

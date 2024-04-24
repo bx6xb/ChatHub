@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom"
 import userPhoto from "../../assets/images/userDefaultPhoto.png"
 import { UserType } from "../../redux/usersReducer/usersReducer"
 import s from "./Users.module.css"
-import { followAPI } from "../../api/api"
 
 type UsersPropsType = {
   users: UserType[]
@@ -12,6 +11,7 @@ type UsersPropsType = {
   totalUsersCount: number
   currentPage: number
   onPageChange: (currentPage: number) => void
+  isFollowingInProgress: number[]
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -33,46 +33,34 @@ export const Users = (props: UsersPropsType) => {
   return (
     <div>
       <div>{pages}</div>
-      {props.users.map((u) => (
-        <div key={u.id}>
-          <div>
-            <NavLink to={"/profile/" + u.id.toString()}>
-              <img src={u.photos.small || userPhoto} alt="avatar" className={s.userPhoto} />
-            </NavLink>
-          </div>
+      {props.users.map((u) => {
+        const isDisabled = props.isFollowingInProgress.some((id) => id === u.id)
 
-          <div>
-            {u.followed ? (
-              <button
-                onClick={() => {
-                  followAPI.deleteFollow(u.id).then((resp) => {
-                    if (resp.data.resultCode === 0) {
-                      props.unfollow(u.id)
-                    }
-                  })
-                }}
-              >
-                unfollow
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  followAPI.createFollow(u.id).then((resp) => {
-                    if (resp.data.resultCode === 0) {
-                      props.follow(u.id)
-                    }
-                  })
-                }}
-              >
-                follow
-              </button>
-            )}
-          </div>
+        return (
+          <div key={u.id}>
+            <div>
+              <NavLink to={"/profile/" + u.id.toString()}>
+                <img src={u.photos.small || userPhoto} alt="avatar" className={s.userPhoto} />
+              </NavLink>
+            </div>
 
-          <div>{u.name}</div>
-          <div>{u.status}</div>
-        </div>
-      ))}
+            <div>
+              {u.followed ? (
+                <button onClick={() => props.unfollow(u.id)} disabled={isDisabled}>
+                  unfollow
+                </button>
+              ) : (
+                <button onClick={() => props.follow(u.id)} disabled={isDisabled}>
+                  follow
+                </button>
+              )}
+            </div>
+
+            <div>{u.name}</div>
+            <div>{u.status}</div>
+          </div>
+        )
+      })}
     </div>
   )
 }

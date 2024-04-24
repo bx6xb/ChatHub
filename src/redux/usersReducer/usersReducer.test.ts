@@ -2,6 +2,7 @@ import {
   UsersPageStateType,
   changeCurrentPageAC,
   changeIsFetchingAC,
+  changeIsFollowingInProgressAC,
   changePageSizeAC,
   changeTotalUsersCountAC,
   followAC,
@@ -39,6 +40,7 @@ export const initialState: UsersPageStateType = {
   totalUsersCount: 28,
   currentPage: 1,
   isFetching: false,
+  isFollowingInProgress: [],
 }
 
 test("user should be followed", () => {
@@ -100,3 +102,10 @@ test("property isFetching should be changed", () => {
   expect(newState).not.toBe(initialState)
   expect(newState.isFetching).toBeTruthy()
 })
+
+// test("property isFollowingInProgress should be changed", () => {
+//   const newState = usersReducer(initialState, changeIsFollowingInProgressAC(true))
+
+//   expect(newState).not.toBe(initialState)
+//   expect(newState.isFollowingInProgress).toBeTruthy()
+// })

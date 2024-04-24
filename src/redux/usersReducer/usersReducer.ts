@@ -1,3 +1,6 @@
+import { ThunkType } from "../store"
+import { followAPI, usersAPI } from "../../api/api"
+
 type PhotosType = {
   small: null | string
   large: null | string
@@ -18,6 +21,7 @@ export type UsersPageStateType = {
   totalUsersCount: number
   currentPage: number
   isFetching: boolean
+  isFollowingInProgress: number[]
 }
 
 export const initialState: UsersPageStateType = {
@@ -26,9 +30,10 @@ export const initialState: UsersPageStateType = {
   totalUsersCount: 28,
   currentPage: 1,
   isFetching: false,
+  isFollowingInProgress: [],
 }
 
-type UsersReducerActionType =
+export type UsersReducerActionType =
   | ReturnType<typeof followAC>
   | ReturnType<typeof unfollowAC>
   | ReturnType<typeof setUsersAC>
@@ -36,6 +41,7 @@ type UsersReducerActionType =
   | ReturnType<typeof changeTotalUsersCountAC>
   | ReturnType<typeof changeCurrentPageAC>
   | ReturnType<typeof changeIsFetchingAC>
+  | ReturnType<typeof changeIsFollowingInProgressAC>
 
 export const usersReducer = (
   state: UsersPageStateType = initialState,
@@ -76,6 +82,13 @@ export const usersReducer = (
       return {
         ...state,
         isFetching: action.isFetching,
+      }
+    case "CHANGE_IS_FOLLOWING_IN_PROGRESS":
+      return {
+        ...state,
+        isFollowingInProgress: action.isFetching
+          ? [...state.isFollowingInProgress, action.userId]
+          : state.isFollowingInProgress.filter((id) => id !== action.userId),
       }
     default:
       return state
@@ -123,3 +136,57 @@ export const changeIsFetchingAC = (isFetching: boolean) =>
     type: "CHANGE_IS_FETCHING",
     isFetching,
   } as const)
+
+export const changeIsFollowingInProgressAC = (isFetching: boolean, userId: number) =>
+  ({
+    type: "CHANGE_IS_FOLLOWING_IN_PROGRESS",
+    isFetching,
+    userId,
+  } as const)
+
+export const getUsersTC =
+  (pageSize: number, currentPage: number): ThunkType =>
+  (dispatch) => {
+    dispatch(changeIsFetchingAC(true))
+
+    usersAPI
+      .getUsers(pageSize, currentPage)
+      .then((response) => {
+        dispatch(setUsersAC(response.data.items))
+        dispatch(changeTotalUsersCountAC(response.data.totalCount))
+      })
+      .catch((err) => console.warn(err))
+      .finally(() => dispatch(changeIsFetchingAC(false)))
+  }
+
+export const followTC =
+  (userId: number): ThunkType =>
+  (dispatch) => {
+    dispatch(changeIsFollowingInProgressAC(true, userId))
+
+    followAPI
+      .follow(userId)
+      .then((resp) => {
+        if (resp.data.resultCode === 0) {
+          dispatch(followAC(userId))
+        }
+      })
+      .catch((err) => console.warn(err))
+      .finally(() => dispatch(changeIsFollowingInProgressAC(false, userId)))
+  }
+
+export const unfollowTC =
+  (userId: number): ThunkType =>
+  (dispatch) => {
+    dispatch(changeIsFollowingInProgressAC(true, userId))
+
+    followAPI
+      .unfollow(userId)
+      .then((resp) => {
+        if (resp.data.resultCode === 0) {
+          dispatch(unfollowAC(userId))
+        }
+      })
+      .catch((err) => console.warn(err))
+      .finally(() => dispatch(changeIsFollowingInProgressAC(false, userId)))
+  }
