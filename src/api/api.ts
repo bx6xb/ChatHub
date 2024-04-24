@@ -7,7 +7,6 @@ export type ResponseType<D = {}> = {
   messages: string[]
   data: D
 }
-
 export type UserProfileType = {
   aboutMe: string | null
   contacts: {
@@ -29,6 +28,11 @@ export type UserProfileType = {
     large: string | null
   }
 } | null
+export type UserDataAuthDomainType = {
+  id: number | null
+  email: string | null
+  login: string | null
+}
 
 // axios instance
 const instance = axios.create({
@@ -42,7 +46,6 @@ export const authAPI = {
     return instance.get<ResponseType<UserDataAuthStateType>>("auth/me")
   },
 }
-
 export const usersAPI = {
   getUsers(count?: number, page?: number, term?: string, friend?: boolean) {
     const queryParams = {
@@ -60,13 +63,11 @@ export const usersAPI = {
     return instance.get(`users?${queryParamsString}`)
   },
 }
-
 export const profileAPI = {
   getUserProfile(userId: string | number) {
     return instance.get<UserProfileType>(`profile/${userId}`)
   },
 }
-
 export const followAPI = {
   follow(userId: string | number) {
     return instance.post<ResponseType>(`follow/${userId}`)

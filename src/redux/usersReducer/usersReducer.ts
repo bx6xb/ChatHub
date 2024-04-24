@@ -1,6 +1,5 @@
 import { ThunkType } from "../store"
 import { followAPI, usersAPI } from "../../api/api"
-import { Axios, AxiosError } from "axios"
 
 // types
 type PhotosType = {
