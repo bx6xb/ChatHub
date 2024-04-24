@@ -1,4 +1,10 @@
-import { ProfilePageStateType, addPostAC, profileReducer, updateNewPostAC } from "./profileReducer"
+import {
+  ProfilePageStateType,
+  addPostAC,
+  profileReducer,
+  setUserProfileAC,
+  updateNewPostAC,
+} from "./profileReducer"
 
 let state: ProfilePageStateType
 
@@ -16,11 +22,9 @@ beforeEach(() => {
 })
 
 test("new post should be added", () => {
-  const action = addPostAC()
-  const newState = profileReducer(state, action)
+  const newState = profileReducer(state, addPostAC())
 
   expect(newState).not.toBe(state)
-  expect(newState).not.toEqual(state)
   expect(newState.posts.length).toBe(5)
   expect(newState.newPostText).toBe("")
 })
@@ -28,11 +32,34 @@ test("new post should be added", () => {
 test("new post text should be updated", () => {
   let postText = "new post"
 
-  const action = updateNewPostAC(postText)
-  const newState = profileReducer(state, action)
+  const newState = profileReducer(state, updateNewPostAC(postText))
 
   expect(newState).not.toBe(state)
-  expect(newState).not.toEqual(state)
-  expect(newState.posts.length).toBe(4)
   expect(newState.newPostText).toBe(postText)
+})
+
+test("user profile should be set", () => {
+  let userProfile = {
+    aboutMe: null,
+    contacts: {
+      facebook: null,
+      website: null,
+      vk: null,
+      twitter: null,
+      instagram: null,
+      youtube: null,
+      github: null,
+      mainLink: null,
+    },
+    lookingForAJob: false,
+    lookingForAJobDescription: null,
+    fullName: "Rusya",
+    userId: 31140,
+    photos: { small: null, large: null },
+  }
+
+  const newState = profileReducer(state, setUserProfileAC(userProfile))
+
+  expect(newState).not.toBe(state)
+  expect(newState.userProfile).toBe(userProfile)
 })

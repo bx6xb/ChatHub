@@ -11,9 +11,9 @@ export const HeaderContainer = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    authAPI.getAuth().then((resp) => {
-      if (resp.data.resultCode === 0) {
-        dispatch(setUserDataAC(resp.data.data))
+    authAPI.getAuth().then((res) => {
+      if (res.data.resultCode === 0) {
+        dispatch(setUserDataAC(res.data.data))
       }
     })
   }, [])

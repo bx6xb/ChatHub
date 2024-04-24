@@ -1,4 +1,4 @@
-import { combineReducers, legacy_createStore, applyMiddleware } from "redux"
+import { combineReducers, legacy_createStore, applyMiddleware, Action } from "redux"
 import { profileReducer } from "./profileReducer/profileReducer"
 import { dialogsReducer } from "./dialogsReducer/dialogsReducer"
 import { sidebarReducer } from "./sidebarReducer/sidebarReducer"
@@ -22,7 +22,12 @@ export type DispatchType = typeof store.dispatch
 
 export type RootActionType = UsersReducerActionType
 
-export type ThunkType = ThunkAction<void, AppRootStateType, unknown, RootActionType>
+export type ThunkType<ActionType extends Action = RootActionType> = ThunkAction<
+  void,
+  AppRootStateType,
+  unknown,
+  ActionType
+>
 
 // @ts-ignore
 window.store = store

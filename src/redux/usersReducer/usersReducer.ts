@@ -1,6 +1,8 @@
 import { ThunkType } from "../store"
 import { followAPI, usersAPI } from "../../api/api"
+import { Axios, AxiosError } from "axios"
 
+// types
 type PhotosType = {
   small: null | string
   large: null | string
@@ -43,6 +45,7 @@ export type UsersReducerActionType =
   | ReturnType<typeof changeIsFetchingAC>
   | ReturnType<typeof changeIsFollowingInProgressAC>
 
+// reducer
 export const usersReducer = (
   state: UsersPageStateType = initialState,
   action: UsersReducerActionType
@@ -95,48 +98,42 @@ export const usersReducer = (
   }
 }
 
+// actions
 export const followAC = (userId: number) =>
   ({
     type: "FOLLOW",
     userId,
   } as const)
-
 export const unfollowAC = (userId: number) =>
   ({
     type: "UNFOLLOW",
     userId,
   } as const)
-
 export const setUsersAC = (users: UserType[]) =>
   ({
     type: "SET_USERS",
     users,
   } as const)
-
 export const changePageSizeAC = (pageSize: number) =>
   ({
     type: "CHANGE_PAGE_SIZE",
     pageSize,
   } as const)
-
 export const changeTotalUsersCountAC = (totalUsersCount: number) =>
   ({
     type: "CHANGE_TOTAL_USERS_COUNT",
     totalUsersCount,
   } as const)
-
 export const changeCurrentPageAC = (currentPage: number) =>
   ({
     type: "CHANGE_CURRENT_PAGE",
     currentPage,
   } as const)
-
 export const changeIsFetchingAC = (isFetching: boolean) =>
   ({
     type: "CHANGE_IS_FETCHING",
     isFetching,
   } as const)
-
 export const changeIsFollowingInProgressAC = (isFetching: boolean, userId: number) =>
   ({
     type: "CHANGE_IS_FOLLOWING_IN_PROGRESS",
@@ -144,6 +141,7 @@ export const changeIsFollowingInProgressAC = (isFetching: boolean, userId: numbe
     userId,
   } as const)
 
+// thunks
 export const getUsersTC =
   (pageSize: number, currentPage: number): ThunkType =>
   (dispatch) => {
@@ -151,14 +149,12 @@ export const getUsersTC =
 
     usersAPI
       .getUsers(pageSize, currentPage)
-      .then((response) => {
-        dispatch(setUsersAC(response.data.items))
-        dispatch(changeTotalUsersCountAC(response.data.totalCount))
+      .then((res) => {
+        dispatch(setUsersAC(res.data.items))
+        dispatch(changeTotalUsersCountAC(res.data.totalCount))
       })
-      .catch((err) => console.warn(err))
       .finally(() => dispatch(changeIsFetchingAC(false)))
   }
-
 export const followTC =
   (userId: number): ThunkType =>
   (dispatch) => {
@@ -166,15 +162,13 @@ export const followTC =
 
     followAPI
       .follow(userId)
-      .then((resp) => {
-        if (resp.data.resultCode === 0) {
+      .then((res) => {
+        if (res.data.resultCode === 0) {
           dispatch(followAC(userId))
         }
       })
-      .catch((err) => console.warn(err))
       .finally(() => dispatch(changeIsFollowingInProgressAC(false, userId)))
   }
-
 export const unfollowTC =
   (userId: number): ThunkType =>
   (dispatch) => {
@@ -182,11 +176,10 @@ export const unfollowTC =
 
     followAPI
       .unfollow(userId)
-      .then((resp) => {
-        if (resp.data.resultCode === 0) {
+      .then((res) => {
+        if (res.data.resultCode === 0) {
           dispatch(unfollowAC(userId))
         }
       })
-      .catch((err) => console.warn(err))
       .finally(() => dispatch(changeIsFollowingInProgressAC(false, userId)))
   }

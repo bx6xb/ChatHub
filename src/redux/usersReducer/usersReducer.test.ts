@@ -103,9 +103,10 @@ test("property isFetching should be changed", () => {
   expect(newState.isFetching).toBeTruthy()
 })
 
-// test("property isFollowingInProgress should be changed", () => {
-//   const newState = usersReducer(initialState, changeIsFollowingInProgressAC(true))
+test("property isFollowingInProgress should be changed", () => {
+  const userId = 66
+  const newState = usersReducer(initialState, changeIsFollowingInProgressAC(true, userId))
 
-//   expect(newState).not.toBe(initialState)
-//   expect(newState.isFollowingInProgress).toBeTruthy()
-// })
+  expect(newState).not.toBe(initialState)
+  expect(newState.isFollowingInProgress[0]).toBe(userId)
+})
