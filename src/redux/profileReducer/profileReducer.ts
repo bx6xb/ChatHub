@@ -82,19 +82,20 @@ export const getUserProfileTC =
       dispatch(setUserProfileAC(res.data))
     })
   }
-export const getProfileStatusTC =
+export const getUserStatusTC =
   (userId: number): Thunk<ProfileReducerAction> =>
   (dispatch) => {
-    profileAPI.getStatus(userId).then((res) => {
-      console.log(res)
+    profileAPI.getUserStatus(userId).then((res) => {
+      dispatch(setProfileStatusAC(res.data))
     })
   }
-export const setProfileStatusTC =
+export const setUserStatusTC =
   (status: string): Thunk<ProfileReducerAction> =>
   (dispatch) => {
-    profileAPI.setStatus(status).then((res) => {
-      dispatch(setProfileStatusAC(status))
-      console.log(res)
+    profileAPI.setUserStatus(status).then((res) => {
+      if (res.data.resultCode === 0) {
+        dispatch(setProfileStatusAC(status))
+      }
     })
   }
 

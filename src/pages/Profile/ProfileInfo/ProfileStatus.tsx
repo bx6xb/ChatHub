@@ -1,20 +1,22 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react"
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react"
 
 type ProfileStatusProps = {
   status: string
-  getStatus: (status: string) => void
+  getUserStatus: (status: string) => void
 }
 
 export const ProfileStatus = (props: ProfileStatusProps) => {
   const [editMode, setEditMode] = useState(false)
-  const [inputValue, setInputValue] = useState(props.status)
+  const [status, setStatus] = useState(props.status)
+
+  useEffect(() => setStatus(props.status), [props.status])
 
   const activateEditMode = () => setEditMode(true)
   const diactivateEditMode = () => setEditMode(false)
   const submitInput = (value: string) => {
-    props.getStatus(value)
+    props.getUserStatus(value)
   }
-  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value)
   const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       submitInput(e.currentTarget.value)
@@ -26,14 +28,14 @@ export const ProfileStatus = (props: ProfileStatusProps) => {
     <div>
       {editMode ? (
         <input
-          value={inputValue}
+          value={status}
           onBlur={diactivateEditMode}
           onChange={onInputChange}
           onKeyDown={onInputKeyDown}
           autoFocus
         />
       ) : (
-        <span onDoubleClick={activateEditMode}>{inputValue}</span>
+        <span onDoubleClick={activateEditMode}>{status || "Add status"}</span>
       )}
     </div>
   )

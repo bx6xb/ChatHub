@@ -4,8 +4,9 @@ import { DialogItem } from "./DialogItem/DialogItem"
 import { Message } from "./Message/Message"
 import { addMessageAC, updateNewMessageAC } from "../../redux/dialogsReducer/dialogsReducer"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 
-export const Dialogs = () => {
+export const Dialogs = withAuthRedirect(() => {
   const { dialogs, messages, newMessageText } = useAppSelector((state) => state.dialogs)
   const dispatch = useAppDispatch()
 
@@ -27,4 +28,4 @@ export const Dialogs = () => {
       <button onClick={sendMessage}>Submit</button>
     </div>
   )
-}
+})

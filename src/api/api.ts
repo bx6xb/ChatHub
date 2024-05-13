@@ -5,6 +5,9 @@ import { UserDataAuthState } from "../redux/authReducer/authReducer"
 const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
   withCredentials: true,
+  headers: {
+    "API-KEY": "0f10c672-c4d1-4613-be30-bf57a61f45f5",
+  },
 })
 
 // api
@@ -32,11 +35,10 @@ export const profileAPI = {
   getUserProfile(userId: string | number) {
     return instance.get<UserProfile>(`profile/${userId}`)
   },
-  getStatus(userId: number) {
-    return instance.get(`profile/status/${userId}`)
+  getUserStatus(userId: number) {
+    return instance.get<string>(`profile/status/${userId}`)
   },
-  setStatus(status: string) {
-    console.log(status)
+  setUserStatus(status: string) {
     return instance.put<ResponseType>("profile/status", { status })
   },
 }

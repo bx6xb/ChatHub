@@ -23,7 +23,7 @@ function App() {
       <Navbar />
       <div className="app-wrapper-content">
         <Routes>
-          <Route path="/" element={<Navigate to="/dialogs" />} />
+          <Route path="/" element={<Navigate to="/profile" />} />
           <Route path="/profile/:id?" element={<Profile />} />
           <Route path="/dialogs" element={<Dialogs />} />
           <Route path="/users" element={<Users />} />

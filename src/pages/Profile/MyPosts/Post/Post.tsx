@@ -1,4 +1,5 @@
 import s from "./Post.module.css"
+import avatar from "../../../../assets/images/userDefaultPhoto.png"
 
 type PostProps = {
   message: string
@@ -8,7 +9,7 @@ type PostProps = {
 export const Post = (props: PostProps) => {
   return (
     <div className={s.item}>
-      <img src="https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg" />
+      <img src={avatar} />
       {props.message}
       <div>
         <span>like</span> {props.likesCount}

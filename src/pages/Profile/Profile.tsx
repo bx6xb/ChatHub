@@ -2,7 +2,7 @@ import { ProfileInfo } from "./ProfileInfo/ProfileInfo"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
-import { getProfileStatusTC, getUserProfileTC } from "../../redux/profileReducer/profileReducer"
+import { getUserStatusTC, getUserProfileTC } from "../../redux/profileReducer/profileReducer"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { MyPosts } from "./MyPosts/MyPosts"
 
@@ -17,7 +17,9 @@ export const Profile = withAuthRedirect(() => {
 
   useEffect(() => {
     dispatch(getUserProfileTC(userId))
-    dispatch(getProfileStatusTC(userId))
+    setTimeout(() => {
+      dispatch(getUserStatusTC(userId))
+    }, 1500)
   }, [])
 
   return (
