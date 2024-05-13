@@ -1,24 +1,8 @@
-import { UserProfileType, profileAPI } from "../../api/api"
-import { ThunkType } from "../store"
-
-// types
-export type PostType = {
-  id: number
-  message: string
-  likesCount: number
-}
-export type ProfilePageStateType = {
-  posts: PostType[]
-  newPostText: string
-  userProfile: UserProfileType | null
-}
-export type ProfileReducerActionType =
-  | ReturnType<typeof addPostAC>
-  | ReturnType<typeof updateNewPostAC>
-  | ReturnType<typeof setUserProfileAC>
+import { UserProfile, profileAPI } from "../../api/api"
+import { Thunk } from "../store"
 
 // initial state
-const initialState: ProfilePageStateType = {
+const initialState: ProfilePageState = {
   posts: [
     { id: 1, message: "Hi, how are you?", likesCount: 12 },
     { id: 2, message: "It's my first post", likesCount: 11 },
@@ -27,13 +11,14 @@ const initialState: ProfilePageStateType = {
   ],
   newPostText: "Yan Turnt",
   userProfile: null,
+  profileStatus: "",
 }
 
 // reducer
 export const profileReducer = (
-  state: ProfilePageStateType = initialState,
-  action: ProfileReducerActionType
-): ProfilePageStateType => {
+  state: ProfilePageState = initialState,
+  action: ProfileReducerAction
+): ProfilePageState => {
   switch (action.type) {
     case "ADD_POST":
       return {
@@ -58,6 +43,11 @@ export const profileReducer = (
         ...state,
         userProfile: action.userProfile,
       }
+    case "SET_PROFILE_STATUS":
+      return {
+        ...state,
+        profileStatus: action.profileStatus,
+      }
     default:
       return state
   }
@@ -73,17 +63,55 @@ export const updateNewPostAC = (text: string) =>
     type: "UPDATE_NEW_POST_TEXT",
     text,
   } as const)
-export const setUserProfileAC = (userProfile: UserProfileType) =>
+export const setUserProfileAC = (userProfile: UserProfile) =>
   ({
     type: "SET_USER_PROFILE",
     userProfile,
   } as const)
+export const setProfileStatusAC = (profileStatus: string) =>
+  ({
+    type: "SET_PROFILE_STATUS",
+    profileStatus,
+  } as const)
 
 // thunks
 export const getUserProfileTC =
-  (userId: number): ThunkType<ProfileReducerActionType> =>
+  (userId: number): Thunk<ProfileReducerAction> =>
   (dispatch) => {
     profileAPI.getUserProfile(userId).then((res) => {
       dispatch(setUserProfileAC(res.data))
     })
   }
+export const getProfileStatusTC =
+  (userId: number): Thunk<ProfileReducerAction> =>
+  (dispatch) => {
+    profileAPI.getStatus(userId).then((res) => {
+      console.log(res)
+    })
+  }
+export const setProfileStatusTC =
+  (status: string): Thunk<ProfileReducerAction> =>
+  (dispatch) => {
+    profileAPI.setStatus(status).then((res) => {
+      dispatch(setProfileStatusAC(status))
+      console.log(res)
+    })
+  }
+
+// types
+export type Post = {
+  id: number
+  message: string
+  likesCount: number
+}
+export type ProfilePageState = {
+  posts: Post[]
+  newPostText: string
+  userProfile: UserProfile | null
+  profileStatus: string
+}
+export type ProfileReducerAction =
+  | ReturnType<typeof addPostAC>
+  | ReturnType<typeof updateNewPostAC>
+  | ReturnType<typeof setUserProfileAC>
+  | ReturnType<typeof setProfileStatusAC>

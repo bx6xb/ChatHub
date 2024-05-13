@@ -1,14 +1,19 @@
 import { Preloader } from "../../../components/Preloader/Preloader"
 import s from "./ProfileInfo.module.css"
 import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
-import { UserProfileType } from "../../../api/api"
+import { ProfileStatus } from "./ProfileStatus"
+import { useAppDispatch, useAppSelector } from "../../../redux/store"
+import { setProfileStatusTC } from "../../../redux/profileReducer/profileReducer"
 
-type ProfileInfoPropsType = {
-  userProfile: UserProfileType
-}
+export const ProfileInfo = () => {
+  const { userProfile, profileStatus } = useAppSelector((state) => state.profile)
+  const dispatch = useAppDispatch()
 
-export const ProfileInfo = (props: ProfileInfoPropsType) => {
-  if (!props.userProfile) {
+  const setProfileStatus = (status: string) => {
+    dispatch(setProfileStatusTC(status))
+  }
+
+  if (!userProfile) {
     return <Preloader />
   }
 
@@ -20,10 +25,11 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
       <div className={s.descriptionBlock}>
         <img
           className={s.userPhoto}
-          src={props.userProfile.photos.small || userDefaultPhoto}
+          src={userProfile.photos.small || userDefaultPhoto}
           alt="user photo"
         />
-        <div>{props.userProfile.fullName}</div>
+        <div>{userProfile.fullName}</div>
+        <ProfileStatus status={profileStatus || "Add status"} getStatus={setProfileStatus} />
       </div>
     </div>
   )

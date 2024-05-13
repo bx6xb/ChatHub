@@ -1,4 +1,4 @@
-const initialState = {
+const initialState: SidebarReducerState = {
   friends: [
     {
       id: 1,
@@ -15,6 +15,16 @@ const initialState = {
   ],
 }
 
-export const sidebarReducer = (state = initialState, action: any) => {
+export const sidebarReducer = (state = initialState, action: SidebarReducerAction) => {
   return state
 }
+
+// types
+export type Friends = {
+  id: number
+  name: string
+}
+type SidebarReducerState = {
+  friends: Friends[]
+}
+export type SidebarReducerAction = any

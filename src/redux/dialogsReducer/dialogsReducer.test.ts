@@ -1,11 +1,11 @@
 import {
-  DialogsPageStateType,
+  DialogsPageState,
   addMessageAC,
   dialogsReducer,
   updateNewMessageAC,
 } from "./dialogsReducer"
 
-let state: DialogsPageStateType
+let state: DialogsPageState
 
 beforeEach(() => {
   state = {

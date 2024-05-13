@@ -1,30 +1,40 @@
 import { combineReducers, legacy_createStore, applyMiddleware, Action } from "redux"
-import { profileReducer } from "./profileReducer/profileReducer"
-import { dialogsReducer } from "./dialogsReducer/dialogsReducer"
-import { sidebarReducer } from "./sidebarReducer/sidebarReducer"
-import { UsersReducerActionType, usersReducer } from "./usersReducer/usersReducer"
-import { authReducer } from "./authReducer/authReducer"
-import { ThunkAction, thunk as thunkMiddlerware } from "redux-thunk"
+import { ProfileReducerAction, profileReducer } from "./profileReducer/profileReducer"
+import { DialogsReducerAction, dialogsReducer } from "./dialogsReducer/dialogsReducer"
+import { SidebarReducerAction, sidebarReducer } from "./sidebarReducer/sidebarReducer"
+import { UsersReducerAction, usersReducer } from "./usersReducer/usersReducer"
+import { AuthReducerAction, authReducer } from "./authReducer/authReducer"
+import { ThunkAction, ThunkDispatch, thunk as thunkMiddlerware } from "redux-thunk"
+import { TypedUseSelectorHook } from "react-redux"
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 const rootReducer = combineReducers({
-  profilePage: profileReducer,
-  dialogsPage: dialogsReducer,
   sidebar: sidebarReducer,
-  usersPage: usersReducer,
+  profile: profileReducer,
+  dialogs: dialogsReducer,
+  users: usersReducer,
   auth: authReducer,
 })
 
 export const store = legacy_createStore(rootReducer, undefined, applyMiddleware(thunkMiddlerware))
 
-export type AppRootStateType = ReturnType<typeof rootReducer>
+export const useAppSelector: TypedUseSelectorHook<AppRootState> = useSelector
+export const useAppDispatch: () => ThunkDispatch<AppRootState, unknown, RootAction> = () =>
+  useDispatch()
 
-export type DispatchType = typeof store.dispatch
-
-export type RootActionType = UsersReducerActionType
-
-export type ThunkType<ActionType extends Action = RootActionType> = ThunkAction<
+// types
+export type AppRootState = ReturnType<typeof rootReducer>
+export type AppRootDispatch = typeof store.dispatch
+export type RootAction =
+  | SidebarReducerAction
+  | ProfileReducerAction
+  | DialogsReducerAction
+  | UsersReducerAction
+  | AuthReducerAction
+export type Thunk<ActionType extends Action = RootAction> = ThunkAction<
   void,
-  AppRootStateType,
+  AppRootState,
   unknown,
   ActionType
 >

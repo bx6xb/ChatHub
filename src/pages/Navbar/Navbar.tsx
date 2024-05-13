@@ -1,6 +1,6 @@
 import s from "./Navbar.module.css"
 import { NavLink } from "react-router-dom"
-import { SidebarContainer } from "./Sidebar/SidebarContainer"
+import { Sidebar } from "./Sidebar/Sidebar"
 
 export const Navbar = () => {
   return (
@@ -29,7 +29,7 @@ export const Navbar = () => {
       <div className={s.item}>
         <a>Settings</a>
       </div>
-      <SidebarContainer />
+      <Sidebar />
     </nav>
   )
 }

@@ -1,23 +1,32 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import "./App.css"
 import { Navbar } from "./pages/Navbar/Navbar"
-import { DialogsContainer } from "./pages/Dialogs/DialogsContainer"
-import { UsersContainer } from "./pages/Users/UsersContainer"
-import { ProfileContainer } from "./pages/Profile/ProfileContainer"
-import { HeaderContainer } from "./layout/Header/HeaderContainer"
 import { Login } from "./pages/Login/Login"
+import { useEffect } from "react"
+import { setUserDataTC } from "./redux/authReducer/authReducer"
+import { useDispatch } from "react-redux"
+import { Profile } from "./pages/Profile/Profile"
+import { Users } from "./pages/Users/Users"
+import { Header } from "./layout/Header/Header"
+import { Dialogs } from "./pages/Dialogs/Dialogs"
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setUserDataTC())
+  }, [])
+
   return (
     <div className="app-wrapper">
-      <HeaderContainer />
+      <Header />
       <Navbar />
       <div className="app-wrapper-content">
         <Routes>
           <Route path="/" element={<Navigate to="/dialogs" />} />
-          <Route path="/profile/:id?" element={<ProfileContainer />} />
-          <Route path="/dialogs" element={<DialogsContainer />} />
-          <Route path="/users" element={<UsersContainer />} />
+          <Route path="/profile/:id?" element={<Profile />} />
+          <Route path="/dialogs" element={<Dialogs />} />
+          <Route path="/users" element={<Users />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>

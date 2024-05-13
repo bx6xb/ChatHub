@@ -1,17 +1,8 @@
-import { UserDataAuthDomainType, authAPI } from "../../api/api"
-import { ThunkType } from "../store"
-
-// types
-export type UserDataAuthStateType = {
-  id: number | null
-  email: string | null
-  login: string | null
-  isAuth: boolean
-}
-type AuthReducerActionType = ReturnType<typeof setUserDataAC>
+import { UserDataAuthDomain, authAPI } from "../../api/api"
+import { Thunk } from "../store"
 
 // initial state
-export const initialState: UserDataAuthStateType = {
+export const initialState: UserDataAuthState = {
   id: null,
   email: null,
   login: null,
@@ -20,9 +11,9 @@ export const initialState: UserDataAuthStateType = {
 
 // reducer
 export const authReducer = (
-  state: UserDataAuthStateType = initialState,
-  action: AuthReducerActionType
-): UserDataAuthStateType => {
+  state: UserDataAuthState = initialState,
+  action: AuthReducerAction
+): UserDataAuthState => {
   switch (action.type) {
     case "SET_USER_DATA":
       return {
@@ -36,17 +27,26 @@ export const authReducer = (
 }
 
 // actions
-export const setUserDataAC = (userData: UserDataAuthDomainType) =>
+export const setUserDataAC = (userData: UserDataAuthDomain) =>
   ({
     type: "SET_USER_DATA",
     userData,
   } as const)
 
 // thunks
-export const setUserDataTC = (): ThunkType<AuthReducerActionType> => (dispatch) => {
+export const setUserDataTC = (): Thunk<AuthReducerAction> => (dispatch) => {
   authAPI.me().then((res) => {
     if (res.data.resultCode === 0) {
       dispatch(setUserDataAC(res.data.data))
     }
   })
 }
+
+// types
+export type UserDataAuthState = {
+  id: number | null
+  email: string | null
+  login: string | null
+  isAuth: boolean
+}
+export type AuthReducerAction = ReturnType<typeof setUserDataAC>

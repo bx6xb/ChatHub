@@ -1,39 +1,8 @@
-import { ThunkType } from "../store"
+import { Thunk } from "../store"
 import { followAPI, usersAPI } from "../../api/api"
 
-// types
-type PhotosType = {
-  small: null | string
-  large: null | string
-}
-export type UserType = {
-  name: string
-  id: number
-  uniqueUrlName: null | string
-  photos: PhotosType
-  status: null | string
-  followed: boolean
-}
-export type UsersPageStateType = {
-  users: UserType[]
-  pageSize: number
-  totalUsersCount: number
-  currentPage: number
-  isFetching: boolean
-  isFollowingInProgress: number[]
-}
-export type UsersReducerActionType =
-  | ReturnType<typeof followAC>
-  | ReturnType<typeof unfollowAC>
-  | ReturnType<typeof setUsersAC>
-  | ReturnType<typeof changePageSizeAC>
-  | ReturnType<typeof changeTotalUsersCountAC>
-  | ReturnType<typeof changeCurrentPageAC>
-  | ReturnType<typeof changeIsFetchingAC>
-  | ReturnType<typeof changeIsFollowingInProgressAC>
-
 // initial state
-export const initialState: UsersPageStateType = {
+export const initialState: UsersPageState = {
   users: [],
   pageSize: 6,
   totalUsersCount: 28,
@@ -44,9 +13,9 @@ export const initialState: UsersPageStateType = {
 
 // reducer
 export const usersReducer = (
-  state: UsersPageStateType = initialState,
-  action: UsersReducerActionType
-): UsersPageStateType => {
+  state: UsersPageState = initialState,
+  action: UsersReducerAction
+): UsersPageState => {
   switch (action.type) {
     case "FOLLOW":
       return {
@@ -106,7 +75,7 @@ export const unfollowAC = (userId: number) =>
     type: "UNFOLLOW",
     userId,
   } as const)
-export const setUsersAC = (users: UserType[]) =>
+export const setUsersAC = (users: User[]) =>
   ({
     type: "SET_USERS",
     users,
@@ -140,7 +109,7 @@ export const changeIsFollowingInProgressAC = (isFetching: boolean, userId: numbe
 
 // thunks
 export const getUsersTC =
-  (pageSize: number, currentPage: number): ThunkType =>
+  (pageSize: number, currentPage: number): Thunk =>
   (dispatch) => {
     dispatch(changeIsFetchingAC(true))
 
@@ -153,7 +122,7 @@ export const getUsersTC =
       .finally(() => dispatch(changeIsFetchingAC(false)))
   }
 export const followTC =
-  (userId: number): ThunkType =>
+  (userId: number): Thunk =>
   (dispatch) => {
     dispatch(changeIsFollowingInProgressAC(true, userId))
 
@@ -167,7 +136,7 @@ export const followTC =
       .finally(() => dispatch(changeIsFollowingInProgressAC(false, userId)))
   }
 export const unfollowTC =
-  (userId: number): ThunkType =>
+  (userId: number): Thunk =>
   (dispatch) => {
     dispatch(changeIsFollowingInProgressAC(true, userId))
 
@@ -180,3 +149,34 @@ export const unfollowTC =
       })
       .finally(() => dispatch(changeIsFollowingInProgressAC(false, userId)))
   }
+
+// types
+type Photos = {
+  small: null | string
+  large: null | string
+}
+export type User = {
+  name: string
+  id: number
+  uniqueUrlName: null | string
+  photos: Photos
+  status: null | string
+  followed: boolean
+}
+export type UsersPageState = {
+  users: User[]
+  pageSize: number
+  totalUsersCount: number
+  currentPage: number
+  isFetching: boolean
+  isFollowingInProgress: number[]
+}
+export type UsersReducerAction =
+  | ReturnType<typeof followAC>
+  | ReturnType<typeof unfollowAC>
+  | ReturnType<typeof setUsersAC>
+  | ReturnType<typeof changePageSizeAC>
+  | ReturnType<typeof changeTotalUsersCountAC>
+  | ReturnType<typeof changeCurrentPageAC>
+  | ReturnType<typeof changeIsFetchingAC>
+  | ReturnType<typeof changeIsFollowingInProgressAC>

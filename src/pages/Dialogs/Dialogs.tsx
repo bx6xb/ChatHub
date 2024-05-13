@@ -2,35 +2,29 @@ import { ChangeEvent } from "react"
 import s from "./Dialogs.module.css"
 import { DialogItem } from "./DialogItem/DialogItem"
 import { Message } from "./Message/Message"
-import { DialogsPageStateType } from "../../redux/dialogsReducer/dialogsReducer"
+import { addMessageAC, updateNewMessageAC } from "../../redux/dialogsReducer/dialogsReducer"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
 
-type DialogsPropsType = {
-  updateNewMessage: (text: string) => void
-  sendMessage: () => void
-  dialogsPage: DialogsPageStateType
-}
+export const Dialogs = () => {
+  const { dialogs, messages, newMessageText } = useAppSelector((state) => state.dialogs)
+  const dispatch = useAppDispatch()
 
-export const Dialogs = (props: DialogsPropsType) => {
-  const state = props.dialogsPage
-
-  const onClickSubmitHandler = () => {
-    props.sendMessage()
+  const sendMessage = () => {
+    dispatch(addMessageAC())
+  }
+  const updateNewMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(updateNewMessageAC(e.currentTarget.value))
   }
 
-  const onTextAreaChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.updateNewMessage(e.currentTarget.value)
-  }
-
-  let dialogsElements = state.dialogs.map((u) => <DialogItem key={u.id} id={u.id} name={u.name} />)
-
-  let messagesElements = state.messages.map((m) => <Message key={m.id} message={m.message} />)
+  let dialogsElements = dialogs.map((u) => <DialogItem key={u.id} id={u.id} name={u.name} />)
+  let messagesElements = messages.map((m) => <Message key={m.id} message={m.message} />)
 
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>{dialogsElements}</div>
       <div className={s.messages}>{messagesElements}</div>
-      <textarea value={state.newMessageText} onChange={onTextAreaChangeHandler} />
-      <button onClick={onClickSubmitHandler}>Submit</button>
+      <textarea value={newMessageText} onChange={updateNewMessage} />
+      <button onClick={sendMessage}>Submit</button>
     </div>
   )
 }

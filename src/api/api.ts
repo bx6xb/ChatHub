@@ -1,5 +1,53 @@
 import axios from "axios"
-import { UserDataAuthStateType } from "../redux/authReducer/authReducer"
+import { UserDataAuthState } from "../redux/authReducer/authReducer"
+
+// axios instance
+const instance = axios.create({
+  baseURL: "https://social-network.samuraijs.com/api/1.0/",
+  withCredentials: true,
+})
+
+// api
+export const authAPI = {
+  me() {
+    return instance.get<ResponseType<UserDataAuthState>>("auth/me")
+  },
+}
+export const usersAPI = {
+  getUsers(count?: number, page?: number, term?: string, friend?: boolean) {
+    const queryParams = {
+      count,
+      page,
+      term,
+      friend,
+    }
+    const queryParamsString = Object.entries(queryParams)
+      .map((p) => (p[1] ? p.join("=") : ""))
+      .filter((s) => s)
+      .join("&")
+    return instance.get(`users?${queryParamsString}`)
+  },
+}
+export const profileAPI = {
+  getUserProfile(userId: string | number) {
+    return instance.get<UserProfile>(`profile/${userId}`)
+  },
+  getStatus(userId: number) {
+    return instance.get(`profile/status/${userId}`)
+  },
+  setStatus(status: string) {
+    console.log(status)
+    return instance.put<ResponseType>("profile/status", { status })
+  },
+}
+export const followAPI = {
+  follow(userId: string | number) {
+    return instance.post<ResponseType>(`follow/${userId}`)
+  },
+  unfollow(userId: string | number) {
+    return instance.delete<ResponseType>(`follow/${userId}`)
+  },
+}
 
 // types
 export type ResponseType<D = {}> = {
@@ -7,7 +55,7 @@ export type ResponseType<D = {}> = {
   messages: string[]
   data: D
 }
-export type UserProfileType = {
+export type UserProfile = {
   aboutMe: string | null
   contacts: {
     facebook: string | null
@@ -28,51 +76,8 @@ export type UserProfileType = {
     large: string | null
   }
 } | null
-export type UserDataAuthDomainType = {
+export type UserDataAuthDomain = {
   id: number | null
   email: string | null
   login: string | null
-}
-
-// axios instance
-const instance = axios.create({
-  baseURL: "https://social-network.samuraijs.com/api/1.0/",
-  withCredentials: true,
-})
-
-// api
-export const authAPI = {
-  me() {
-    return instance.get<ResponseType<UserDataAuthStateType>>("auth/me")
-  },
-}
-export const usersAPI = {
-  getUsers(count?: number, page?: number, term?: string, friend?: boolean) {
-    const queryParams = {
-      count,
-      page,
-      term,
-      friend,
-    }
-
-    const queryParamsString = Object.entries(queryParams)
-      .map((p) => (p[1] ? p.join("=") : ""))
-      .filter((s) => s)
-      .join("&")
-
-    return instance.get(`users?${queryParamsString}`)
-  },
-}
-export const profileAPI = {
-  getUserProfile(userId: string | number) {
-    return instance.get<UserProfileType>(`profile/${userId}`)
-  },
-}
-export const followAPI = {
-  follow(userId: string | number) {
-    return instance.post<ResponseType>(`follow/${userId}`)
-  },
-  unfollow(userId: string | number) {
-    return instance.delete<ResponseType>(`follow/${userId}`)
-  },
 }

@@ -1,40 +1,21 @@
 import { NavLink } from "react-router-dom"
 import userPhoto from "../../assets/images/userDefaultPhoto.png"
-import { UserType } from "../../redux/usersReducer/usersReducer"
 import s from "./Users.module.css"
+import { Preloader } from "../../components/Preloader/Preloader"
+import { useUsers } from "./hooks/useUsers"
 
-type UsersPropsType = {
-  users: UserType[]
-  follow: (userId: number) => void
-  unfollow: (userId: number) => void
-  pageSize: number
-  totalUsersCount: number
-  currentPage: number
-  onPageChange: (currentPage: number) => void
-  isFollowingInProgress: number[]
-}
+export const Users = () => {
+  const { pages, users, isFollowingInProgress, follow, unfollow, isFetching } = useUsers()
 
-export const Users = (props: UsersPropsType) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-
-  const pages = []
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(
-      <span
-        onClick={() => props.onPageChange(i)}
-        key={i}
-        className={props.currentPage === i ? s.selectedPage : ""}
-      >
-        {i}
-      </span>
-    )
+  if (isFetching) {
+    return <Preloader />
   }
 
   return (
     <div>
       <div>{pages}</div>
-      {props.users.map((u) => {
-        const isDisabled = props.isFollowingInProgress.some((id) => id === u.id)
+      {users.map((u) => {
+        const isDisabled = isFollowingInProgress.some((id) => id === u.id)
 
         return (
           <div key={u.id}>
@@ -46,11 +27,11 @@ export const Users = (props: UsersPropsType) => {
 
             <div>
               {u.followed ? (
-                <button onClick={() => props.unfollow(u.id)} disabled={isDisabled}>
+                <button onClick={() => unfollow(u.id)} disabled={isDisabled}>
                   unfollow
                 </button>
               ) : (
-                <button onClick={() => props.follow(u.id)} disabled={isDisabled}>
+                <button onClick={() => follow(u.id)} disabled={isDisabled}>
                   follow
                 </button>
               )}

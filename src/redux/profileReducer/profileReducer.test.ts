@@ -1,12 +1,12 @@
 import {
-  ProfilePageStateType,
+  ProfilePageState,
   addPostAC,
   profileReducer,
   setUserProfileAC,
   updateNewPostAC,
 } from "./profileReducer"
 
-let state: ProfilePageStateType
+let state: ProfilePageState
 
 beforeEach(() => {
   state = {
@@ -18,6 +18,7 @@ beforeEach(() => {
     ],
     newPostText: "Yan Turnt",
     userProfile: null,
+    profileStatus: "love zenow",
   }
 })
 

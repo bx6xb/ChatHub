@@ -1,17 +1,29 @@
-import s from "./Profile.module.css"
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo"
-import { MyPostsContainer } from "./MyPosts/MyPostsContainer"
-import { UserProfileType } from "../../api/api"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
+import { useParams } from "react-router-dom"
+import { useEffect } from "react"
+import { getProfileStatusTC, getUserProfileTC } from "../../redux/profileReducer/profileReducer"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect"
+import { MyPosts } from "./MyPosts/MyPosts"
 
-type ProfilePropsType = {
-  userProfile: UserProfileType
-}
+export const Profile = withAuthRedirect(() => {
+  const authorizedUserId = useAppSelector((state) => state.auth.id)
+  const dispatch = useAppDispatch()
 
-export const Profile = (props: ProfilePropsType) => {
+  const urlParams = useParams<{
+    id: string
+  }>()
+  const userId = urlParams.id ? +urlParams.id : authorizedUserId!
+
+  useEffect(() => {
+    dispatch(getUserProfileTC(userId))
+    dispatch(getProfileStatusTC(userId))
+  }, [])
+
   return (
     <div>
-      <ProfileInfo userProfile={props.userProfile} />
-      <MyPostsContainer />
+      <ProfileInfo />
+      <MyPosts />
     </div>
   )
-}
+})
