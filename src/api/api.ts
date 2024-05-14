@@ -15,6 +15,12 @@ export const authAPI = {
   me() {
     return instance.get<ResponseType<UserDataAuthState>>("auth/me")
   },
+  login(formData: FormData) {
+    return instance.post<ResponseType<{ userId: number }>>("auth/login", formData)
+  },
+  logout() {
+    return instance.delete<ResponseType>("auth/login")
+  },
 }
 export const usersAPI = {
   getUsers(count?: number, page?: number, term?: string, friend?: boolean) {
@@ -82,4 +88,9 @@ export type UserDataAuthDomain = {
   id: number | null
   email: string | null
   login: string | null
+}
+export type FormData = {
+  login: string
+  password: string
+  rememberMe: boolean
 }

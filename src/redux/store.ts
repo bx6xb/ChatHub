@@ -8,6 +8,7 @@ import { ThunkAction, ThunkDispatch, thunk as thunkMiddlerware } from "redux-thu
 import { TypedUseSelectorHook } from "react-redux"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
+import { reducer as formReducer } from "redux-form"
 
 const rootReducer = combineReducers({
   sidebar: sidebarReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   dialogs: dialogsReducer,
   users: usersReducer,
   auth: authReducer,
+  form: formReducer,
 })
 
 export const store = legacy_createStore(rootReducer, undefined, applyMiddleware(thunkMiddlerware))

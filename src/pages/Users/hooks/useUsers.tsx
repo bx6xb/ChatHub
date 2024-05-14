@@ -37,6 +37,7 @@ export const useUsers = () => {
         onClick={() => onPageChange(i)}
         key={i}
         className={currentPage === i ? s.selectedPage : ""}
+        style={{ marginRight: "4px" }}
       >
         {i}
       </span>

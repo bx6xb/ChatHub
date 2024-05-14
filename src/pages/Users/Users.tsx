@@ -3,8 +3,9 @@ import userPhoto from "../../assets/images/userDefaultPhoto.png"
 import s from "./Users.module.css"
 import { Preloader } from "../../components/Preloader/Preloader"
 import { useUsers } from "./hooks/useUsers"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 
-export const Users = () => {
+export const Users = withAuthRedirect(() => {
   const { pages, users, isFollowingInProgress, follow, unfollow, isFetching } = useUsers()
 
   if (isFetching) {
@@ -44,4 +45,4 @@ export const Users = () => {
       })}
     </div>
   )
-}
+})

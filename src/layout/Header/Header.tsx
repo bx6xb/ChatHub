@@ -1,15 +1,29 @@
 import { NavLink } from "react-router-dom"
 import s from "./Header.module.css"
-import { useAppSelector } from "../../redux/store"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
+import { logoutTC } from "../../redux/authReducer/authReducer"
 
 export const Header = () => {
   const { isAuth, login } = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
+
+  const logout = () => dispatch(logoutTC())
 
   return (
     <header className={s.header}>
-      <img src="https://www.freelogodesign.org/Content/img/logo-ex-7.png" />
+      <span>logo</span>
 
-      <div className={s.loginBlock}>{isAuth ? login : <NavLink to={"/login"}>Login</NavLink>}</div>
+      <div className={s.loginBlock}>
+        {isAuth ? (
+          <>
+            {login}
+            <br />
+            <button onClick={logout}>Logout</button>
+          </>
+        ) : (
+          <NavLink to={"/login"}>Login</NavLink>
+        )}
+      </div>
     </header>
   )
 }

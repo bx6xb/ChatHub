@@ -1,4 +1,4 @@
-import { UserDataAuthDomain, authAPI } from "../../api/api"
+import { FormData, UserDataAuthDomain, authAPI } from "../../api/api"
 import { Thunk } from "../store"
 
 // initial state
@@ -21,6 +21,14 @@ export const authReducer = (
         ...action.userData,
         isAuth: true,
       }
+    case "DELETE_USER_DATA":
+      return {
+        ...state,
+        id: null,
+        email: null,
+        login: null,
+        isAuth: false,
+      }
     default:
       return state
   }
@@ -32,12 +40,32 @@ export const setUserDataAC = (userData: UserDataAuthDomain) =>
     type: "SET_USER_DATA",
     userData,
   } as const)
+export const deleteUserDataAC = () =>
+  ({
+    type: "DELETE_USER_DATA",
+  } as const)
 
 // thunks
 export const setUserDataTC = (): Thunk<AuthReducerAction> => (dispatch) => {
   authAPI.me().then((res) => {
     if (res.data.resultCode === 0) {
       dispatch(setUserDataAC(res.data.data))
+    }
+  })
+}
+export const loginTC =
+  (formData: FormData): Thunk =>
+  (dispatch) => {
+    authAPI.login(formData).then((res) => {
+      if (res.data.resultCode === 0) {
+        dispatch(setUserDataTC())
+      }
+    })
+  }
+export const logoutTC = (): Thunk => (dispatch) => {
+  authAPI.logout().then((res) => {
+    if (res.data.resultCode === 0) {
+      dispatch(deleteUserDataAC())
     }
   })
 }
@@ -49,4 +77,6 @@ export type UserDataAuthState = {
   login: string | null
   isAuth: boolean
 }
-export type AuthReducerAction = ReturnType<typeof setUserDataAC>
+export type AuthReducerAction =
+  | ReturnType<typeof setUserDataAC>
+  | ReturnType<typeof deleteUserDataAC>
