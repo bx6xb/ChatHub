@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form"
 import { FormData, UserDataAuthDomain, authAPI } from "../../api/api"
 import { Thunk } from "../store"
 
@@ -59,6 +60,8 @@ export const loginTC =
     authAPI.login(formData).then((res) => {
       if (res.data.resultCode === 0) {
         dispatch(setUserDataTC())
+      } else {
+        dispatch(stopSubmit("login", { _error: res.data.messages[0] }))
       }
     })
   }
