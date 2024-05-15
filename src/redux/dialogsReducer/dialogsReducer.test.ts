@@ -1,9 +1,4 @@
-import {
-  DialogsPageState,
-  addMessageAC,
-  dialogsReducer,
-  updateNewMessageAC,
-} from "./dialogsReducer"
+import { DialogsPageState, addMessageAC, dialogsReducer } from "./dialogsReducer"
 
 let state: DialogsPageState
 
@@ -25,30 +20,16 @@ beforeEach(() => {
       { id: 5, message: "Yo" },
       { id: 6, message: "Yo!" },
     ],
-    newMessageText: "Zenow Turnt",
   }
 })
 
 test("new message should be added in stateTypes", () => {
-  const action = addMessageAC()
-  const newState = dialogsReducer(state, action)
+  const message = "new message"
+  const newState = dialogsReducer(state, addMessageAC(message))
 
   expect(newState).not.toBe(state)
   expect(newState).not.toEqual(state)
   expect(newState.messages.length).toBe(7)
   expect(newState.dialogs.length).toBe(6)
-  expect(newState.newMessageText).toBe("")
-})
-
-test("new message text should be updated", () => {
-  let message = "new message"
-
-  const action = updateNewMessageAC(message)
-  const newState = dialogsReducer(state, action)
-
-  expect(newState).not.toBe(state)
-  expect(newState).not.toEqual(state)
-  expect(newState.messages.length).toBe(6)
-  expect(newState.dialogs.length).toBe(6)
-  expect(newState.newMessageText).toBe(message)
+  expect(newState.messages.pop()!.message).toBe(message)
 })

@@ -2,8 +2,8 @@ import {
   ProfilePageState,
   addPostAC,
   profileReducer,
+  setProfileStatusAC,
   setUserProfileAC,
-  updateNewPostAC,
 } from "./profileReducer"
 
 let state: ProfilePageState
@@ -16,31 +16,22 @@ beforeEach(() => {
       { id: 3, message: "Blabla", likesCount: 10 },
       { id: 4, message: "Dada", likesCount: 9 },
     ],
-    newPostText: "Yan Turnt",
     userProfile: null,
     profileStatus: "love zenow",
   }
 })
 
+// tests
 test("new post should be added", () => {
-  const newState = profileReducer(state, addPostAC())
+  const message = "zenow"
+  const newState = profileReducer(state, addPostAC(message))
 
   expect(newState).not.toBe(state)
   expect(newState.posts.length).toBe(5)
-  expect(newState.newPostText).toBe("")
+  expect(newState.posts[0].message).toBe(message)
 })
-
-test("new post text should be updated", () => {
-  let postText = "new post"
-
-  const newState = profileReducer(state, updateNewPostAC(postText))
-
-  expect(newState).not.toBe(state)
-  expect(newState.newPostText).toBe(postText)
-})
-
 test("user profile should be set", () => {
-  let userProfile = {
+  const userProfile = {
     aboutMe: null,
     contacts: {
       facebook: null,
@@ -63,4 +54,11 @@ test("user profile should be set", () => {
 
   expect(newState).not.toBe(state)
   expect(newState.userProfile).toBe(userProfile)
+})
+test("profile status should be set", () => {
+  const profileStatus = "new status"
+  const newState = profileReducer(state, setProfileStatusAC(profileStatus))
+
+  expect(newState).not.toBe(state)
+  expect(newState.profileStatus).toBe(profileStatus)
 })

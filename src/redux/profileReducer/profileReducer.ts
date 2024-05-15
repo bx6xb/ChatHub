@@ -9,7 +9,6 @@ const initialState: ProfilePageState = {
     { id: 3, message: "Blabla", likesCount: 10 },
     { id: 4, message: "Dada", likesCount: 9 },
   ],
-  newPostText: "Yan Turnt",
   userProfile: null,
   profileStatus: "",
 }
@@ -26,17 +25,11 @@ export const profileReducer = (
         posts: [
           {
             id: state.posts.length + 1,
-            message: state.newPostText,
+            message: action.message,
             likesCount: 0,
           },
           ...state.posts,
         ],
-        newPostText: "",
-      }
-    case "UPDATE_NEW_POST_TEXT":
-      return {
-        ...state,
-        newPostText: action.text,
       }
     case "SET_USER_PROFILE":
       return {
@@ -54,14 +47,10 @@ export const profileReducer = (
 }
 
 // actions
-export const addPostAC = () =>
+export const addPostAC = (message: string) =>
   ({
     type: "ADD_POST",
-  } as const)
-export const updateNewPostAC = (text: string) =>
-  ({
-    type: "UPDATE_NEW_POST_TEXT",
-    text,
+    message,
   } as const)
 export const setUserProfileAC = (userProfile: UserProfile) =>
   ({
@@ -107,12 +96,10 @@ export type Post = {
 }
 export type ProfilePageState = {
   posts: Post[]
-  newPostText: string
   userProfile: UserProfile | null
   profileStatus: string
 }
 export type ProfileReducerAction =
   | ReturnType<typeof addPostAC>
-  | ReturnType<typeof updateNewPostAC>
   | ReturnType<typeof setUserProfileAC>
   | ReturnType<typeof setProfileStatusAC>

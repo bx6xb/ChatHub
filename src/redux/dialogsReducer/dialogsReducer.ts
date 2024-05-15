@@ -16,7 +16,6 @@ const initialState: DialogsPageState = {
     { id: 5, message: "Yo" },
     { id: 6, message: "Yo!" },
   ],
-  newMessageText: "Zenow Turnt",
 }
 
 // reducer
@@ -32,15 +31,9 @@ export const dialogsReducer = (
           ...state.messages,
           {
             id: state.messages.length + 1,
-            message: state.newMessageText,
+            message: action.message,
           },
         ],
-        newMessageText: "",
-      }
-    case "UPDATE_NEW_MESSAGE_TEXT":
-      return {
-        ...state,
-        newMessageText: action.text,
       }
     default:
       return state
@@ -48,14 +41,10 @@ export const dialogsReducer = (
 }
 
 // actions
-export const addMessageAC = () =>
+export const addMessageAC = (message: string) =>
   ({
     type: "ADD_MESSAGE",
-  } as const)
-export const updateNewMessageAC = (text: string) =>
-  ({
-    type: "UPDATE_NEW_MESSAGE_TEXT",
-    text,
+    message,
   } as const)
 
 // types
@@ -70,8 +59,5 @@ export type Dialog = {
 export type DialogsPageState = {
   dialogs: Dialog[]
   messages: Message[]
-  newMessageText: string
 }
-export type DialogsReducerAction =
-  | ReturnType<typeof addMessageAC>
-  | ReturnType<typeof updateNewMessageAC>
+export type DialogsReducerAction = ReturnType<typeof addMessageAC>
