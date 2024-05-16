@@ -1,12 +1,12 @@
 import {
-  ProfilePageState,
+  ProfileState,
   addPostAC,
   profileReducer,
   setProfileStatusAC,
   setUserProfileAC,
 } from "./profileReducer"
 
-let state: ProfilePageState
+let state: ProfileState
 
 beforeEach(() => {
   state = {

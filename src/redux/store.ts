@@ -9,8 +9,10 @@ import { TypedUseSelectorHook } from "react-redux"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { reducer as formReducer } from "redux-form"
+import { AppReducerAction, appReducer } from "./appReducer/appReducer"
 
 const rootReducer = combineReducers({
+  app: appReducer,
   sidebar: sidebarReducer,
   profile: profileReducer,
   dialogs: dialogsReducer,
@@ -34,8 +36,9 @@ export type RootAction =
   | DialogsReducerAction
   | UsersReducerAction
   | AuthReducerAction
-export type Thunk<ActionType extends Action = RootAction> = ThunkAction<
-  void,
+  | AppReducerAction
+export type Thunk<ActionType extends Action = RootAction, Return = void> = ThunkAction<
+  Return,
   AppRootState,
   unknown,
   ActionType

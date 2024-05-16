@@ -2,7 +2,7 @@ import { UserProfile, profileAPI } from "../../api/api"
 import { Thunk } from "../store"
 
 // initial state
-const initialState: ProfilePageState = {
+const initialState: ProfileState = {
   posts: [
     { id: 1, message: "Hi, how are you?", likesCount: 12 },
     { id: 2, message: "It's my first post", likesCount: 11 },
@@ -15,9 +15,9 @@ const initialState: ProfilePageState = {
 
 // reducer
 export const profileReducer = (
-  state: ProfilePageState = initialState,
+  state: ProfileState = initialState,
   action: ProfileReducerAction
-): ProfilePageState => {
+): ProfileState => {
   switch (action.type) {
     case "ADD_POST":
       return {
@@ -94,7 +94,7 @@ export type Post = {
   message: string
   likesCount: number
 }
-export type ProfilePageState = {
+export type ProfileState = {
   posts: Post[]
   userProfile: UserProfile | null
   profileStatus: string

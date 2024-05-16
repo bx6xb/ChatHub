@@ -1,6 +1,7 @@
 import { stopSubmit } from "redux-form"
 import { FormData, UserDataAuthDomain, authAPI } from "../../api/api"
 import { Thunk } from "../store"
+import { Dispatch } from "redux"
 
 // initial state
 export const initialState: UserDataAuthState = {
@@ -47,13 +48,14 @@ export const deleteUserDataAC = () =>
   } as const)
 
 // thunks
-export const setUserDataTC = (): Thunk<AuthReducerAction> => (dispatch) => {
-  authAPI.me().then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setUserDataAC(res.data.data))
-    }
-  })
-}
+export const setUserDataTC =
+  (): Thunk<AuthReducerAction, Promise<any>> => async (dispatch: Dispatch) => {
+    return authAPI.me().then((res) => {
+      if (res.data.resultCode === 0) {
+        dispatch(setUserDataAC(res.data.data))
+      }
+    })
+  }
 export const loginTC =
   (formData: FormData): Thunk =>
   (dispatch) => {
