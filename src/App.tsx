@@ -3,18 +3,17 @@ import "./App.css"
 import { Navbar } from "./pages/Navbar/Navbar"
 import { Login } from "./pages/Login/Login"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { Profile } from "./pages/Profile/Profile"
 import { Users } from "./pages/Users/Users"
 import { Header } from "./layout/Header/Header"
 import { Dialogs } from "./pages/Dialogs/Dialogs"
 import { initializeAppTC } from "./redux/appReducer/appReducer"
-import { useAppSelector } from "./redux/store"
+import { useAppDispatch, useAppSelector } from "./redux/store"
 import { Preloader } from "./components/Preloader/Preloader"
 
 function App() {
   const isAppInitialized = useAppSelector((state) => state.app.isAppInitialized)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(initializeAppTC())

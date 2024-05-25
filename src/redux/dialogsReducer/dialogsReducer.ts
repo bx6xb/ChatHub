@@ -1,51 +1,46 @@
-// initial state
-const initialState: DialogsPageState = {
-  dialogs: [
-    { id: 1, name: "Yan" },
-    { id: 2, name: "Veronika" },
-    { id: 3, name: "Sanya" },
-    { id: 4, name: "Firdavs" },
-    { id: 5, name: "Denis" },
-    { id: 6, name: "Tolik" },
-  ],
-  messages: [
-    { id: 1, message: "Hi" },
-    { id: 2, message: "How is your it-kamasutra?" },
-    { id: 3, message: "Yo" },
-    { id: 4, message: "Yo" },
-    { id: 5, message: "Yo" },
-    { id: 6, message: "Yo!" },
-  ],
-}
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
-// reducer
-export const dialogsReducer = (
-  state: DialogsPageState = initialState,
-  action: DialogsReducerAction
-): DialogsPageState => {
-  switch (action.type) {
-    case "ADD_MESSAGE":
+const slice = createSlice({
+  name: "dialogs",
+  initialState: {
+    dialogs: [
+      { id: 1, name: "Yan" },
+      { id: 2, name: "Veronika" },
+      { id: 3, name: "Sanya" },
+      { id: 4, name: "Firdavs" },
+      { id: 5, name: "Denis" },
+      { id: 6, name: "Tolik" },
+    ],
+    messages: [
+      { id: 1, message: "Hi" },
+      { id: 2, message: "How is your it-kamasutra?" },
+      { id: 3, message: "Yo" },
+      { id: 4, message: "Yo" },
+      { id: 5, message: "Yo" },
+      { id: 6, message: "Yo!" },
+    ],
+  } as DialogsState,
+  reducers: {
+    addMessage(state, action: PayloadAction<{ message: string }>) {
       return {
         ...state,
         messages: [
           ...state.messages,
           {
             id: state.messages.length + 1,
-            message: action.message,
+            message: action.payload.message,
           },
         ],
       }
-    default:
-      return state
-  }
-}
+    },
+  },
+})
+
+// reducer
+export const dialogsReducer = slice.reducer
 
 // actions
-export const addMessageAC = (message: string) =>
-  ({
-    type: "ADD_MESSAGE",
-    message,
-  } as const)
+export const { addMessage } = slice.actions
 
 // types
 export type Message = {
@@ -56,8 +51,8 @@ export type Dialog = {
   id: number
   name: string
 }
-export type DialogsPageState = {
+export type DialogsState = {
   dialogs: Dialog[]
   messages: Message[]
 }
-export type DialogsReducerAction = ReturnType<typeof addMessageAC>
+export type DialogsReducerAction = ReturnType<typeof addMessage>

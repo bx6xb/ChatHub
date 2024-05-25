@@ -1,92 +1,67 @@
-import { UserProfile, profileAPI } from "../../api/api"
-import { Thunk } from "../store"
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { Profile, profileAPI } from "../../api/api"
 
-// initial state
-const initialState: ProfileState = {
-  posts: [
-    { id: 1, message: "Hi, how are you?", likesCount: 12 },
-    { id: 2, message: "It's my first post", likesCount: 11 },
-    { id: 3, message: "Blabla", likesCount: 10 },
-    { id: 4, message: "Dada", likesCount: 9 },
-  ],
-  userProfile: null,
-  profileStatus: "",
-}
+// thunks
+export const getUserProfile = createAsyncThunk("profile/getUserProfile", async (userId: number) => {
+  const response = await profileAPI.getUserProfile(userId)
+  console.log("user profile", response.data)
+  return response.data
+})
+export const getUserStatus = createAsyncThunk("profile/getUserStatus", async (userId: number) => {
+  const response = await profileAPI.getUserStatus(userId)
+  return response.data
+})
+export const setUserStatus = createAsyncThunk("profile/setUserStatus", async (status: string) => {
+  await profileAPI.setUserStatus(status)
+  return status
+})
 
-// reducer
-export const profileReducer = (
-  state: ProfileState = initialState,
-  action: ProfileReducerAction
-): ProfileState => {
-  switch (action.type) {
-    case "ADD_POST":
+const slice = createSlice({
+  name: "profile",
+  initialState: {
+    posts: [
+      { id: 1, message: "Hi, how are you?", likesCount: 12 },
+      { id: 2, message: "It's my first post", likesCount: 11 },
+      { id: 3, message: "Blabla", likesCount: 10 },
+      { id: 4, message: "Dada", likesCount: 9 },
+    ],
+    userProfile: null,
+    profileStatus: "",
+  } as ProfileState,
+  reducers: {
+    addPost(state, action: PayloadAction<{ message: string }>) {
       return {
         ...state,
         posts: [
           {
             id: state.posts.length + 1,
-            message: action.message,
+            message: action.payload.message,
             likesCount: 0,
           },
           ...state.posts,
         ],
       }
-    case "SET_USER_PROFILE":
-      return {
-        ...state,
-        userProfile: action.userProfile,
-      }
-    case "SET_PROFILE_STATUS":
-      return {
-        ...state,
-        profileStatus: action.profileStatus,
-      }
-    default:
-      return state
-  }
-}
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        return {
+          ...state,
+          userProfile: action.payload,
+        }
+      })
+      .addCase(setUserStatus.fulfilled, (state, action) => {
+        return {
+          ...state,
+          profileStatus: action.payload,
+        }
+      })
+  },
+})
 
-// actions
-export const addPostAC = (message: string) =>
-  ({
-    type: "ADD_POST",
-    message,
-  } as const)
-export const setUserProfileAC = (userProfile: UserProfile) =>
-  ({
-    type: "SET_USER_PROFILE",
-    userProfile,
-  } as const)
-export const setProfileStatusAC = (profileStatus: string) =>
-  ({
-    type: "SET_PROFILE_STATUS",
-    profileStatus,
-  } as const)
-
-// thunks
-export const getUserProfileTC =
-  (userId: number): Thunk<ProfileReducerAction> =>
-  (dispatch) => {
-    profileAPI.getUserProfile(userId).then((res) => {
-      dispatch(setUserProfileAC(res.data))
-    })
-  }
-export const getUserStatusTC =
-  (userId: number): Thunk<ProfileReducerAction> =>
-  (dispatch) => {
-    profileAPI.getUserStatus(userId).then((res) => {
-      dispatch(setProfileStatusAC(res.data))
-    })
-  }
-export const setUserStatusTC =
-  (status: string): Thunk<ProfileReducerAction> =>
-  (dispatch) => {
-    profileAPI.setUserStatus(status).then((res) => {
-      if (res.data.resultCode === 0) {
-        dispatch(setProfileStatusAC(status))
-      }
-    })
-  }
+export const profileReducer = slice.reducer
+export const { addPost } = slice.actions
 
 // types
 export type Post = {
@@ -96,10 +71,7 @@ export type Post = {
 }
 export type ProfileState = {
   posts: Post[]
-  userProfile: UserProfile | null
+  userProfile: Profile | null
   profileStatus: string
 }
-export type ProfileReducerAction =
-  | ReturnType<typeof addPostAC>
-  | ReturnType<typeof setUserProfileAC>
-  | ReturnType<typeof setProfileStatusAC>
+export type ProfileReducerAction = ReturnType<typeof addPost>

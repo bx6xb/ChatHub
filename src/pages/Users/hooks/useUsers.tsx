@@ -1,11 +1,6 @@
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import {
-  changeCurrentPageAC,
-  followTC,
-  getUsersTC,
-  unfollowTC,
-} from "../../../redux/usersReducer/usersReducer"
+import { getUsers } from "../../../redux/usersReducer/usersReducer"
 import s from "../Users.module.css"
 
 export const useUsers = () => {
@@ -14,18 +9,17 @@ export const useUsers = () => {
     useAppSelector((state) => state.users)
 
   useEffect(() => {
-    dispatch(getUsersTC(pageSize, currentPage))
+    dispatch(getUsers({ pageSize, currentPage }))
   }, [])
 
   const onPageChange = (pageNumber: number) => {
-    dispatch(changeCurrentPageAC(pageNumber))
-    dispatch(getUsersTC(pageSize, pageNumber))
+    dispatch(getUsers({ pageSize, currentPage: pageNumber }))
   }
   const follow = (userId: number) => {
-    dispatch(followTC(userId))
+    dispatch(follow(userId))
   }
   const unfollow = (userId: number) => {
-    dispatch(unfollowTC(userId))
+    dispatch(unfollow(userId))
   }
 
   let pagesCount = Math.ceil(totalUsersCount / pageSize)

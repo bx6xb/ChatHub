@@ -1,14 +1,12 @@
 import {
   UsersPageState,
-  changeCurrentPageAC,
-  changeIsFetchingAC,
-  changeIsFollowingInProgressAC,
-  changePageSizeAC,
-  changeTotalUsersCountAC,
-  followAC,
-  setUsersAC,
-  unfollowAC,
+  changeIsFetching,
+  changeIsFollowingInProgress,
+  follow,
+  getUsers,
+  unfollow,
   usersReducer,
+  changePageSize,
 } from "./usersReducer"
 
 export const initialState: UsersPageState = {
@@ -43,69 +41,58 @@ export const initialState: UsersPageState = {
   isFollowingInProgress: [],
 }
 
+// tests
 test("user should be followed", () => {
   const userId = 30993
-  const newState = usersReducer(initialState, followAC(userId))
+  const newState = usersReducer(initialState, follow.fulfilled(userId, "requestId", userId))
 
   expect(newState).not.toBe(initialState)
   expect(newState.users).not.toBe(initialState.users)
   expect(newState.users[0].followed).toBeTruthy()
 })
-
 test("user should be unfollowed", () => {
   const userId = 30992
-  const newState = usersReducer(initialState, unfollowAC(userId))
+  const newState = usersReducer(initialState, unfollow.fulfilled(userId, "requestId", userId))
 
   expect(newState).not.toBe(initialState)
   expect(newState.users).not.toBe(initialState.users)
   expect(newState.users[1].followed).toBeFalsy()
 })
-
 test("users should be added", () => {
-  const newState = usersReducer(initialState, setUsersAC(initialState.users))
+  const thunkReturnValue = { users: initialState.users, currentPage: 66, totalCount: 582 }
+  const newState = usersReducer(
+    initialState,
+    getUsers.fulfilled(thunkReturnValue, "requestId", {
+      currentPage: thunkReturnValue.currentPage,
+      pageSize: 10,
+    })
+  )
 
   expect(newState).not.toBe(initialState)
-  expect(newState.users).not.toBe(initialState.users)
   expect(newState.users.length).toBe(2)
+  expect(newState.currentPage).toBe(thunkReturnValue.currentPage)
+  expect(newState.totalUsersCount).toBe(thunkReturnValue.totalCount)
 })
-
 test("page size should be changed", () => {
   const pageSize = 10
-  const newState = usersReducer(initialState, changePageSizeAC(pageSize))
+  const newState = usersReducer(initialState, changePageSize({ pageSize }))
 
   expect(newState).not.toBe(initialState)
   expect(newState.users).toBe(initialState.users)
   expect(newState.pageSize).toBe(pageSize)
 })
-
-test("total users count should be changed", () => {
-  const totalUsersCount = 35
-  const newState = usersReducer(initialState, changeTotalUsersCountAC(totalUsersCount))
-
-  expect(newState).not.toBe(initialState)
-  expect(newState.users).toBe(initialState.users)
-  expect(newState.totalUsersCount).toBe(totalUsersCount)
-})
-
-test("current page should be changed", () => {
-  const currentPage = 3
-  const newState = usersReducer(initialState, changeCurrentPageAC(currentPage))
-
-  expect(newState).not.toBe(initialState)
-  expect(newState.users).toBe(initialState.users)
-  expect(newState.currentPage).toBe(currentPage)
-})
-
 test("property isFetching should be changed", () => {
-  const newState = usersReducer(initialState, changeIsFetchingAC(true))
+  const newState = usersReducer(initialState, changeIsFetching({ isFetching: true }))
 
   expect(newState).not.toBe(initialState)
   expect(newState.isFetching).toBeTruthy()
 })
-
 test("property isFollowingInProgress should be changed", () => {
   const userId = 66
-  const newState = usersReducer(initialState, changeIsFollowingInProgressAC(true, userId))
+  const newState = usersReducer(
+    initialState,
+    changeIsFollowingInProgress({ isFetching: true, userId })
+  )
 
   expect(newState).not.toBe(initialState)
   expect(newState.isFollowingInProgress[0]).toBe(userId)

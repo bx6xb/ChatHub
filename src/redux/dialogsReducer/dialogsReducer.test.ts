@@ -1,6 +1,6 @@
-import { DialogsPageState, addMessageAC, dialogsReducer } from "./dialogsReducer"
+import { DialogsState, addMessage, dialogsReducer } from "./dialogsReducer"
 
-let state: DialogsPageState
+let state: DialogsState
 
 beforeEach(() => {
   state = {
@@ -25,11 +25,11 @@ beforeEach(() => {
 
 test("new message should be added in stateTypes", () => {
   const message = "new message"
-  const newState = dialogsReducer(state, addMessageAC(message))
+  const newState = dialogsReducer(state, addMessage({ message }))
 
   expect(newState).not.toBe(state)
   expect(newState).not.toEqual(state)
   expect(newState.messages.length).toBe(7)
   expect(newState.dialogs.length).toBe(6)
-  expect(newState.messages.pop()!.message).toBe(message)
+  expect(newState.messages[newState.messages.length - 1].message).toBe(message)
 })

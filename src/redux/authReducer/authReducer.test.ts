@@ -1,9 +1,9 @@
-import { authReducer, deleteUserDataAC, initialState, setUserDataAC } from "./authReducer"
+import { authReducer, initialState, logout, setUserData } from "./authReducer"
 
 test("user data should be set", () => {
-  const userData = { id: 30880, login: "Yan_Turnt", email: "bx6xbchosen1@gmail.com" }
+  const userData = { id: 30880, login: "Yan_Turnt", email: "bx6xbchosen1@gmail.com", isAuth: true }
 
-  const newState = authReducer(initialState, setUserDataAC(userData))
+  const newState = authReducer(initialState, setUserData.fulfilled(userData, "requestId"))
 
   expect(newState).not.toBe(initialState)
   expect(newState.id).toBe(userData.id)
@@ -14,7 +14,7 @@ test("user data should be set", () => {
 test("user data should be deleted", () => {
   const state = { id: 30880, login: "Yan_Turnt", email: "bx6xbchosen1@gmail.com", isAuth: true }
 
-  const newState = authReducer(state, deleteUserDataAC())
+  const newState = authReducer(state, logout.fulfilled({}, "requestiId"))
 
   expect(newState).not.toBe(initialState)
   expect(newState.id).toBe(null)

@@ -34,12 +34,12 @@ export const usersAPI = {
       .map((p) => (p[1] ? p.join("=") : ""))
       .filter((s) => s)
       .join("&")
-    return instance.get(`users?${queryParamsString}`)
+    return instance.get<GetUsersResponse>(`users?${queryParamsString}`)
   },
 }
 export const profileAPI = {
   getUserProfile(userId: string | number) {
-    return instance.get<UserProfile>(`profile/${userId}`)
+    return instance.get<Profile>(`profile/${userId}`)
   },
   getUserStatus(userId: number) {
     return instance.get<string>(`profile/status/${userId}`)
@@ -63,7 +63,11 @@ export type ResponseType<D = {}> = {
   messages: string[]
   data: D
 }
-export type UserProfile = {
+export type Photos = {
+  small: string | null
+  large: string | null
+}
+export type Profile = {
   aboutMe: string | null
   contacts: {
     facebook: string | null
@@ -79,11 +83,8 @@ export type UserProfile = {
   lookingForAJobDescription: string | null
   fullName: string
   userId: number
-  photos: {
-    small: string | null
-    large: string | null
-  }
-} | null
+  photos: Photos
+}
 export type UserDataAuthDomain = {
   id: number | null
   email: string | null
@@ -93,4 +94,16 @@ export type FormData = {
   login: string
   password: string
   rememberMe: boolean
+}
+export type User = {
+  name: string
+  id: number
+  photos: Photos
+  status: string | null
+  followed: boolean
+}
+export type GetUsersResponse = {
+  items: User[]
+  totalCount: number
+  error: string | null
 }

@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom"
 import s from "./Header.module.css"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
-import { logoutTC } from "../../redux/authReducer/authReducer"
+import { logout } from "../../redux/authReducer/authReducer"
 
 export const Header = () => {
   const { isAuth, login } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
-  const logout = () => dispatch(logoutTC())
+  const logout = () => dispatch(logout())
 
   return (
     <header className={s.header}>

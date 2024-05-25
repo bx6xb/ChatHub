@@ -1,79 +1,56 @@
 import { stopSubmit } from "redux-form"
-import { FormData, UserDataAuthDomain, authAPI } from "../../api/api"
-import { Thunk } from "../store"
-import { Dispatch } from "redux"
+import { FormData, authAPI } from "../../api/api"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-// initial state
-export const initialState: UserDataAuthState = {
+// thunks
+export const setUserData = createAsyncThunk("auth/setUserData", async () => {
+  const response = await authAPI.me()
+  return response.data.data
+})
+export const login = createAsyncThunk("auth/login", async (formData: FormData, { dispatch }) => {
+  const response = await authAPI.login(formData)
+  if (response.data.resultCode === 0) {
+    dispatch(setUserData())
+  } else {
+    // @ts-ignore
+    dispatch(stopSubmit("login", { _error: response.data.messages[0] }))
+  }
+})
+export const logout = createAsyncThunk("auth/logout", async (payload, { fulfillWithValue }) => {
+  await authAPI.logout()
+  return fulfillWithValue({})
+})
+
+export const initialState = {
   id: null,
   email: null,
   login: null,
   isAuth: false,
-}
+} as UserDataAuthState
 
-// reducer
-export const authReducer = (
-  state: UserDataAuthState = initialState,
-  action: AuthReducerAction
-): UserDataAuthState => {
-  switch (action.type) {
-    case "SET_USER_DATA":
-      return {
+const slice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(setUserData.fulfilled, (state, action) => ({
         ...state,
-        ...action.userData,
-        isAuth: true,
-      }
-    case "DELETE_USER_DATA":
-      return {
+        ...action.payload,
+        // isAuth: true,
+      }))
+      .addCase(logout.fulfilled, (state, action) => ({
         ...state,
         id: null,
         email: null,
         login: null,
         isAuth: false,
-      }
-    default:
-      return state
-  }
-}
+      }))
+  },
+})
 
-// actions
-export const setUserDataAC = (userData: UserDataAuthDomain) =>
-  ({
-    type: "SET_USER_DATA",
-    userData,
-  } as const)
-export const deleteUserDataAC = () =>
-  ({
-    type: "DELETE_USER_DATA",
-  } as const)
-
-// thunks
-export const setUserDataTC =
-  (): Thunk<AuthReducerAction, Promise<any>> => async (dispatch: Dispatch) => {
-    return authAPI.me().then((res) => {
-      if (res.data.resultCode === 0) {
-        dispatch(setUserDataAC(res.data.data))
-      }
-    })
-  }
-export const loginTC =
-  (formData: FormData): Thunk =>
-  (dispatch) => {
-    authAPI.login(formData).then((res) => {
-      if (res.data.resultCode === 0) {
-        dispatch(setUserDataTC())
-      } else {
-        dispatch(stopSubmit("login", { _error: res.data.messages[0] }))
-      }
-    })
-  }
-export const logoutTC = (): Thunk => (dispatch) => {
-  authAPI.logout().then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(deleteUserDataAC())
-    }
-  })
-}
+// reducer
+export const authReducer = slice.reducer
 
 // types
 export type UserDataAuthState = {
@@ -82,6 +59,3 @@ export type UserDataAuthState = {
   login: string | null
   isAuth: boolean
 }
-export type AuthReducerAction =
-  | ReturnType<typeof setUserDataAC>
-  | ReturnType<typeof deleteUserDataAC>

@@ -1,154 +1,92 @@
-import { Thunk } from "../store"
 import { followAPI, usersAPI } from "../../api/api"
-
-// initial state
-export const initialState: UsersPageState = {
-  users: [],
-  pageSize: 6,
-  totalUsersCount: 28,
-  currentPage: 1,
-  isFetching: false,
-  isFollowingInProgress: [],
-}
-
-// reducer
-export const usersReducer = (
-  state: UsersPageState = initialState,
-  action: UsersReducerAction
-): UsersPageState => {
-  switch (action.type) {
-    case "FOLLOW":
-      return {
-        ...state,
-        users: state.users.map((u) => (u.id === action.userId ? { ...u, followed: true } : u)),
-      }
-    case "UNFOLLOW":
-      return {
-        ...state,
-        users: state.users.map((u) => (u.id === action.userId ? { ...u, followed: false } : u)),
-      }
-    case "SET_USERS":
-      return {
-        ...state,
-        users: [...action.users],
-      }
-    case "CHANGE_PAGE_SIZE":
-      return {
-        ...state,
-        pageSize: action.pageSize,
-      }
-    case "CHANGE_TOTAL_USERS_COUNT":
-      return {
-        ...state,
-        totalUsersCount: action.totalUsersCount,
-      }
-    case "CHANGE_CURRENT_PAGE":
-      return {
-        ...state,
-        currentPage: action.currentPage,
-      }
-    case "CHANGE_IS_FETCHING":
-      return {
-        ...state,
-        isFetching: action.isFetching,
-      }
-    case "CHANGE_IS_FOLLOWING_IN_PROGRESS":
-      return {
-        ...state,
-        isFollowingInProgress: action.isFetching
-          ? [...state.isFollowingInProgress, action.userId]
-          : state.isFollowingInProgress.filter((id) => id !== action.userId),
-      }
-    default:
-      return state
-  }
-}
-
-// actions
-export const followAC = (userId: number) =>
-  ({
-    type: "FOLLOW",
-    userId,
-  } as const)
-export const unfollowAC = (userId: number) =>
-  ({
-    type: "UNFOLLOW",
-    userId,
-  } as const)
-export const setUsersAC = (users: User[]) =>
-  ({
-    type: "SET_USERS",
-    users,
-  } as const)
-export const changePageSizeAC = (pageSize: number) =>
-  ({
-    type: "CHANGE_PAGE_SIZE",
-    pageSize,
-  } as const)
-export const changeTotalUsersCountAC = (totalUsersCount: number) =>
-  ({
-    type: "CHANGE_TOTAL_USERS_COUNT",
-    totalUsersCount,
-  } as const)
-export const changeCurrentPageAC = (currentPage: number) =>
-  ({
-    type: "CHANGE_CURRENT_PAGE",
-    currentPage,
-  } as const)
-export const changeIsFetchingAC = (isFetching: boolean) =>
-  ({
-    type: "CHANGE_IS_FETCHING",
-    isFetching,
-  } as const)
-export const changeIsFollowingInProgressAC = (isFetching: boolean, userId: number) =>
-  ({
-    type: "CHANGE_IS_FOLLOWING_IN_PROGRESS",
-    isFetching,
-    userId,
-  } as const)
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 // thunks
-export const getUsersTC =
-  (pageSize: number, currentPage: number): Thunk =>
-  (dispatch) => {
-    dispatch(changeIsFetchingAC(true))
+export const getUsers = createAsyncThunk(
+  "users/getUsers",
+  async ({ pageSize, currentPage }: { pageSize: number; currentPage: number }, { dispatch }) => {
+    dispatch(changeIsFetching({ isFetching: true }))
 
-    usersAPI
-      .getUsers(pageSize, currentPage)
-      .then((res) => {
-        dispatch(setUsersAC(res.data.items))
-        dispatch(changeTotalUsersCountAC(res.data.totalCount))
-      })
-      .finally(() => dispatch(changeIsFetchingAC(false)))
+    const response = await usersAPI.getUsers(pageSize, currentPage)
+    dispatch(changeIsFetching({ isFetching: false }))
+    return { users: response.data.items, totalCount: response.data.totalCount, currentPage }
   }
-export const followTC =
-  (userId: number): Thunk =>
-  (dispatch) => {
-    dispatch(changeIsFollowingInProgressAC(true, userId))
+)
+export const follow = createAsyncThunk("users/follow", async (userId: number, { dispatch }) => {
+  dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))
 
-    followAPI
-      .follow(userId)
-      .then((res) => {
-        if (res.data.resultCode === 0) {
-          dispatch(followAC(userId))
-        }
-      })
-      .finally(() => dispatch(changeIsFollowingInProgressAC(false, userId)))
-  }
-export const unfollowTC =
-  (userId: number): Thunk =>
-  (dispatch) => {
-    dispatch(changeIsFollowingInProgressAC(true, userId))
+  await followAPI.follow(userId)
+  dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
+  return userId
+})
+export const unfollow = createAsyncThunk("users/unfollow", async (userId: number, { dispatch }) => {
+  dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))
 
-    followAPI
-      .unfollow(userId)
-      .then((res) => {
-        if (res.data.resultCode === 0) {
-          dispatch(unfollowAC(userId))
-        }
-      })
-      .finally(() => dispatch(changeIsFollowingInProgressAC(false, userId)))
-  }
+  await followAPI.unfollow(userId)
+  dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
+  return userId
+})
+
+const slice = createSlice({
+  name: "users",
+  initialState: {
+    users: [],
+    pageSize: 6,
+    totalUsersCount: 28,
+    currentPage: 1,
+    isFetching: false,
+    isFollowingInProgress: [],
+  } as UsersPageState,
+  reducers: {
+    changeIsFollowingInProgress(
+      state,
+      action: PayloadAction<{ isFetching: boolean; userId: number }>
+    ) {
+      return {
+        ...state,
+        isFollowingInProgress: action.payload.isFetching
+          ? [...state.isFollowingInProgress, action.payload.userId]
+          : state.isFollowingInProgress.filter((id) => id !== action.payload.userId),
+      }
+    },
+    changeIsFetching(state, action: PayloadAction<{ isFetching: boolean }>) {
+      return {
+        ...state,
+        isFetching: action.payload.isFetching,
+      }
+    },
+    changePageSize(state, action: PayloadAction<{ pageSize: number }>) {
+      return {
+        ...state,
+        pageSize: action.payload.pageSize,
+      }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      // @ts-ignore
+      .addCase(getUsers.fulfilled, (state, action) => ({
+        ...state,
+        users: action.payload.users,
+        totalUsersCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+      }))
+      .addCase(follow.fulfilled, (state, action) => ({
+        ...state,
+        users: state.users.map((u) => (u.id === action.payload ? { ...u, followed: true } : u)),
+      }))
+      .addCase(unfollow.fulfilled, (state, action) => ({
+        ...state,
+        users: state.users.map((u) => (u.id === action.payload ? { ...u, followed: false } : u)),
+      }))
+  },
+})
+
+// reducer
+export const usersReducer = slice.reducer
+
+// actions
+export const { changeIsFollowingInProgress, changeIsFetching, changePageSize } = slice.actions
 
 // types
 type Photos = {
@@ -172,11 +110,5 @@ export type UsersPageState = {
   isFollowingInProgress: number[]
 }
 export type UsersReducerAction =
-  | ReturnType<typeof followAC>
-  | ReturnType<typeof unfollowAC>
-  | ReturnType<typeof setUsersAC>
-  | ReturnType<typeof changePageSizeAC>
-  | ReturnType<typeof changeTotalUsersCountAC>
-  | ReturnType<typeof changeCurrentPageAC>
-  | ReturnType<typeof changeIsFetchingAC>
-  | ReturnType<typeof changeIsFollowingInProgressAC>
+  | ReturnType<typeof changeIsFetching>
+  | ReturnType<typeof changeIsFollowingInProgress>

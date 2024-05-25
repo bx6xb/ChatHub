@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { FormData } from "../../api/api"
-import { loginTC } from "../../redux/authReducer/authReducer"
+import { login } from "../../redux/authReducer/authReducer"
 import { LoginForm } from "./LoginForm/LoginForm"
 
 export const Login = () => {
@@ -9,7 +9,7 @@ export const Login = () => {
   const dispatch = useAppDispatch()
 
   const onSubmit = (formData: FormData) => {
-    dispatch(loginTC(formData))
+    dispatch(login(formData))
   }
 
   if (isAuth) {

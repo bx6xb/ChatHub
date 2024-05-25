@@ -1,6 +1,6 @@
 import s from "./MyPosts.module.css"
 import { Post } from "./Post/Post"
-import { addPostAC } from "../../../redux/profileReducer/profileReducer"
+import { addPost } from "../../../redux/profileReducer/profileReducer"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
 import { reset } from "redux-form"
 import { PostsForm, PostsFormData } from "./PostsForm"
@@ -10,7 +10,7 @@ export const MyPosts = () => {
   const dispatch = useAppDispatch()
 
   const onSubmit = (formData: PostsFormData) => {
-    dispatch(addPostAC(formData.message))
+    dispatch(addPost(formData.message))
     dispatch(reset("posts")) // clear form
   }
 

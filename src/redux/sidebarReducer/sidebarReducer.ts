@@ -1,23 +1,27 @@
-const initialState: SidebarReducerState = {
-  friends: [
-    {
-      id: 1,
-      name: "Yan",
-    },
-    {
-      id: 2,
-      name: "Veronika",
-    },
-    {
-      id: 3,
-      name: "Sasha",
-    },
-  ],
-}
+import { createSlice } from "@reduxjs/toolkit"
 
-export const sidebarReducer = (state = initialState, action: SidebarReducerAction) => {
-  return state
-}
+const slice = createSlice({
+  name: "sidebar",
+  initialState: {
+    friends: [
+      {
+        id: 1,
+        name: "Yan",
+      },
+      {
+        id: 2,
+        name: "Veronika",
+      },
+      {
+        id: 3,
+        name: "Sasha",
+      },
+    ],
+  } as SidebarReducerState,
+  reducers: {},
+})
+
+export const sidebarReducer = slice.reducer
 
 // types
 export type Friends = {

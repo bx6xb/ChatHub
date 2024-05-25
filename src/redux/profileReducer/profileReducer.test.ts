@@ -1,9 +1,9 @@
 import {
   ProfileState,
-  addPostAC,
+  addPost,
+  getUserProfile,
   profileReducer,
-  setProfileStatusAC,
-  setUserProfileAC,
+  setUserStatus,
 } from "./profileReducer"
 
 let state: ProfileState
@@ -24,7 +24,7 @@ beforeEach(() => {
 // tests
 test("new post should be added", () => {
   const message = "zenow"
-  const newState = profileReducer(state, addPostAC(message))
+  const newState = profileReducer(state, addPost({ message }))
 
   expect(newState).not.toBe(state)
   expect(newState.posts.length).toBe(5)
@@ -50,14 +50,17 @@ test("user profile should be set", () => {
     photos: { small: null, large: null },
   }
 
-  const newState = profileReducer(state, setUserProfileAC(userProfile))
+  const newState = profileReducer(state, getUserProfile.fulfilled(userProfile, "requestId", 2))
 
   expect(newState).not.toBe(state)
   expect(newState.userProfile).toBe(userProfile)
 })
 test("profile status should be set", () => {
   const profileStatus = "new status"
-  const newState = profileReducer(state, setProfileStatusAC(profileStatus))
+  const newState = profileReducer(
+    state,
+    setUserStatus.fulfilled(profileStatus, "requestId", profileStatus)
+  )
 
   expect(newState).not.toBe(state)
   expect(newState.profileStatus).toBe(profileStatus)

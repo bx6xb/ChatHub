@@ -3,14 +3,14 @@ import s from "./ProfileInfo.module.css"
 import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
 import { ProfileStatus } from "./ProfileStatus"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { setUserStatusTC } from "../../../redux/profileReducer/profileReducer"
+import { setUserStatus } from "../../../redux/profileReducer/profileReducer"
 
 export const ProfileInfo = () => {
   const { userProfile, profileStatus } = useAppSelector((state) => state.profile)
   const dispatch = useAppDispatch()
 
   const setProfileStatus = (status: string) => {
-    dispatch(setUserStatusTC(status))
+    dispatch(setUserStatus(status))
   }
 
   if (!userProfile) {

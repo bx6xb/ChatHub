@@ -1,7 +1,7 @@
 import s from "./Dialogs.module.css"
 import { DialogItem } from "./DialogItem/DialogItem"
 import { Message } from "./Message/Message"
-import { addMessageAC } from "../../redux/dialogsReducer/dialogsReducer"
+import { addMessage } from "../../redux/dialogsReducer/dialogsReducer"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { reset } from "redux-form"
@@ -12,7 +12,7 @@ export const Dialogs = withAuthRedirect(() => {
   const dispatch = useAppDispatch()
 
   const onSubmit = (formData: DialogsFormData) => {
-    dispatch(addMessageAC(formData.message))
+    dispatch(addMessage(formData.message))
     dispatch(reset("dialogs"))
   }
 
