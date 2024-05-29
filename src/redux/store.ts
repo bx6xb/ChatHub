@@ -54,6 +54,3 @@ export type Thunk<ActionType extends Action = RootAction, Return = void> = Thunk
   unknown,
   ActionType
 > // remove this type
-
-// @ts-ignore
-window.store = store

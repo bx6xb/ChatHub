@@ -14,7 +14,6 @@ export const initialState: UsersPageState = {
     {
       name: "anastasiyaArkhipchuk",
       id: 30993,
-      uniqueUrlName: null,
       photos: {
         small: null,
         large: null,
@@ -25,7 +24,6 @@ export const initialState: UsersPageState = {
     {
       name: "F-A-Z-A",
       id: 30992,
-      uniqueUrlName: null,
       photos: {
         small: null,
         large: null,

@@ -4,7 +4,6 @@ import { Profile, profileAPI } from "../../api/api"
 // thunks
 export const getUserProfile = createAsyncThunk("profile/getUserProfile", async (userId: number) => {
   const response = await profileAPI.getUserProfile(userId)
-  console.log("user profile", response.data)
   return response.data
 })
 export const getUserStatus = createAsyncThunk("profile/getUserStatus", async (userId: number) => {

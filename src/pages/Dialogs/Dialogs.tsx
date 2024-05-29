@@ -12,7 +12,7 @@ export const Dialogs = withAuthRedirect(() => {
   const dispatch = useAppDispatch()
 
   const onSubmit = (formData: DialogsFormData) => {
-    dispatch(addMessage(formData.message))
+    dispatch(addMessage({ message: formData.message }))
     dispatch(reset("dialogs"))
   }
 

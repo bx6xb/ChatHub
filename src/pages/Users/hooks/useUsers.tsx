@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { getUsers } from "../../../redux/usersReducer/usersReducer"
-import s from "../Users.module.css"
+import { getUsers, follow, unfollow } from "../../../redux/usersReducer/usersReducer"
 
 export const useUsers = () => {
   const dispatch = useAppDispatch()
@@ -15,28 +14,22 @@ export const useUsers = () => {
   const onPageChange = (pageNumber: number) => {
     dispatch(getUsers({ pageSize, currentPage: pageNumber }))
   }
-  const follow = (userId: number) => {
+  const followOnClick = (userId: number) => {
     dispatch(follow(userId))
   }
-  const unfollow = (userId: number) => {
+  const unfollowOnClick = (userId: number) => {
     dispatch(unfollow(userId))
   }
 
-  let pagesCount = Math.ceil(totalUsersCount / pageSize)
-
-  const pages = []
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(
-      <span
-        onClick={() => onPageChange(i)}
-        key={i}
-        className={currentPage === i ? s.selectedPage : ""}
-        style={{ marginRight: "4px" }}
-      >
-        {i}
-      </span>
-    )
+  return {
+    currentPage,
+    totalUsersCount,
+    pageSize,
+    users,
+    isFollowingInProgress,
+    followOnClick,
+    unfollowOnClick,
+    onPageChange,
+    isFetching,
   }
-
-  return { pages, users, isFollowingInProgress, follow, unfollow, isFetching }
 }

@@ -1,17 +1,18 @@
-import { followAPI, usersAPI } from "../../api/api"
+import { User, followAPI, usersAPI } from "../../api/api"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 // thunks
-export const getUsers = createAsyncThunk(
-  "users/getUsers",
-  async ({ pageSize, currentPage }: { pageSize: number; currentPage: number }, { dispatch }) => {
-    dispatch(changeIsFetching({ isFetching: true }))
+type GetUsersPayload = { pageSize: number; currentPage: number }
+export const getUsers = createAsyncThunk<
+  { users: User[]; totalCount: number; currentPage: number },
+  GetUsersPayload
+>("users/getUsers", async ({ pageSize, currentPage }: GetUsersPayload, { dispatch }) => {
+  dispatch(changeIsFetching({ isFetching: true }))
 
-    const response = await usersAPI.getUsers(pageSize, currentPage)
-    dispatch(changeIsFetching({ isFetching: false }))
-    return { users: response.data.items, totalCount: response.data.totalCount, currentPage }
-  }
-)
+  const response = await usersAPI.getUsers(pageSize, currentPage)
+  dispatch(changeIsFetching({ isFetching: false }))
+  return { users: response.data.items, totalCount: response.data.totalCount, currentPage }
+})
 export const follow = createAsyncThunk("users/follow", async (userId: number, { dispatch }) => {
   dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))
 
@@ -64,7 +65,6 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // @ts-ignore
       .addCase(getUsers.fulfilled, (state, action) => ({
         ...state,
         users: action.payload.users,
@@ -92,14 +92,6 @@ export const { changeIsFollowingInProgress, changeIsFetching, changePageSize } =
 type Photos = {
   small: null | string
   large: null | string
-}
-export type User = {
-  name: string
-  id: number
-  uniqueUrlName: null | string
-  photos: Photos
-  status: null | string
-  followed: boolean
 }
 export type UsersPageState = {
   users: User[]

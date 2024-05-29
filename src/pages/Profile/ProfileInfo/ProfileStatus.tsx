@@ -1,10 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react"
 
-type ProfileStatusProps = {
-  status: string
-  getUserStatus: (status: string) => void
-}
-
 export const ProfileStatus = (props: ProfileStatusProps) => {
   const [editMode, setEditMode] = useState(false)
   const [status, setStatus] = useState(props.status)
@@ -39,4 +34,10 @@ export const ProfileStatus = (props: ProfileStatusProps) => {
       )}
     </div>
   )
+}
+
+// types
+type ProfileStatusProps = {
+  status: string
+  getUserStatus: (status: string) => void
 }

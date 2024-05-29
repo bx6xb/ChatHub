@@ -10,7 +10,7 @@ export const MyPosts = () => {
   const dispatch = useAppDispatch()
 
   const onSubmit = (formData: PostsFormData) => {
-    dispatch(addPost(formData.message))
+    dispatch(addPost({message: formData.message}))
     dispatch(reset("posts")) // clear form
   }
 

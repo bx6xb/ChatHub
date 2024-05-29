@@ -7,7 +7,7 @@ export const Header = () => {
   const { isAuth, login } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
-  const logout = () => dispatch(logout())
+  const logoutOnClick = () => dispatch(logout())
 
   return (
     <header className={s.header}>
@@ -18,7 +18,7 @@ export const Header = () => {
           <>
             {login}
             <br />
-            <button onClick={logout}>Logout</button>
+            <button onClick={logoutOnClick}>Logout</button>
           </>
         ) : (
           <NavLink to={"/login"}>Login</NavLink>

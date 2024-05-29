@@ -1,11 +1,6 @@
 import s from "./Post.module.css"
 import avatar from "../../../../assets/images/userDefaultPhoto.png"
 
-type PostProps = {
-  message: string
-  likesCount: number
-}
-
 export const Post = (props: PostProps) => {
   return (
     <div className={s.item}>
@@ -16,4 +11,10 @@ export const Post = (props: PostProps) => {
       </div>
     </div>
   )
+}
+
+// types
+type PostProps = {
+  message: string
+  likesCount: number
 }

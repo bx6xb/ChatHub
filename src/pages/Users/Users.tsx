@@ -4,9 +4,20 @@ import s from "./Users.module.css"
 import { Preloader } from "../../components/Preloader/Preloader"
 import { useUsers } from "./hooks/useUsers"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
+import { Paginator } from "../../components/Paginator/Paginator"
 
 export const Users = withAuthRedirect(() => {
-  const { pages, users, isFollowingInProgress, follow, unfollow, isFetching } = useUsers()
+  const {
+    currentPage,
+    totalUsersCount,
+    pageSize,
+    users,
+    isFollowingInProgress,
+    followOnClick,
+    unfollowOnClick,
+    onPageChange,
+    isFetching,
+  } = useUsers()
 
   if (isFetching) {
     return <Preloader />
@@ -14,7 +25,12 @@ export const Users = withAuthRedirect(() => {
 
   return (
     <div>
-      <div>{pages}</div>
+      <Paginator
+        currentPage={currentPage}
+        totalItemsCount={totalUsersCount}
+        pageSize={pageSize}
+        onPageChange={onPageChange}
+      />
       {users.map((u) => {
         const isDisabled = isFollowingInProgress.some((id) => id === u.id)
 
@@ -28,11 +44,11 @@ export const Users = withAuthRedirect(() => {
 
             <div>
               {u.followed ? (
-                <button onClick={() => unfollow(u.id)} disabled={isDisabled}>
+                <button onClick={() => unfollowOnClick(u.id)} disabled={isDisabled}>
                   unfollow
                 </button>
               ) : (
-                <button onClick={() => follow(u.id)} disabled={isDisabled}>
+                <button onClick={() => followOnClick(u.id)} disabled={isDisabled}>
                   follow
                 </button>
               )}

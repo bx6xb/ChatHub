@@ -7,16 +7,16 @@ import { Profile } from "./pages/Profile/Profile"
 import { Users } from "./pages/Users/Users"
 import { Header } from "./layout/Header/Header"
 import { Dialogs } from "./pages/Dialogs/Dialogs"
-import { initializeAppTC } from "./redux/appReducer/appReducer"
 import { useAppDispatch, useAppSelector } from "./redux/store"
 import { Preloader } from "./components/Preloader/Preloader"
+import { setUserData } from "./redux/authReducer/authReducer"
 
 function App() {
   const isAppInitialized = useAppSelector((state) => state.app.isAppInitialized)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(initializeAppTC())
+    dispatch(setUserData())
   }, [])
 
   if (!isAppInitialized) {

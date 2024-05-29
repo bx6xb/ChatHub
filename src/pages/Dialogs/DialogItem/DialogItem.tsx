@@ -1,11 +1,6 @@
 import { NavLink } from "react-router-dom"
 import s from "./DialogItem.module.css"
 
-type DialogItemProps = {
-  id: number
-  name: string
-}
-
 export const DialogItem = (props: DialogItemProps) => {
   return (
     <div>
@@ -17,4 +12,10 @@ export const DialogItem = (props: DialogItemProps) => {
       </NavLink>
     </div>
   )
+}
+
+// types
+type DialogItemProps = {
+  id: number
+  name: string
 }
