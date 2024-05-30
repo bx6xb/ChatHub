@@ -4,10 +4,12 @@ import { Profile, profileAPI } from "../../api/api"
 // thunks
 export const getUserProfile = createAsyncThunk("profile/getUserProfile", async (userId: number) => {
   const response = await profileAPI.getUserProfile(userId)
+
   return response.data
 })
 export const getUserStatus = createAsyncThunk("profile/getUserStatus", async (userId: number) => {
   const response = await profileAPI.getUserStatus(userId)
+
   return response.data
 })
 export const setUserStatus = createAsyncThunk("profile/setUserStatus", async (status: string) => {
@@ -48,6 +50,12 @@ const slice = createSlice({
         return {
           ...state,
           userProfile: action.payload,
+        }
+      })
+      .addCase(getUserStatus.fulfilled, (state, action) => {
+        return {
+          ...state,
+          profileStatus: action.payload,
         }
       })
       .addCase(setUserStatus.fulfilled, (state, action) => {

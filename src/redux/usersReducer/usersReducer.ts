@@ -89,10 +89,6 @@ export const usersReducer = slice.reducer
 export const { changeIsFollowingInProgress, changeIsFetching, changePageSize } = slice.actions
 
 // types
-type Photos = {
-  small: null | string
-  large: null | string
-}
 export type UsersPageState = {
   users: User[]
   pageSize: number
