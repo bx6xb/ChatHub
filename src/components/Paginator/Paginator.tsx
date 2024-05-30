@@ -1,15 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import s from "./Paginator.module.css"
 
 export const Paginator = (props: PaginatorProps) => {
-  const firstPaginatorPageInitialValue = Math.floor(props.currentPage / 10) * 10 + 1
   const [firstPaginatorPage, setFirstPaginatorPage] = useState(
     Math.floor(props.currentPage / 10) * 10 + 1
   )
   const pagesCount = Math.ceil(props.totalItemsCount / props.pageSize)
   const pages = []
 
-  console.log(props.currentPage, firstPaginatorPageInitialValue, firstPaginatorPage)
+  useEffect(() => {
+    setFirstPaginatorPage(Math.floor(props.currentPage / 10) * 10 + 1)
+  }, [props.currentPage])
 
   for (let i = firstPaginatorPage; i < firstPaginatorPage + 10; i++) {
     if (i > pagesCount) {
