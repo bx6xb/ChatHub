@@ -3,7 +3,7 @@ import {
   addPost,
   getUserProfile,
   profileReducer,
-  setUserStatus,
+  setProfileStatus,
 } from "./profileReducer"
 
 let state: ProfileState
@@ -59,7 +59,7 @@ test("profile status should be set", () => {
   const profileStatus = "new status"
   const newState = profileReducer(
     state,
-    setUserStatus.fulfilled(profileStatus, "requestId", profileStatus)
+    setProfileStatus.fulfilled(profileStatus, "requestId", profileStatus)
   )
 
   expect(newState).not.toBe(state)

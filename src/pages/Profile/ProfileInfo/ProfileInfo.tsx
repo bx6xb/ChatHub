@@ -3,14 +3,22 @@ import s from "./ProfileInfo.module.css"
 import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
 import { ProfileStatus } from "./ProfileStatus"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { setUserStatus } from "../../../redux/profileReducer/profileReducer"
+import { setProfilePhoto, setProfileStatus } from "../../../redux/profileReducer/profileReducer"
+import { ChangeEvent } from "react"
 
 export const ProfileInfo = () => {
   const { userProfile, profileStatus } = useAppSelector((state) => state.profile)
+  const authUserId = useAppSelector((state) => state.auth.id)
   const dispatch = useAppDispatch()
 
-  const setProfileStatus = (status: string) => {
-    dispatch(setUserStatus(status))
+  const setUserStatus = (status: string) => {
+    dispatch(setProfileStatus(status))
+  }
+  const onSetProfilePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files) {
+      const photo = e.currentTarget.files[0]
+      dispatch(setProfilePhoto(photo))
+    }
   }
 
   if (!userProfile) {
@@ -28,8 +36,13 @@ export const ProfileInfo = () => {
           src={userProfile.photos.small || userDefaultPhoto}
           alt="user photo"
         />
+        {userProfile.userId === authUserId && (
+          <label>
+            Set photo <input type="file" onChange={onSetProfilePhoto} />
+          </label>
+        )}
         <div>{userProfile.fullName}</div>
-        <ProfileStatus status={profileStatus} getUserStatus={setProfileStatus} />
+        <ProfileStatus status={profileStatus} setUserStatus={setUserStatus} />
       </div>
     </div>
   )

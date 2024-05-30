@@ -6,7 +6,7 @@ const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
   withCredentials: true,
   headers: {
-    "API-KEY": process.env.API_KEY,
+    "API-KEY": process.env.REACT_APP_API_KEY,
   },
 })
 
@@ -44,8 +44,17 @@ export const profileAPI = {
   getUserStatus(userId: number) {
     return instance.get<string>(`profile/status/${userId}`)
   },
-  setUserStatus(status: string) {
+  setProfileStatus(status: string) {
     return instance.put<ResponseType>("profile/status", { status })
+  },
+  setProfilePhoto(photo: File) {
+    const formData = new FormData()
+    formData.append("image", photo)
+    return instance.put<ResponseType<{ photos: Photos }>>("profile/photo", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
   },
 }
 export const followAPI = {
@@ -64,8 +73,8 @@ export type ResponseType<D = {}> = {
   data: D
 }
 export type Photos = {
-  small: string | null
   large: string | null
+  small: string | null
 }
 export type Profile = {
   aboutMe: string | null

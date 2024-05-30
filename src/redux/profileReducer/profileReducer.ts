@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { Profile, profileAPI } from "../../api/api"
+import { Photos, Profile, profileAPI } from "../../api/api"
+import { AppRootState } from "../store"
 
 // thunks
 export const getUserProfile = createAsyncThunk("profile/getUserProfile", async (userId: number) => {
@@ -12,10 +13,32 @@ export const getUserStatus = createAsyncThunk("profile/getUserStatus", async (us
 
   return response.data
 })
-export const setUserStatus = createAsyncThunk("profile/setUserStatus", async (status: string) => {
-  await profileAPI.setUserStatus(status)
-  return status
-})
+export const setProfileStatus = createAsyncThunk<string, string, { state: AppRootState }>( // fix this: if request was rejected thunk returns old status
+  "profile/setProfileStatus",
+  async (status: string, { getState }) => {
+    try {
+      const response = await profileAPI.setProfileStatus(status)
+      if (response.data.resultCode === 0) {
+        return status
+      } else {
+        return getState().profile.profileStatus
+      }
+    } catch {
+      return getState().profile.profileStatus
+    }
+  }
+)
+export const setProfilePhoto = createAsyncThunk<Photos, File>(
+  "profile/setProfilePhoto",
+  async (photo, { rejectWithValue }) => {
+    const response = await profileAPI.setProfilePhoto(photo)
+    if (response.data.resultCode === 0) {
+      return response.data.data.photos
+    } else {
+      return rejectWithValue({})
+    }
+  }
+)
 
 const slice = createSlice({
   name: "profile",
@@ -58,12 +81,23 @@ const slice = createSlice({
           profileStatus: action.payload,
         }
       })
-      .addCase(setUserStatus.fulfilled, (state, action) => {
+      .addCase(setProfileStatus.fulfilled, (state, action) => {
         return {
           ...state,
           profileStatus: action.payload,
         }
       })
+    // .addCase(setProfilePhoto.fulfilled, (state, action) => {
+    //   return {
+    //     ...state,
+    //     userProfile: {
+    //       ...state.userProfile,
+    //       photos: {
+    //         ...action.payload,
+    //       },
+    //     },
+    //   }
+    // })
   },
 })
 

@@ -1,10 +1,10 @@
-import { combineReducers, Action, AnyAction } from "redux"
+import { combineReducers, AnyAction } from "redux"
 import { ProfileReducerAction, profileReducer } from "./profileReducer/profileReducer"
 import { DialogsReducerAction, dialogsReducer } from "./dialogsReducer/dialogsReducer"
 import { SidebarReducerAction, sidebarReducer } from "./sidebarReducer/sidebarReducer"
 import { UsersReducerAction, usersReducer } from "./usersReducer/usersReducer"
 import { authReducer } from "./authReducer/authReducer"
-import { ThunkAction, ThunkDispatch, thunk } from "redux-thunk"
+import { ThunkDispatch, thunk } from "redux-thunk"
 import { TypedUseSelectorHook } from "react-redux"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
@@ -48,9 +48,6 @@ export type RootAction =
   | ProfileReducerAction
   | DialogsReducerAction
   | UsersReducerAction
-export type Thunk<ActionType extends Action = RootAction, Return = void> = ThunkAction<
-  Return,
-  AppRootState,
-  unknown,
-  ActionType
-> // remove this type
+
+// @ts-ignore
+window.store = store

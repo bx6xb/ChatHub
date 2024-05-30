@@ -4,12 +4,14 @@ export const ProfileStatus = (props: ProfileStatusProps) => {
   const [editMode, setEditMode] = useState(false)
   const [status, setStatus] = useState(props.status)
 
-  useEffect(() => setStatus(props.status), [props.status])
+  useEffect(() => {
+    setStatus(props.status)
+  }, [props.status])
 
   const activateEditMode = () => setEditMode(true)
   const diactivateEditMode = () => setEditMode(false)
   const submitInput = (value: string) => {
-    props.getUserStatus(value)
+    props.setUserStatus(value)
   }
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value)
   const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -30,7 +32,7 @@ export const ProfileStatus = (props: ProfileStatusProps) => {
           autoFocus
         />
       ) : (
-        <span onDoubleClick={activateEditMode}>{status || "Add status"}</span>
+        <span onDoubleClick={activateEditMode}>{status || "Add new status"}</span>
       )}
     </div>
   )
@@ -39,5 +41,5 @@ export const ProfileStatus = (props: ProfileStatusProps) => {
 // types
 type ProfileStatusProps = {
   status: string
-  getUserStatus: (status: string) => void
+  setUserStatus: (status: string) => void
 }
