@@ -7,7 +7,7 @@ import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { reset } from "redux-form"
 import { DialogsForm, DialogsFormData } from "./DialogsForm"
 
-export const Dialogs = withAuthRedirect(() => {
+const Dialogs = withAuthRedirect(() => {
   const { dialogs, messages } = useAppSelector((state) => state.dialogs)
   const dispatch = useAppDispatch()
 
@@ -27,3 +27,5 @@ export const Dialogs = withAuthRedirect(() => {
     </div>
   )
 })
+
+export default Dialogs

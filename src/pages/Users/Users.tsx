@@ -6,7 +6,7 @@ import { useUsers } from "./hooks/useUsers"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { Paginator } from "../../components/Paginator/Paginator"
 
-export const Users = withAuthRedirect(() => {
+const Users = withAuthRedirect(() => {
   const {
     currentPage,
     totalUsersCount,
@@ -62,3 +62,5 @@ export const Users = withAuthRedirect(() => {
     </div>
   )
 })
+
+export default Users

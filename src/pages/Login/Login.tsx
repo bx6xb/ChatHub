@@ -4,7 +4,7 @@ import { FormData } from "../../api/api"
 import { login } from "../../redux/authReducer/authReducer"
 import { LoginForm } from "./LoginForm/LoginForm"
 
-export const Login = () => {
+const Login = () => {
   const { isAuth } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
@@ -23,3 +23,5 @@ export const Login = () => {
     </div>
   )
 }
+
+export default Login
