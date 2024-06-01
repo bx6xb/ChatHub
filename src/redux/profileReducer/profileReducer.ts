@@ -87,17 +87,19 @@ const slice = createSlice({
           profileStatus: action.payload,
         }
       })
-    // .addCase(setProfilePhoto.fulfilled, (state, action) => {
-    //   return {
-    //     ...state,
-    //     userProfile: {
-    //       ...state.userProfile,
-    //       photos: {
-    //         ...action.payload,
-    //       },
-    //     },
-    //   }
-    // })
+      .addCase(setProfilePhoto.fulfilled, (state, action) => {
+        if (state.userProfile) {
+          return {
+            ...state,
+            userProfile: {
+              ...state.userProfile,
+              photos: {
+                ...action.payload,
+              },
+            },
+          }
+        }
+      })
   },
 })
 

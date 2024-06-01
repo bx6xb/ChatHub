@@ -16,9 +16,9 @@ beforeEach(() => {
       { id: 3, message: "Blabla", likesCount: 10 },
       { id: 4, message: "Dada", likesCount: 9 },
     ],
-    userProfile: null,
+    userProfile: {},
     profileStatus: "love zenow",
-  }
+  } as ProfileState
 })
 
 // tests
