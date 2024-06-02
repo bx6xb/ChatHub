@@ -1,4 +1,4 @@
-import { useAppSelector } from "../redux/store"
+import { useAppSelector } from "../store/store"
 import { Navigate } from "react-router-dom"
 
 export function withAuthRedirect<T extends {}>(WrappedComponent: React.ComponentType<T>) {

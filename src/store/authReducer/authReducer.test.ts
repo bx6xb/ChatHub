@@ -1,7 +1,19 @@
-import { authReducer, initialState, logout, setUserData } from "./authReducer"
+import {
+  AuthState,
+  authReducer,
+  getCaptchaUrl,
+  initialState,
+  logout,
+  setUserData,
+} from "./authReducer"
 
 test("user data should be set", () => {
-  const userData = { id: 30880, login: "Yan_Turnt", email: "bx6xbchosen1@gmail.com", isAuth: true }
+  const userData = {
+    id: 30880,
+    login: "Yan_Turnt",
+    email: "bx6xbchosen1@gmail.com",
+    isAuth: true,
+  }
 
   const newState = authReducer(initialState, setUserData.fulfilled(userData, "requestId"))
 
@@ -12,7 +24,13 @@ test("user data should be set", () => {
   expect(newState.isAuth).toBeTruthy()
 })
 test("user data should be deleted", () => {
-  const state = { id: 30880, login: "Yan_Turnt", email: "bx6xbchosen1@gmail.com", isAuth: true }
+  const state = {
+    id: 30880,
+    login: "Yan_Turnt",
+    email: "bx6xbchosen1@gmail.com",
+    isAuth: true,
+    captchaUrl: null,
+  } as AuthState
 
   const newState = authReducer(state, logout.fulfilled({}, "requestiId"))
 
@@ -21,4 +39,10 @@ test("user data should be deleted", () => {
   expect(newState.login).toBe(null)
   expect(newState.email).toBe(null)
   expect(newState.isAuth).toBeFalsy()
+})
+test("captcha url should be set", () => {
+  const url = "url"
+  const newState = authReducer(initialState, getCaptchaUrl.fulfilled(url, "requestId"))
+
+  expect(newState.captchaUrl).toBe(url)
 })

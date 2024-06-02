@@ -2,8 +2,8 @@ import { Preloader } from "../../../components/Preloader/Preloader"
 import s from "./ProfileInfo.module.css"
 import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
 import { ProfileStatus } from "./ProfileStatus"
-import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { setProfilePhoto, setProfileStatus } from "../../../redux/profileReducer/profileReducer"
+import { useAppDispatch, useAppSelector } from "../../../store/store"
+import { setProfilePhoto, setProfileStatus } from "../../../store/profileReducer/profileReducer"
 import { ChangeEvent } from "react"
 
 export const ProfileInfo = () => {
@@ -28,7 +28,10 @@ export const ProfileInfo = () => {
   return (
     <div>
       <div>
-        <img src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350" />
+        <img
+          src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350"
+          alt="profile background"
+        />
       </div>
       <div className={s.descriptionBlock}>
         <img

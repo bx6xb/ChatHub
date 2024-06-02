@@ -1,6 +1,6 @@
 import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../../redux/store"
-import { getUsers, follow, unfollow } from "../../../redux/usersReducer/usersReducer"
+import { useAppDispatch, useAppSelector } from "../../../store/store"
+import { getUsers, follow, unfollow } from "../../../store/usersReducer/usersReducer"
 
 export const useUsers = () => {
   const dispatch = useAppDispatch()

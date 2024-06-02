@@ -5,7 +5,7 @@ test("isAppInitialized value should be changed", () => {
   const newState = appReducer(
     { isAppInitialized: false },
     setUserData.fulfilled(
-      { email: "example@gmail.com", id: 1, isAuth: true, login: "login" },
+      { email: "example@gmail.com", id: 1, login: "login", isAuth: true },
       "requestId"
     )
   )

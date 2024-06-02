@@ -8,7 +8,6 @@ import { ThunkDispatch, thunk } from "redux-thunk"
 import { TypedUseSelectorHook } from "react-redux"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { reducer as formReducer } from "redux-form"
 import { appReducer } from "./appReducer/appReducer"
 import { configureStore } from "@reduxjs/toolkit"
 
@@ -19,19 +18,10 @@ const rootReducer = combineReducers({
   dialogs: dialogsReducer,
   users: usersReducer,
   auth: authReducer,
-  form: formReducer,
 })
 
 export const store = configureStore({
-  reducer: {
-    app: appReducer,
-    sidebar: sidebarReducer,
-    profile: profileReducer,
-    dialogs: dialogsReducer,
-    users: usersReducer,
-    auth: authReducer,
-    form: formReducer,
-  },
+  reducer: rootReducer,
   // @ts-ignore
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk),
 })

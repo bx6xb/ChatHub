@@ -1,27 +1,33 @@
-import { Field, InjectedFormProps, reduxForm } from "redux-form"
-import { maxLengthCreator, required } from "../../../utils/validators/validators"
-import { FormControl } from "../../../components/FormControls/FormControls"
+import { useAppDispatch } from "../../../store/store"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { addPost } from "../../../store/profileReducer/profileReducer"
 
-const maxLengthValidator = maxLengthCreator(10)
+export const PostsForm = () => {
+  const dispatch = useAppDispatch()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<PostsFormData>()
 
-const Form: React.FC<InjectedFormProps<PostsFormData>> = (props) => {
+  const onSubmit: SubmitHandler<PostsFormData> = (data) => {
+    dispatch(addPost({ message: data.message }))
+    reset()
+  }
+
   return (
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <Field
-          name="message"
-          component={FormControl}
-          tag="textarea"
-          validate={[required, maxLengthValidator]}
-        />
-      </div>
-      <div>
-        <button>Add post</button>
-      </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("message", { required: true, maxLength: 10 })} placeholder="Message" />
+      {errors.message?.type === "maxLength" && (
+        <span>The message must be less than 10 characters</span>
+      )}
+      {errors.message?.type === "required" && <span>This field is required</span>}
+
+      <button type="submit">Submit</button>
     </form>
   )
 }
-export const PostsForm = reduxForm<PostsFormData>({ form: "posts" })(Form)
 
 // types
 export type PostsFormData = {

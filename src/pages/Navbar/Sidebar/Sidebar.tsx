@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../redux/store"
+import { useAppSelector } from "../../../store/store"
 import s from "./Sidebar.module.css"
 
 export const Sidebar = () => {

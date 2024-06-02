@@ -1,5 +1,4 @@
 import axios from "axios"
-import { UserDataAuthState } from "../redux/authReducer/authReducer"
 
 // axios instance
 const instance = axios.create({
@@ -13,7 +12,7 @@ const instance = axios.create({
 // api
 export const authAPI = {
   me() {
-    return instance.get<ResponseType<UserDataAuthState>>("auth/me")
+    return instance.get<ResponseType<UserDataDomain>>("auth/me")
   },
   login(formData: FormData) {
     return instance.post<ResponseType<{ userId: number }>>("auth/login", formData)
@@ -38,7 +37,7 @@ export const usersAPI = {
   },
 }
 export const profileAPI = {
-  getUserProfile(userId: string | number) {
+  getUserProfile(userId: number) {
     return instance.get<Profile>(`profile/${userId}`)
   },
   getUserStatus(userId: number) {
@@ -65,11 +64,17 @@ export const followAPI = {
     return instance.delete<ResponseType>(`follow/${userId}`)
   },
 }
+export const securityAPI = {
+  getCaptcha() {
+    return instance.get<{ url: string }>("security/get-captcha-url")
+  },
+}
 
 // types
 export type ResponseType<D = {}> = {
   resultCode: number
   messages: string[]
+  fieldsErrors: { field: FormFields; error: string }[]
   data: D
 }
 export type Photos = {
@@ -94,16 +99,18 @@ export type Profile = {
   userId: number
   photos: Photos
 }
-export type UserDataAuthDomain = {
-  id: number | null
-  email: string | null
-  login: string | null
-}
-export type FormData = {
+export type UserDataDomain = {
+  id: number
+  email: string
   login: string
+}
+export interface FormData {
+  email: string
   password: string
   rememberMe: boolean
+  captcha: string | null
 }
+export type FormFields = keyof FormData
 export type User = {
   name: string
   id: number

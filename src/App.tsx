@@ -4,9 +4,9 @@ import { Navbar } from "./pages/Navbar/Navbar"
 import { Suspense, lazy, useEffect } from "react"
 import { Profile } from "./pages/Profile/Profile"
 import { Header } from "./layout/Header/Header"
-import { useAppDispatch, useAppSelector } from "./redux/store"
+import { useAppDispatch, useAppSelector } from "./store/store"
 import { Preloader } from "./components/Preloader/Preloader"
-import { setUserData } from "./redux/authReducer/authReducer"
+import { setUserData } from "./store/authReducer/authReducer"
 
 const Dialogs = lazy(() => import("./pages/Dialogs/Dialogs"))
 const Users = lazy(() => import("./pages/Users/Users"))

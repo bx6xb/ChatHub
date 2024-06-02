@@ -1,41 +1,54 @@
-import { Field, InjectedFormProps, reduxForm } from "redux-form"
 import { FormData } from "../../../api/api"
-import { FormControl } from "../../../components/FormControls/FormControls"
-import { required } from "../../../utils/validators/validators"
 import s from "./LoginForm.module.css"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { login } from "../../../store/authReducer/authReducer"
+import { useAppDispatch, useAppSelector } from "../../../store/store"
 
-const Form: React.FC<InjectedFormProps<FormData>> = (props) => {
+export const LoginForm = () => {
+  const captchaUrl = useAppSelector((state) => state.auth.captchaUrl)
+  const dispatch = useAppDispatch()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<FormData>()
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const action = await dispatch(login(data))
+    if (login.rejected.match(action) && action.payload) {
+      console.log(action.payload)
+      setError(action.payload.field, { message: action.payload.error })
+    }
+  }
+
   return (
-    <form onSubmit={props.handleSubmit}>
-      {props.error && <div className={s.error}>{props.error}</div>}
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <Field
-          placeholder="email"
-          name="email"
-          component={FormControl}
-          tag="input"
-          validate={[required]}
-        />
+        <input {...register("email", { required: "Email is required" })} placeholder="Email" />
+        {<div className={s.error}>{errors.email?.message}</div>}
       </div>
       <div>
-        <Field
+        <input
           type="password"
-          placeholder="password"
-          name="password"
-          component={FormControl}
-          tag="input"
-          validate={[required]}
+          {...register("password", { required: "Password is required" })}
+          placeholder="Password"
         />
+        {<div className={s.error}>{errors.password?.message}</div>}
       </div>
       <div>
-        <Field type="checkbox" name="rememberMe" component={"input"} /> remember me
+        <label>
+          <input type="checkbox" {...register("rememberMe")} /> Remember me
+        </label>
       </div>
-      <div>
-        <button>Login</button>
-      </div>
+      {captchaUrl && (
+        <div>
+          <img src={captchaUrl} alt="captcha" />
+          <input {...register("captcha")} />
+        </div>
+      )}
+      {<div className={s.error}>{errors.captcha?.message}</div>}
+      <button type="submit">Login</button>
     </form>
   )
 }
-export const LoginForm = reduxForm<FormData>({
-  form: "login",
-})(Form)

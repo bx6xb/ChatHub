@@ -1,8 +1,8 @@
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo"
-import { useAppDispatch, useAppSelector } from "../../redux/store"
+import { useAppDispatch, useAppSelector } from "../../store/store"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
-import { getUserStatus, getUserProfile } from "../../redux/profileReducer/profileReducer"
+import { getUserStatus, getUserProfile } from "../../store/profileReducer/profileReducer"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { MyPosts } from "./MyPosts/MyPosts"
 
