@@ -22,7 +22,6 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
-  // @ts-ignore
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk),
 })
 
@@ -38,6 +37,3 @@ export type RootAction =
   | ProfileReducerAction
   | DialogsReducerAction
   | UsersReducerAction
-
-// @ts-ignore
-window.store = store

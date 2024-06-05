@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { Photos, Profile, profileAPI } from "../../api/api"
+import { Photos, ProfileData, ProfileDomain, profileAPI } from "../../api/api"
 import { AppRootState } from "../store"
 
 // thunks
@@ -8,11 +8,14 @@ export const getUserProfile = createAsyncThunk("profile/getUserProfile", async (
 
   return response.data
 })
-export const getUserStatus = createAsyncThunk("profile/getUserStatus", async (userId: number) => {
-  const response = await profileAPI.getUserStatus(userId)
+export const getProfileStatus = createAsyncThunk(
+  "profile/getProfileStatus",
+  async (userId: number) => {
+    const response = await profileAPI.getProfileStatus(userId)
 
-  return response.data
-})
+    return response.data
+  }
+)
 export const setProfileStatus = createAsyncThunk<string, string, { state: AppRootState }>( // fix this: if request was rejected thunk returns old status
   "profile/setProfileStatus",
   async (status: string, { getState }) => {
@@ -36,6 +39,16 @@ export const setProfilePhoto = createAsyncThunk<Photos, File>(
       return response.data.data.photos
     } else {
       return rejectWithValue({})
+    }
+  }
+)
+export const setProfileData = createAsyncThunk<void, ProfileData, { state: AppRootState }>(
+  "profile/setProfileData",
+  async (profileData: ProfileData, { dispatch, getState }) => {
+    const response = await profileAPI.setProfileData(profileData)
+    if (response.data.resultCode === 0) {
+      const userId = getState().auth.id!
+      dispatch(getUserProfile(userId))
     }
   }
 )
@@ -75,7 +88,7 @@ const slice = createSlice({
           userProfile: action.payload,
         }
       })
-      .addCase(getUserStatus.fulfilled, (state, action) => {
+      .addCase(getProfileStatus.fulfilled, (state, action) => {
         return {
           ...state,
           profileStatus: action.payload,
@@ -114,7 +127,7 @@ export type Post = {
 }
 export type ProfileState = {
   posts: Post[]
-  userProfile: Profile | null
+  userProfile: ProfileDomain | null
   profileStatus: string
 }
 export type ProfileReducerAction = ReturnType<typeof addPost>

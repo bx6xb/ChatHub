@@ -37,10 +37,13 @@ export const usersAPI = {
   },
 }
 export const profileAPI = {
-  getUserProfile(userId: number) {
-    return instance.get<Profile>(`profile/${userId}`)
+  setProfileData(profileData: ProfileData) {
+    return instance.put<ResponseType>("profile", profileData)
   },
-  getUserStatus(userId: number) {
+  getUserProfile(userId: number) {
+    return instance.get<ProfileDomain>(`profile/${userId}`)
+  },
+  getProfileStatus(userId: number) {
     return instance.get<string>(`profile/status/${userId}`)
   },
   setProfileStatus(status: string) {
@@ -81,22 +84,26 @@ export type Photos = {
   large: string | null
   small: string | null
 }
-export type Profile = {
+export type Contacts = {
+  facebook: string | null
+  website: string | null
+  vk: string | null
+  twitter: string | null
+  instagram: string | null
+  youtube: string | null
+  github: string | null
+  mainLink: string | null
+}
+export type ProfileData = {
   aboutMe: string | null
-  contacts: {
-    facebook: string | null
-    website: string | null
-    vk: string | null
-    twitter: string | null
-    instagram: string | null
-    youtube: string | null
-    github: string | null
-    mainLink: string | null
-  }
+  contacts: Contacts
   lookingForAJob: boolean
   lookingForAJobDescription: string | null
   fullName: string
   userId: number
+}
+export type ProfileDataValues = keyof ProfileData
+export type ProfileDomain = ProfileData & {
   photos: Photos
 }
 export type UserDataDomain = {

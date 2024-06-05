@@ -1,12 +1,15 @@
-import { ProfileInfo } from "./ProfileInfo/ProfileInfo"
 import { useAppDispatch, useAppSelector } from "../../store/store"
 import { useParams } from "react-router-dom"
-import { useEffect } from "react"
-import { getUserStatus, getUserProfile } from "../../store/profileReducer/profileReducer"
+import { useEffect, useState } from "react"
+import { getProfileStatus, getUserProfile } from "../../store/profileReducer/profileReducer"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { MyPosts } from "./MyPosts/MyPosts"
+import { ProfileForm } from "./ProfileForm/ProfileForm"
+import { ProfileData } from "./ProfileData/ProfileData"
 
 export const Profile = withAuthRedirect(() => {
+  const [isProfileEditMode, setProfileEditMode] = useState(false)
+
   const authorizedUserId = useAppSelector((state) => state.auth.id)
   const dispatch = useAppDispatch()
 
@@ -17,13 +20,25 @@ export const Profile = withAuthRedirect(() => {
 
   useEffect(() => {
     dispatch(getUserProfile(userId))
-    dispatch(getUserStatus(userId))
+    dispatch(getProfileStatus(userId))
   }, [])
 
   return (
     <div>
-      <ProfileInfo />
-      <MyPosts />
+      <div>
+        <img
+          src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350"
+          alt="profile background"
+        />
+      </div>
+      {isProfileEditMode ? (
+        <ProfileForm setProfileEditMode={setProfileEditMode} />
+      ) : (
+        <>
+          <ProfileData setProfileEditMode={setProfileEditMode} />
+          <MyPosts />
+        </>
+      )}
     </div>
   )
 })

@@ -17,7 +17,6 @@ export const LoginForm = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const action = await dispatch(login(data))
     if (login.rejected.match(action) && action.payload) {
-      console.log(action.payload)
       setError(action.payload.field, { message: action.payload.error })
     }
   }
