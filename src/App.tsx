@@ -7,13 +7,14 @@ import { Header } from "./layout/Header/Header"
 import { useAppDispatch, useAppSelector } from "./store/store"
 import { Preloader } from "./components/Preloader/Preloader"
 import { setUserData } from "./store/authReducer/authReducer"
+import { Snackbar } from "./components/Snackbar/Snackbar"
 
 const Dialogs = lazy(() => import("./pages/Dialogs/Dialogs"))
 const Users = lazy(() => import("./pages/Users/Users"))
 const Login = lazy(() => import("./pages/Login/Login"))
 
 function App() {
-  const isAppInitialized = useAppSelector((state) => state.app.isAppInitialized)
+  const { isAppInitialized, error } = useAppSelector((state) => state.app)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <div className="app-wrapper">
+      <Snackbar message={error} />
       <Header />
       <Navbar />
       <div className="app-wrapper-content">

@@ -1,0 +1,16 @@
+.snackbar {
+  width: 400px;
+  height: 50px;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+.snackbar.hidden {
+  display: none;
+}

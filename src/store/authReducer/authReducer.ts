@@ -1,5 +1,6 @@
 import { FormData, FormFields, authAPI, securityAPI } from "../../api/api"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { errorHandler, networkErrorHandler } from "../../utils/errorHandler"
 
 // thunks
 export const setUserData = createAsyncThunk("auth/setUserData", async () => {
@@ -15,23 +16,48 @@ export const login = createAsyncThunk<
   FormData,
   { rejectValue: { field: FormFields; error: string } }
 >("auth/login", async (formData: FormData, { dispatch, rejectWithValue }) => {
-  const response = await authAPI.login(formData)
-  if (response.data.resultCode === 0) {
-    dispatch(setUserData())
-  } else if (response.data.resultCode === 10) {
-    dispatch(getCaptchaUrl())
-  } else {
-    return rejectWithValue({ ...response.data.fieldsErrors[0] })
+  try {
+    const response = await authAPI.login(formData)
+    if (response.data.resultCode === 0) {
+      dispatch(setUserData())
+    } else if (response.data.resultCode === 10) {
+      dispatch(getCaptchaUrl())
+    } else {
+      return rejectWithValue({ ...response.data.fieldsErrors[0] })
+    }
+  } catch {
+    networkErrorHandler()
   }
 })
-export const logout = createAsyncThunk("auth/logout", async (payload, { fulfillWithValue }) => {
-  await authAPI.logout()
-  return fulfillWithValue({})
-})
-export const getCaptchaUrl = createAsyncThunk("auth/getCaptchaUrl", async (payload, thunkAPI) => {
-  const response = await securityAPI.getCaptcha()
-  return response.data.url
-})
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (payload, { dispatch, fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await authAPI.logout()
+      if (response.data.resultCode === 0) {
+        return fulfillWithValue({})
+      } else {
+        errorHandler(dispatch, "Failed to logout")
+        return rejectWithValue({})
+      }
+    } catch {
+      networkErrorHandler()
+      return rejectWithValue({})
+    }
+  }
+)
+export const getCaptchaUrl = createAsyncThunk(
+  "auth/getCaptchaUrl",
+  async (payload, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await securityAPI.getCaptcha()
+      return response.data.url
+    } catch {
+      networkErrorHandler()
+      return rejectWithValue({})
+    }
+  }
+)
 
 export const initialState = {
   id: null,

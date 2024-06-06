@@ -1,32 +1,69 @@
 import { User, followAPI, usersAPI } from "../../api/api"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { errorHandler, networkErrorHandler } from "../../utils/errorHandler"
 
 // thunks
-type GetUsersPayload = { pageSize: number; currentPage: number }
-export const getUsers = createAsyncThunk<
-  { users: User[]; totalCount: number; currentPage: number },
-  GetUsersPayload
->("users/getUsers", async ({ pageSize, currentPage }: GetUsersPayload, { dispatch }) => {
-  dispatch(changeIsFetching({ isFetching: true }))
+export const getUsers = createAsyncThunk(
+  "users/getUsers",
+  async (
+    { pageSize, currentPage }: { pageSize: number; currentPage: number },
+    { dispatch, rejectWithValue }
+  ) => {
+    dispatch(changeIsFetching({ isFetching: true }))
 
-  const response = await usersAPI.getUsers(pageSize, currentPage)
-  dispatch(changeIsFetching({ isFetching: false }))
-  return { users: response.data.items, totalCount: response.data.totalCount, currentPage }
-})
-export const follow = createAsyncThunk("users/follow", async (userId: number, { dispatch }) => {
-  dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))
+    try {
+      const response = await usersAPI.getUsers(pageSize, currentPage)
+      return { users: response.data.items, totalCount: response.data.totalCount, currentPage }
+    } catch {
+      errorHandler(dispatch, "Network error: failed to load users")
+      return rejectWithValue({})
+    } finally {
+      dispatch(changeIsFetching({ isFetching: false }))
+    }
+  }
+)
+export const follow = createAsyncThunk(
+  "users/follow",
+  async (userId: number, { dispatch, rejectWithValue }) => {
+    dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))
 
-  await followAPI.follow(userId)
-  dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
-  return userId
-})
-export const unfollow = createAsyncThunk("users/unfollow", async (userId: number, { dispatch }) => {
-  dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))
+    try {
+      const response = await followAPI.follow(userId)
+      if (response.data.resultCode === 0) {
+        return userId
+      } else {
+        errorHandler(dispatch, "Failed to follow user")
+        return rejectWithValue({})
+      }
+    } catch {
+      networkErrorHandler()
+      return rejectWithValue({})
+    } finally {
+      dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
+    }
+  }
+)
+export const unfollow = createAsyncThunk(
+  "users/unfollow",
+  async (userId: number, { dispatch, rejectWithValue }) => {
+    dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))
 
-  await followAPI.unfollow(userId)
-  dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
-  return userId
-})
+    try {
+      const response = await followAPI.unfollow(userId)
+      if (response.data.resultCode === 0) {
+        return userId
+      } else {
+        errorHandler(dispatch, "Failed to unfollow user")
+        return rejectWithValue({})
+      }
+    } catch {
+      networkErrorHandler()
+      return rejectWithValue({})
+    } finally {
+      dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
+    }
+  }
+)
 
 const slice = createSlice({
   name: "users",
