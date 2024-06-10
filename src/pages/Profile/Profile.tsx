@@ -21,16 +21,14 @@ export const Profile = withAuthRedirect(() => {
   useEffect(() => {
     dispatch(getUserProfile(userId))
     dispatch(getProfileStatus(userId))
-  }, [])
+  }, [userId])
 
   return (
-    <div>
-      <div>
-        <img
-          src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350"
-          alt="profile background"
-        />
-      </div>
+    <>
+      <img
+        src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350"
+        alt="profile background"
+      />
       {isProfileEditMode ? (
         <ProfileForm setProfileEditMode={setProfileEditMode} />
       ) : (
@@ -39,6 +37,6 @@ export const Profile = withAuthRedirect(() => {
           <MyPosts />
         </>
       )}
-    </div>
+    </>
   )
 })
