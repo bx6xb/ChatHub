@@ -26,7 +26,7 @@ export const login = createAsyncThunk<
       return rejectWithValue({ ...response.data.fieldsErrors[0] })
     }
   } catch {
-    networkErrorHandler()
+    networkErrorHandler(dispatch)
   }
 })
 export const logout = createAsyncThunk(
@@ -41,7 +41,7 @@ export const logout = createAsyncThunk(
         return rejectWithValue({})
       }
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     }
   }
@@ -53,7 +53,7 @@ export const getCaptchaUrl = createAsyncThunk(
       const response = await securityAPI.getCaptcha()
       return response.data.url
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     }
   }

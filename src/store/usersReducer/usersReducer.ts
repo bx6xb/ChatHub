@@ -36,7 +36,7 @@ export const follow = createAsyncThunk(
         return rejectWithValue({})
       }
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     } finally {
       dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
@@ -57,7 +57,7 @@ export const unfollow = createAsyncThunk(
         return rejectWithValue({})
       }
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     } finally {
       dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))

@@ -11,7 +11,7 @@ export const getUserProfile = createAsyncThunk(
       const response = await profileAPI.getUserProfile(userId)
       return response.data
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     }
   }
@@ -23,7 +23,7 @@ export const getProfileStatus = createAsyncThunk(
       const response = await profileAPI.getProfileStatus(userId)
       return response.data
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     }
   }
@@ -40,7 +40,7 @@ export const setProfileStatus = createAsyncThunk<string, string, { state: AppRoo
         return rejectWithValue({})
       }
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     }
   }
@@ -57,7 +57,7 @@ export const setProfilePhoto = createAsyncThunk<Photos, File>(
         return rejectWithValue({})
       }
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     }
   }
@@ -75,7 +75,7 @@ export const setProfileData = createAsyncThunk<void, ProfileData, { state: AppRo
         return rejectWithValue({})
       }
     } catch {
-      networkErrorHandler()
+      networkErrorHandler(dispatch)
       return rejectWithValue({})
     }
   }

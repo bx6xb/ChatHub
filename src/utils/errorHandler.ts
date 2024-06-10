@@ -5,7 +5,6 @@ import { useAppDispatch } from "../store/store"
 export const errorHandler = (dispatch: Dispatch, message: string) => {
   dispatch(setError(message))
 }
-export const networkErrorHandler = () => {
-  const dispatch = useAppDispatch()
+export const networkErrorHandler = (dispatch: Dispatch) => {
   dispatch(setError("Network error"))
 }
