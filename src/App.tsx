@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import "./App.css"
-import { Navbar } from "./pages/Navbar/Navbar"
+import { Sidebar } from "./pages/Sidebar/Sidebar"
 import { Suspense, lazy, useEffect } from "react"
 import { Profile } from "./pages/Profile/Profile"
 import { Header } from "./layout/Header/Header"
@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from "./store/store"
 import { Preloader } from "./components/Preloader/Preloader"
 import { setUserData } from "./store/authReducer/authReducer"
 import { Snackbar } from "./components/Snackbar/Snackbar"
+import { getSidebarUsers } from "./store/sidebarReducer/sidebarReducer"
+import { Page404 } from "./pages/Page404/Page404"
 
 const Dialogs = lazy(() => import("./pages/Dialogs/Dialogs"))
 const Users = lazy(() => import("./pages/Users/Users"))
@@ -19,6 +21,7 @@ function App() {
 
   useEffect(() => {
     dispatch(setUserData())
+    dispatch(getSidebarUsers())
   }, [])
 
   if (!isAppInitialized) {
@@ -33,7 +36,7 @@ function App() {
     <div className="app-wrapper">
       <Snackbar message={error} />
       <Header />
-      <Navbar />
+      <Sidebar />
       <div className="app-wrapper-content">
         <Suspense fallback={<Preloader />}>
           <Routes>
@@ -42,6 +45,7 @@ function App() {
             <Route path="/dialogs" element={<Dialogs />} />
             <Route path="/users" element={<Users />} />
             <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Page404 />} />
           </Routes>
         </Suspense>
       </div>

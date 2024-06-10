@@ -1,0 +1,34 @@
+.sidebar {
+  grid-area: n;
+  background-color: burlywood;
+  padding: 20px;
+}
+.menuItem a {
+  color: white;
+  text-decoration: none;
+}
+.menuItem a.active {
+  color: gold;
+}
+.users {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  gap: 10px;
+}
+.link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: black;
+}
+.userPhoto {
+  width: 30px;
+  height: 30px;
+  background-color: rgb(81, 255, 0);
+  border-radius: 50%;
+}
+.name {
+  font-size: 10px;
+}
