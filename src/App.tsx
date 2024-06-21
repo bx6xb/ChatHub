@@ -16,7 +16,7 @@ const Users = lazy(() => import("./pages/Users/Users"))
 const Login = lazy(() => import("./pages/Login/Login"))
 
 function App() {
-  const { isAppInitialized, error } = useAppSelector((state) => state.app)
+  const { isAppInitialized } = useAppSelector((state) => state.app)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="app-wrapper">
-      <Snackbar message={error} />
+      <Snackbar />
       <Header />
       <Sidebar />
       <div className="app-wrapper-content">

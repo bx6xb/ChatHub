@@ -29,7 +29,7 @@ export const ProfileData = (props: ProfileDataProps) => {
         <img
           className={s.userPhoto}
           src={userProfile.photos.small || userDefaultPhoto}
-          alt="user photo"
+          alt="user"
         />
         <div>{userProfile.fullName}</div>
         <div>{profileStatus}</div>

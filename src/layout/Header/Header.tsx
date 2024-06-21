@@ -1,7 +1,8 @@
-import { NavLink } from "react-router-dom"
 import s from "./Header.module.css"
 import { useAppDispatch, useAppSelector } from "../../store/store"
 import { logout } from "../../store/authReducer/authReducer"
+import { Icon } from "../../components/Icon/Icon"
+import { Logo } from "../../components/Logo/Logo"
 
 export const Header = () => {
   const { isAuth, login } = useAppSelector((state) => state.auth)
@@ -11,18 +12,16 @@ export const Header = () => {
 
   return (
     <header className={s.header}>
-      <span>logo</span>
+      <Icon id="logo" />
 
       <div className={s.loginBlock}>
-        {isAuth ? (
+        {isAuth && (
           <>
             {login}
             <br />
             <button onClick={logoutOnClick}>Logout</button>
           </>
-        ) : (
-          <NavLink to={"/login"}>Login</NavLink>
-        )}
+        ) }
       </div>
     </header>
   )

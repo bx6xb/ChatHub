@@ -1,6 +1,6 @@
-import { useAppDispatch } from "../../../store/store"
+import { useAppDispatch } from "../../store/store"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { addPost } from "../../../store/profileReducer/profileReducer"
+import { addPost } from "../../store/profileReducer/profileReducer"
 
 export const PostsForm = () => {
   const dispatch = useAppDispatch()

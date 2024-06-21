@@ -23,7 +23,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
     dispatch(setProfileStatus(profileStatus))
     if (photo.length) {
       dispatch(setProfilePhoto(photo[0]))
-    }
+    } 
   }
 
   if (!userProfile) {
@@ -38,7 +38,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
         <img
           className={s.userPhoto}
           src={userProfile.photos.small || userDefaultPhoto}
-          alt="user photo"
+          alt="user"
         />
         <br />
         <label>

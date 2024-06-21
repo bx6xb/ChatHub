@@ -1,7 +1,7 @@
 export const Contact = ({ contact, link }: ContactProps) => {
   return (
     <div>
-      <a href={link!} target="_blank">
+      <a href={link!} target="_blank" rel="noreferrer">
         {contact}
       </a>
     </div>

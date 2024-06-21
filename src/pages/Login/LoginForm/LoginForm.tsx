@@ -11,13 +11,16 @@ export const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
+    reset,
+    clearErrors
   } = useForm<FormData>()
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const action = await dispatch(login(data))
-    if (login.rejected.match(action) && action.payload) {
-      setError(action.payload.field, { message: action.payload.error })
+    console.log(action);
+    if (login.fulfilled.match(action)) {
+      reset()
+      clearErrors()
     }
   }
 

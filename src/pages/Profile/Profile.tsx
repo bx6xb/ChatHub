@@ -3,14 +3,17 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getProfileStatus, getUserProfile } from "../../store/profileReducer/profileReducer"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
-import { MyPosts } from "./MyPosts/MyPosts"
 import { ProfileForm } from "./ProfileForm/ProfileForm"
 import { ProfileData } from "./ProfileData/ProfileData"
+import { Post } from "./Post/Post"
+import { PostsForm } from "./PostsForm"
+import s from './Profile.module.css'
 
 export const Profile = withAuthRedirect(() => {
   const [isProfileEditMode, setProfileEditMode] = useState(false)
 
   const authorizedUserId = useAppSelector((state) => state.auth.id)
+  const { posts } = useAppSelector((state) => state.profile)
   const dispatch = useAppDispatch()
 
   const urlParams = useParams<{
@@ -23,6 +26,10 @@ export const Profile = withAuthRedirect(() => {
     dispatch(getProfileStatus(userId))
   }, [userId])
 
+  let postsElements = posts.map((p) => (
+    <Post key={p.id} message={p.message} likesCount={p.likesCount} />
+  ))
+
   return (
     <>
       <img
@@ -34,7 +41,12 @@ export const Profile = withAuthRedirect(() => {
       ) : (
         <>
           <ProfileData setProfileEditMode={setProfileEditMode} />
-          <MyPosts />
+          {/* Posts */}
+          <div className={s.postsBlock}>
+            <h3>My posts</h3>
+            <PostsForm />
+            <div className={s.posts}>{postsElements}</div>
+          </div>
         </>
       )}
     </>

@@ -21,6 +21,7 @@ const menuItems = [
 
 export const Sidebar = () => {
   const { users } = useAppSelector((state) => state.sidebar)
+  const { isAuth } = useAppSelector((state) => state.auth)
 
   return (
     <aside className={s.sidebar}>
@@ -28,7 +29,7 @@ export const Sidebar = () => {
         <ul className={s.menu}>
           {menuItems.map((i) => {
             return (
-              <li className={s.menuItem}>
+              <li key={i.name} className={s.menuItem}>
                 <NavLink to={i.path} className={({ isActive }) => (isActive ? s.active : "")}>
                   {i.name}
                 </NavLink>
@@ -38,10 +39,10 @@ export const Sidebar = () => {
         </ul>
       </nav>
 
-      <div className={s.users}>
+      {isAuth && <div className={s.users}>
         {users ? (
           users.map((u) => (
-            <NavLink to={"/profile/" + u.id.toString()} className={s.link}>
+            <NavLink key={u.id} to={"/profile/" + u.id.toString()} className={s.link}>
               <img src={u.photos.small || userPhoto} alt="avatar" className={s.userPhoto} />
               <span className={s.name}>{u.name}</span>
             </NavLink>
@@ -49,7 +50,7 @@ export const Sidebar = () => {
         ) : (
           <Preloader />
         )}
-      </div>
+      </div>}
     </aside>
   )
 }

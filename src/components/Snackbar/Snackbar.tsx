@@ -1,32 +1,31 @@
 import { useEffect, useState } from "react"
 import s from "./Snackbar.module.css"
+import { useAppSelector } from "../../store/store"
 
-export const Snackbar = ({ message, autoHideDuration = 4000 }: SnackbarProps) => {
+export const Snackbar = () => {
+  const { error } = useAppSelector(state => state.app)
+
   const [isOpen, setOpen] = useState(false)
   const [intervalId, setIntervalId] = useState<number>()
 
   useEffect(() => {
-    if (message) {
+    if (error) {
       setOpen(true)
       setIntervalId(
         +setTimeout(() => {
           setOpen(false)
-        }, autoHideDuration)
+        }, 4000)
       )
     }
 
     return () => clearInterval(intervalId)
-  }, [message])
+  }, [error])
+
+  const snackbarStyle = s.snackbar + (isOpen ? "" : " " + s.hidden)
 
   return (
-    <div className={s.snackbar + (isOpen ? "" : " " + s.hidden)}>
-      {message} <button onClick={() => setOpen(false)}>x</button>
+    <div className={snackbarStyle}>
+      {error} <button onClick={() => setOpen(false)}>x</button>
     </div>
   )
-}
-
-// types
-type SnackbarProps = {
-  message: string | null
-  autoHideDuration?: number
 }

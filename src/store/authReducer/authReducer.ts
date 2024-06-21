@@ -1,4 +1,4 @@
-import { FormData, FormFields, authAPI, securityAPI } from "../../api/api"
+import { FormData, authAPI, securityAPI } from "../../api/api"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { errorHandler, networkErrorHandler } from "../../utils/errorHandler"
 
@@ -14,7 +14,7 @@ export const setUserData = createAsyncThunk("auth/setUserData", async () => {
 export const login = createAsyncThunk<
   void,
   FormData,
-  { rejectValue: { field: FormFields; error: string } }
+  { rejectValue: string }
 >("auth/login", async (formData: FormData, { dispatch, rejectWithValue }) => {
   try {
     const response = await authAPI.login(formData)
@@ -22,8 +22,11 @@ export const login = createAsyncThunk<
       dispatch(setUserData())
     } else if (response.data.resultCode === 10) {
       dispatch(getCaptchaUrl())
+      errorHandler(dispatch, response.data.messages[0])
+      return rejectWithValue(response.data.messages[0])
     } else {
-      return rejectWithValue({ ...response.data.fieldsErrors[0] })
+      errorHandler(dispatch, response.data.messages[0])
+      return rejectWithValue(response.data.messages[0])
     }
   } catch {
     networkErrorHandler(dispatch)
