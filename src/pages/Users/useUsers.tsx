@@ -1,11 +1,12 @@
 import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../store/store"
 import { getUsers, follow, unfollow } from "../../store/usersReducer/usersReducer"
+import { useAppDispatch, useAppSelector } from "../../utils/redexUtils"
+import { usersSelectors } from "../../store/usersReducer"
 
 export const useUsers = () => {
   const dispatch = useAppDispatch()
   const { pageSize, totalUsersCount, currentPage, isFollowingInProgress, isFetching, users } =
-    useAppSelector((state) => state.users)
+    useAppSelector(usersSelectors.selectUsersState)
 
   useEffect(() => {
     dispatch(getUsers({ pageSize, currentPage }))

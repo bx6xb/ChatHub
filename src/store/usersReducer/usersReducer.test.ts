@@ -1,5 +1,5 @@
+import { UsersPageState } from "./types"
 import {
-  UsersPageState,
   changeIsFetching,
   changeIsFollowingInProgress,
   follow,

@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { setUserData } from "../authReducer/authReducer"
+import { AppState } from "./types"
 
 const slice = createSlice({
   name: "app",
@@ -25,9 +26,3 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer
 export const { setError } = slice.actions
-
-// types
-type AppState = {
-  isAppInitialized: boolean
-  error: string | null
-}

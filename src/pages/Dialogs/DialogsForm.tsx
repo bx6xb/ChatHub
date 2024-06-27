@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useAppDispatch } from "../../store/store"
 import { addMessage } from "../../store/dialogsReducer/dialogsReducer"
+import { useAppDispatch } from "../../utils/redexUtils"
 
 export const DialogsForm = () => {
   const dispatch = useAppDispatch()

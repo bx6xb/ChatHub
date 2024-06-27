@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import s from "./Snackbar.module.css"
-import { useAppSelector } from "../../store/store"
+import { useAppSelector } from "../../utils/redexUtils"
+import { appSelectors } from "../../store/appReducer"
 
 export const Snackbar = () => {
-  const { error } = useAppSelector(state => state.app)
+  const error = useAppSelector(appSelectors.selectError)
 
   const [isOpen, setOpen] = useState(false)
   const [intervalId, setIntervalId] = useState<number>()

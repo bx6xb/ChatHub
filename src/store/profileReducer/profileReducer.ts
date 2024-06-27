@@ -1,7 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { Photos, ProfileData, ProfileDomain, profileAPI } from "../../api/api"
+import { Photos, ProfileData, profileAPI } from "../../api/api"
 import { AppRootState } from "../store"
 import { errorHandler, networkErrorHandler } from "../../utils/errorHandler"
+import { ProfileState } from "./types"
 
 // thunks
 export const getUserProfile = createAsyncThunk(
@@ -12,7 +13,7 @@ export const getUserProfile = createAsyncThunk(
       return response.data
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     }
   }
 )
@@ -24,7 +25,7 @@ export const getProfileStatus = createAsyncThunk(
       return response.data
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     }
   }
 )
@@ -37,11 +38,11 @@ export const setProfileStatus = createAsyncThunk<string, string, { state: AppRoo
         return status
       } else {
         errorHandler(dispatch, "Error while set profile status")
-        return rejectWithValue({})
+        return rejectWithValue(null)
       }
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     }
   }
 )
@@ -54,11 +55,11 @@ export const setProfilePhoto = createAsyncThunk<Photos, File>(
         return response.data.data.photos
       } else {
         errorHandler(dispatch, "Error while set profile photo")
-        return rejectWithValue({})
+        return rejectWithValue(null)
       }
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     }
   }
 )
@@ -72,11 +73,11 @@ export const setProfileData = createAsyncThunk<void, ProfileData, { state: AppRo
         dispatch(getUserProfile(userId))
       } else {
         errorHandler(dispatch, "Error while set profile data")
-        return rejectWithValue({})
+        return rejectWithValue(null)
       }
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     }
   }
 )
@@ -146,16 +147,3 @@ const slice = createSlice({
 
 export const profileReducer = slice.reducer
 export const { addPost } = slice.actions
-
-// types
-export type Post = {
-  id: number
-  message: string
-  likesCount: number
-}
-export type ProfileState = {
-  posts: Post[]
-  userProfile: ProfileDomain | null
-  profileStatus: string
-}
-export type ProfileReducerAction = ReturnType<typeof addPost>

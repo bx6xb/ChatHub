@@ -1,8 +1,10 @@
 import s from "./Sidebar.module.css"
 import { NavLink } from "react-router-dom"
-import { useAppSelector } from "../../store/store"
 import userPhoto from "../../assets/images/userDefaultPhoto.png"
 import { Preloader } from "../../components/Preloader/Preloader"
+import { useAppSelector } from "../../utils/redexUtils"
+import { authSelectors } from "../../store/authReducer"
+import { sidebarSelectors } from "../../store/sidebarReducer"
 
 const menuItems = [
   {
@@ -20,8 +22,8 @@ const menuItems = [
 ]
 
 export const Sidebar = () => {
-  const { users } = useAppSelector((state) => state.sidebar)
-  const { isAuth } = useAppSelector((state) => state.auth)
+  const users = useAppSelector(sidebarSelectors.selectUsers)
+  const isAuth = useAppSelector(authSelectors.selectIsAuth)
 
   return (
     <aside className={s.sidebar}>
@@ -39,18 +41,20 @@ export const Sidebar = () => {
         </ul>
       </nav>
 
-      {isAuth && <div className={s.users}>
-        {users ? (
-          users.map((u) => (
-            <NavLink key={u.id} to={"/profile/" + u.id.toString()} className={s.link}>
-              <img src={u.photos.small || userPhoto} alt="avatar" className={s.userPhoto} />
-              <span className={s.name}>{u.name}</span>
-            </NavLink>
-          ))
-        ) : (
-          <Preloader />
-        )}
-      </div>}
+      {isAuth && (
+        <div className={s.users}>
+          {users ? (
+            users.map((u) => (
+              <NavLink key={u.id} to={"/profile/" + u.id.toString()} className={s.link}>
+                <img src={u.photos.small || userPhoto} alt="avatar" className={s.userPhoto} />
+                <span className={s.name}>{u.name}</span>
+              </NavLink>
+            ))
+          ) : (
+            <Preloader />
+          )}
+        </div>
+      )}
     </aside>
   )
 }

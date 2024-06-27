@@ -1,4 +1,5 @@
-import { DialogsState, addMessage, dialogsReducer } from "./dialogsReducer"
+import { addMessage, dialogsReducer } from "./dialogsReducer"
+import { DialogsState } from "./types"
 
 let state: DialogsState
 

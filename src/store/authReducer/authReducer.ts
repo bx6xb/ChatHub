@@ -1,6 +1,7 @@
 import { FormData, authAPI, securityAPI } from "../../api/api"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { errorHandler, networkErrorHandler } from "../../utils/errorHandler"
+import { AuthState } from "./types"
 
 // thunks
 export const setUserData = createAsyncThunk("auth/setUserData", async () => {
@@ -11,27 +12,26 @@ export const setUserData = createAsyncThunk("auth/setUserData", async () => {
     return { isAuth: false }
   }
 })
-export const login = createAsyncThunk<
-  void,
-  FormData,
-  { rejectValue: string }
->("auth/login", async (formData: FormData, { dispatch, rejectWithValue }) => {
-  try {
-    const response = await authAPI.login(formData)
-    if (response.data.resultCode === 0) {
-      dispatch(setUserData())
-    } else if (response.data.resultCode === 10) {
-      dispatch(getCaptchaUrl())
-      errorHandler(dispatch, response.data.messages[0])
-      return rejectWithValue(response.data.messages[0])
-    } else {
-      errorHandler(dispatch, response.data.messages[0])
-      return rejectWithValue(response.data.messages[0])
+export const login = createAsyncThunk<void, FormData, { rejectValue: string }>(
+  "auth/login",
+  async (formData: FormData, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await authAPI.login(formData)
+      if (response.data.resultCode === 0) {
+        dispatch(setUserData())
+      } else if (response.data.resultCode === 10) {
+        dispatch(getCaptchaUrl())
+        errorHandler(dispatch, response.data.messages[0])
+        return rejectWithValue(response.data.messages[0])
+      } else {
+        errorHandler(dispatch, response.data.messages[0])
+        return rejectWithValue(response.data.messages[0])
+      }
+    } catch {
+      networkErrorHandler(dispatch)
     }
-  } catch {
-    networkErrorHandler(dispatch)
   }
-})
+)
 export const logout = createAsyncThunk(
   "auth/logout",
   async (payload, { dispatch, fulfillWithValue, rejectWithValue }) => {
@@ -41,11 +41,11 @@ export const logout = createAsyncThunk(
         return fulfillWithValue({})
       } else {
         errorHandler(dispatch, "Failed to logout")
-        return rejectWithValue({})
+        return rejectWithValue(null)
       }
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     }
   }
 )
@@ -57,7 +57,7 @@ export const getCaptchaUrl = createAsyncThunk(
       return response.data.url
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     }
   }
 )
@@ -97,12 +97,3 @@ const slice = createSlice({
 })
 
 export const authReducer = slice.reducer
-
-// types
-export type AuthState = {
-  id: number | null
-  email: string | null
-  login: string | null
-  isAuth: boolean
-  captchaUrl: string | null
-}

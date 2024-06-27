@@ -5,16 +5,17 @@ import {
   setProfilePhoto,
   setProfileStatus,
 } from "../../../store/profileReducer/profileReducer"
-import { useAppDispatch, useAppSelector } from "../../../store/store"
 import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
 import s from "../ProfileData/ProfileData.module.css"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { ProfileData, ProfileDataValues } from "../../../api/api"
+import { useAppDispatch, useAppSelector } from "../../../utils/redexUtils"
+import { profileSelectors } from "../../../store/profileReducer"
 
 export const ProfileForm = (props: ProfileFormProps) => {
   const { register, handleSubmit } = useForm<Inputs>()
 
-  const { userProfile, profileStatus } = useAppSelector((state) => state.profile)
+  const { userProfile, profileStatus } = useAppSelector(profileSelectors.selectProfileState)
   const dispatch = useAppDispatch()
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -23,7 +24,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
     dispatch(setProfileStatus(profileStatus))
     if (photo.length) {
       dispatch(setProfilePhoto(photo[0]))
-    } 
+    }
   }
 
   if (!userProfile) {

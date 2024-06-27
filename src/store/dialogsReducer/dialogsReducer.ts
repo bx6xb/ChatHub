@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { DialogsState } from "./types"
 
 const slice = createSlice({
   name: "dialogs",
@@ -41,18 +42,3 @@ export const dialogsReducer = slice.reducer
 
 // actions
 export const { addMessage } = slice.actions
-
-// types
-export type Message = {
-  id: number
-  message: string
-}
-export type Dialog = {
-  id: number
-  name: string
-}
-export type DialogsState = {
-  dialogs: Dialog[]
-  messages: Message[]
-}
-export type DialogsReducerAction = ReturnType<typeof addMessage>

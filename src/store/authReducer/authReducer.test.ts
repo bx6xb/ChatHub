@@ -1,11 +1,5 @@
-import {
-  AuthState,
-  authReducer,
-  getCaptchaUrl,
-  initialState,
-  logout,
-  setUserData,
-} from "./authReducer"
+import { authReducer, getCaptchaUrl, initialState, logout, setUserData } from "./authReducer"
+import { AuthState } from "./types"
 
 test("user data should be set", () => {
   const userData = {

@@ -4,19 +4,20 @@ import { Sidebar } from "./pages/Sidebar/Sidebar"
 import { Suspense, lazy, useEffect } from "react"
 import { Profile } from "./pages/Profile/Profile"
 import { Header } from "./layout/Header/Header"
-import { useAppDispatch, useAppSelector } from "./store/store"
 import { Preloader } from "./components/Preloader/Preloader"
 import { setUserData } from "./store/authReducer/authReducer"
 import { Snackbar } from "./components/Snackbar/Snackbar"
-import { getSidebarUsers } from "./store/sidebarReducer/sidebarReducer"
 import { Page404 } from "./pages/Page404/Page404"
+import { getSidebarUsers } from "./store/sidebarReducer/asyncActions"
+import { useAppDispatch, useAppSelector } from "./utils/redexUtils"
+import { appSelectors } from "./store/appReducer"
 
 const Dialogs = lazy(() => import("./pages/Dialogs/Dialogs"))
 const Users = lazy(() => import("./pages/Users/Users"))
 const Login = lazy(() => import("./pages/Login/Login"))
 
 function App() {
-  const { isAppInitialized } = useAppSelector((state) => state.app)
+  const isAppInitialized = useAppSelector(appSelectors.selectIsAppInitialized)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

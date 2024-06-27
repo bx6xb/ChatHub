@@ -1,4 +1,3 @@
-import { useAppDispatch, useAppSelector } from "../../store/store"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getProfileStatus, getUserProfile } from "../../store/profileReducer/profileReducer"
@@ -7,13 +6,16 @@ import { ProfileForm } from "./ProfileForm/ProfileForm"
 import { ProfileData } from "./ProfileData/ProfileData"
 import { Post } from "./Post/Post"
 import { PostsForm } from "./PostsForm"
-import s from './Profile.module.css'
+import s from "./Profile.module.css"
+import { useAppDispatch, useAppSelector } from "../../utils/redexUtils"
+import { authSelectors } from "../../store/authReducer"
+import { profileSelectors } from "../../store/profileReducer"
 
 export const Profile = withAuthRedirect(() => {
   const [isProfileEditMode, setProfileEditMode] = useState(false)
 
-  const authorizedUserId = useAppSelector((state) => state.auth.id)
-  const { posts } = useAppSelector((state) => state.profile)
+  const authorizedUserId = useAppSelector(authSelectors.selectId)
+  const posts = useAppSelector(profileSelectors.selectPosts)
   const dispatch = useAppDispatch()
 
   const urlParams = useParams<{

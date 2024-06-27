@@ -1,12 +1,13 @@
 import s from "./Dialogs.module.css"
 import { DialogItem } from "./DialogItem/DialogItem"
 import { Message } from "./Message/Message"
-import { useAppSelector } from "../../store/store"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { DialogsForm } from "./DialogsForm"
+import { useAppSelector } from "../../utils/redexUtils"
+import { dialogsSelectors } from "../../store/dialogsReducer"
 
 const Dialogs = withAuthRedirect(() => {
-  const { dialogs, messages } = useAppSelector((state) => state.dialogs)
+  const { dialogs, messages } = useAppSelector(dialogsSelectors.selectDialogsState)
 
   let dialogsElements = dialogs.map((u) => <DialogItem key={u.id} id={u.id} name={u.name} />)
   let messagesElements = messages.map((m) => <Message key={m.id} message={m.message} />)

@@ -1,13 +1,15 @@
 import { Preloader } from "../../../components/Preloader/Preloader"
 import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
 import s from "./ProfileData.module.css"
-import { useAppSelector } from "../../../store/store"
 import { ReactElement } from "react"
 import { Contact } from "./Contact/Contact"
+import { useAppSelector } from "../../../utils/redexUtils"
+import { authSelectors } from "../../../store/authReducer"
+import { profileSelectors } from "../../../store/profileReducer"
 
 export const ProfileData = (props: ProfileDataProps) => {
-  const { userProfile, profileStatus } = useAppSelector((state) => state.profile)
-  const authUserId = useAppSelector((state) => state.auth.id)
+  const { userProfile, profileStatus } = useAppSelector(profileSelectors.selectProfileState)
+  const authUserId = useAppSelector(authSelectors.selectId)
 
   let mappedContacts: ReactElement[] = []
   let isOwner: boolean = false

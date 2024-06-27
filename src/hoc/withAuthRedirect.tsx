@@ -1,9 +1,10 @@
-import { useAppSelector } from "../store/store"
 import { Navigate } from "react-router-dom"
+import { useAppSelector } from "../utils/redexUtils"
+import { authSelectors } from "../store/authReducer"
 
 export function withAuthRedirect<T extends {}>(WrappedComponent: React.ComponentType<T>) {
   return (props: T) => {
-    const isAuth = useAppSelector((state) => state.auth.isAuth)
+    const isAuth = useAppSelector(authSelectors.selectIsAuth)
 
     return isAuth ? <WrappedComponent {...props} /> : <Navigate to="/login" />
   }

@@ -2,22 +2,23 @@ import { FormData } from "../../../api/api"
 import s from "./LoginForm.module.css"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { login } from "../../../store/authReducer/authReducer"
-import { useAppDispatch, useAppSelector } from "../../../store/store"
+import { useAppDispatch, useAppSelector } from "../../../utils/redexUtils"
+import { authSelectors } from "../../../store/authReducer"
 
 export const LoginForm = () => {
-  const captchaUrl = useAppSelector((state) => state.auth.captchaUrl)
+  const captchaUrl = useAppSelector(authSelectors.selectCaptchaUrl)
   const dispatch = useAppDispatch()
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    clearErrors
+    clearErrors,
   } = useForm<FormData>()
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const action = await dispatch(login(data))
-    console.log(action);
+    console.log(action)
     if (login.fulfilled.match(action)) {
       reset()
       clearErrors()

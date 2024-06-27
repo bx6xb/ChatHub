@@ -1,6 +1,7 @@
 import { User, followAPI, usersAPI } from "../../api/api"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { errorHandler, networkErrorHandler } from "../../utils/errorHandler"
+import { UsersPageState } from "./types";
 
 // thunks
 export const getUsers = createAsyncThunk(
@@ -16,7 +17,7 @@ export const getUsers = createAsyncThunk(
       return { users: response.data.items, totalCount: response.data.totalCount, currentPage }
     } catch {
       errorHandler(dispatch, "Network error: failed to load users")
-      return rejectWithValue({})
+      return rejectWithValue(null)
     } finally {
       dispatch(changeIsFetching({ isFetching: false }))
     }
@@ -33,11 +34,11 @@ export const follow = createAsyncThunk(
         return userId
       } else {
         errorHandler(dispatch, "Failed to follow user")
-        return rejectWithValue({})
+        return rejectWithValue(null)
       }
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     } finally {
       dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
     }
@@ -54,11 +55,11 @@ export const unfollow = createAsyncThunk(
         return userId
       } else {
         errorHandler(dispatch, "Failed to unfollow user")
-        return rejectWithValue({})
+        return rejectWithValue(null)
       }
     } catch {
       networkErrorHandler(dispatch)
-      return rejectWithValue({})
+      return rejectWithValue(null)
     } finally {
       dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
     }
@@ -125,15 +126,4 @@ export const usersReducer = slice.reducer
 // actions
 export const { changeIsFollowingInProgress, changeIsFetching, changePageSize } = slice.actions
 
-// types
-export type UsersPageState = {
-  users: User[]
-  pageSize: number
-  totalUsersCount: number
-  currentPage: number
-  isFetching: boolean
-  isFollowingInProgress: number[]
-}
-export type UsersReducerAction =
-  | ReturnType<typeof changeIsFetching>
-  | ReturnType<typeof changeIsFollowingInProgress>
+

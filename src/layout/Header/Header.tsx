@@ -1,11 +1,11 @@
 import s from "./Header.module.css"
-import { useAppDispatch, useAppSelector } from "../../store/store"
 import { logout } from "../../store/authReducer/authReducer"
 import { Icon } from "../../components/Icon/Icon"
-import { Logo } from "../../components/Logo/Logo"
+import { useAppDispatch, useAppSelector } from "../../utils/redexUtils"
+import { authSelectors } from "../../store/authReducer"
 
 export const Header = () => {
-  const { isAuth, login } = useAppSelector((state) => state.auth)
+  const { isAuth, login } = useAppSelector(authSelectors.selectAuthState)
   const dispatch = useAppDispatch()
 
   const logoutOnClick = () => dispatch(logout())
@@ -21,7 +21,7 @@ export const Header = () => {
             <br />
             <button onClick={logoutOnClick}>Logout</button>
           </>
-        ) }
+        )}
       </div>
     </header>
   )
