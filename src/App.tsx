@@ -44,7 +44,7 @@ function App() {
           <Suspense fallback={<Preloader />}>
             <Routes>
               <Route path="/" element={<Navigate to="/profile" />} />
-              <Route path="/profile/  :id?" element={<Profile />} />
+              <Route path="/profile/:id?" element={<Profile />} />
               <Route path="/dialogs" element={<Dialogs />} />
               <Route path="/users" element={<Users />} />
               <Route path="/login" element={<Login />} />
