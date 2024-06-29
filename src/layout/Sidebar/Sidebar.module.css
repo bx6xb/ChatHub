@@ -1,6 +1,5 @@
 .sidebar {
-  grid-area: n;
-  background-color: burlywood;
+  background-color: #ffaa00;
   padding: 20px;
 }
 .menuItem a {

@@ -1,0 +1,13 @@
+.content {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+}
+.appWrapperContent {
+  background-color: #5500ff;
+}
+.preloader {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}

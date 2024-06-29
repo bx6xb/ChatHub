@@ -1,9 +1,9 @@
 import { FormData } from "../../../api/api"
 import s from "./LoginForm.module.css"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { login } from "../../../store/authReducer/authReducer"
 import { useAppDispatch, useAppSelector } from "../../../utils/redexUtils"
 import { authSelectors } from "../../../store/authReducer"
+import { login } from "../../../store/authReducer/asyncActions"
 
 export const LoginForm = () => {
   const captchaUrl = useAppSelector(authSelectors.selectCaptchaUrl)

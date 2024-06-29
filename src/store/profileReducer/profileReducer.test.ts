@@ -1,4 +1,5 @@
-import { addPost, getUserProfile, profileReducer, setProfileStatus } from "./profileReducer"
+import { getUserProfile, setProfileStatus } from "./asyncActions"
+import { addPost, profileReducer } from "./profileReducer"
 import { ProfileState } from "./types"
 
 let state: ProfileState

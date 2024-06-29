@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { usersAPI } from "../../api/api"
-import { getRandomNumber } from "../../utils/randomData"
+import { getRandomNumber } from "../../utils/randomNumber"
 import { SidebarUsersArray } from "./types"
 import { networkErrorHandler } from "../../utils/errorHandler"
 
-const getSidebarUsers = createAsyncThunk(
+export const getSidebarUsers = createAsyncThunk(
   "sidebar/getSidebarUsers",
   async (payload, { dispatch, rejectWithValue }) => {
     try {
@@ -16,5 +16,3 @@ const getSidebarUsers = createAsyncThunk(
     }
   }
 )
-
-export { getSidebarUsers }

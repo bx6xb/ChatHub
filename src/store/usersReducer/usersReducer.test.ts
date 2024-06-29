@@ -1,10 +1,8 @@
+import { follow, getUsers, unfollow } from "./asyncActions"
 import { UsersPageState } from "./types"
 import {
   changeIsFetching,
   changeIsFollowingInProgress,
-  follow,
-  getUsers,
-  unfollow,
   usersReducer,
   changePageSize,
 } from "./usersReducer"

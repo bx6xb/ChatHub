@@ -1,4 +1,4 @@
-import { setUserData } from "../authReducer/authReducer"
+import { setUserData } from "../authReducer/asyncActions"
 import { appReducer, setError } from "./appReducer"
 
 test("isAppInitialized value should be changed", () => {

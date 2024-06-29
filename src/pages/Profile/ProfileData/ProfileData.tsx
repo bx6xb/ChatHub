@@ -1,5 +1,4 @@
 import { Preloader } from "../../../components/Preloader/Preloader"
-import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
 import s from "./ProfileData.module.css"
 import { ReactElement } from "react"
 import { Contact } from "./Contact/Contact"
@@ -28,11 +27,6 @@ export const ProfileData = (props: ProfileDataProps) => {
   return (
     <>
       <div className={s.descriptionBlock}>
-        <img
-          className={s.userPhoto}
-          src={userProfile.photos.small || userDefaultPhoto}
-          alt="user"
-        />
         <div>{userProfile.fullName}</div>
         <div>{profileStatus}</div>
         {userProfile.aboutMe && (

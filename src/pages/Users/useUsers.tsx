@@ -1,7 +1,7 @@
 import { useEffect } from "react"
-import { getUsers, follow, unfollow } from "../../store/usersReducer/usersReducer"
 import { useAppDispatch, useAppSelector } from "../../utils/redexUtils"
 import { usersSelectors } from "../../store/usersReducer"
+import { follow, getUsers, unfollow } from "../../store/usersReducer/asyncActions"
 
 export const useUsers = () => {
   const dispatch = useAppDispatch()

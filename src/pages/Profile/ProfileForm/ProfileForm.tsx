@@ -1,16 +1,14 @@
 import React from "react"
 import { Preloader } from "../../../components/Preloader/Preloader"
-import {
-  setProfileData,
-  setProfilePhoto,
-  setProfileStatus,
-} from "../../../store/profileReducer/profileReducer"
-import userDefaultPhoto from "../../../assets/images/userDefaultPhoto.png"
-import s from "../ProfileData/ProfileData.module.css"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { ProfileData, ProfileDataValues } from "../../../api/api"
 import { useAppDispatch, useAppSelector } from "../../../utils/redexUtils"
 import { profileSelectors } from "../../../store/profileReducer"
+import {
+  setProfileData,
+  setProfilePhoto,
+  setProfileStatus,
+} from "../../../store/profileReducer/asyncActions"
 
 export const ProfileForm = (props: ProfileFormProps) => {
   const { register, handleSubmit } = useForm<Inputs>()
@@ -36,11 +34,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
       <button onClick={() => props.setProfileEditMode(false)}>Back</button>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <img
-          className={s.userPhoto}
-          src={userProfile.photos.small || userDefaultPhoto}
-          alt="user"
-        />
         <br />
         <label>
           Set photo <input type="file" {...register("photo")} />

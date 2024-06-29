@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { getProfileStatus, getUserProfile } from "../../store/profileReducer/profileReducer"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { ProfileForm } from "./ProfileForm/ProfileForm"
 import { ProfileData } from "./ProfileData/ProfileData"
@@ -10,12 +9,18 @@ import s from "./Profile.module.css"
 import { useAppDispatch, useAppSelector } from "../../utils/redexUtils"
 import { authSelectors } from "../../store/authReducer"
 import { profileSelectors } from "../../store/profileReducer"
+import { getProfileStatus, getUserProfile } from "../../store/profileReducer/asyncActions"
+import { randomProfileBg } from "../../utils/randomProfileBg"
+import userDefaultPhoto from "../../assets/images/userDefaultPhoto.png"
 
 export const Profile = withAuthRedirect(() => {
+  console.log("Profile")
   const [isProfileEditMode, setProfileEditMode] = useState(false)
+  const [profileBg] = useState<string>(randomProfileBg())
 
   const authorizedUserId = useAppSelector(authSelectors.selectId)
   const posts = useAppSelector(profileSelectors.selectPosts)
+  const userPhoto = useAppSelector(profileSelectors.selectPhoto)
   const dispatch = useAppDispatch()
 
   const urlParams = useParams<{
@@ -34,10 +39,8 @@ export const Profile = withAuthRedirect(() => {
 
   return (
     <>
-      <img
-        src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350"
-        alt="profile background"
-      />
+      <img src={profileBg} alt="profile background" className={s.profileBg} />
+      <img className={s.userPhoto} src={userPhoto || userDefaultPhoto} alt="user" />
       {isProfileEditMode ? (
         <ProfileForm setProfileEditMode={setProfileEditMode} />
       ) : (

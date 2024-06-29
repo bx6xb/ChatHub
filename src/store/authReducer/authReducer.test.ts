@@ -1,4 +1,5 @@
-import { authReducer, getCaptchaUrl, initialState, logout, setUserData } from "./authReducer"
+import { getCaptchaUrl, logout, setUserData } from "./asyncActions"
+import { authReducer, initialState } from "./authReducer"
 import { AuthState } from "./types"
 
 test("user data should be set", () => {

@@ -45,7 +45,7 @@ export const Sidebar = () => {
         <div className={s.users}>
           {users ? (
             users.map((u) => (
-              <NavLink key={u.id} to={"/profile/" + u.id.toString()} className={s.link}>
+              <NavLink key={u.id} to={"profile/" + u.id.toString()} className={s.link}>
                 <img src={u.photos.small || userPhoto} alt="avatar" className={s.userPhoto} />
                 <span className={s.name}>{u.name}</span>
               </NavLink>
