@@ -11,6 +11,7 @@
 }
 .userPhoto {
   width: 150px;
+  outline: 3px solid #fff;
   border-radius: 100%;
   transform: translateX(20px) translateY(-75px);
 }
