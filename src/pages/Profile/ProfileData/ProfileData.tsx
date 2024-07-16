@@ -1,4 +1,4 @@
-import { Preloader } from "../../../components/Preloader/Preloader"
+// import { Preloader } from "../../../components/Preloader/Preloader"
 import s from "./ProfileData.module.css"
 import { ReactElement } from "react"
 import { Contact } from "./Contact/Contact"
@@ -21,7 +21,8 @@ export const ProfileData = (props: ProfileDataProps) => {
   }
 
   if (!userProfile) {
-    return <Preloader />
+    // return <Preloader />
+    return <div>Preloader</div>
   }
 
   return (

@@ -1,22 +1,11 @@
-.headerWrapper {
+.header {
+  padding: 0;
   background-color: #ffaa00;
 }
-.header {
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.flexWrapper {
+  height: 100%;
   padding: 0 20px;
 }
-.loginBlock {
-  float: right;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.avatar {
-  border-radius: 100%;
-  width: 25px;
-  height: 25px;
-  flex-shrink: 0;
+.logo {
+  width: 100px;
 }

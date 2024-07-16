@@ -1,37 +1,28 @@
-import s from "./Header.module.css"
-import { Icon } from "../../components/Icon/Icon"
-import { useAppDispatch, useAppSelector } from "../../utils/redexUtils"
+import { useAppSelector } from "../../utils/redexUtils"
 import { authSelectors } from "../../store/authReducer"
-import { Container } from "../../components/Container/Container"
-import { logout } from "../../store/authReducer/asyncActions"
 import userDefaultPhoto from "../../assets/images/userDefaultPhoto.png"
 import { profileSelectors } from "../../store/profileReducer"
+import { Avatar, Button, Flex, Layout, Popover } from "antd"
+import { ProfilePopOver } from "./ProfilePopOver/ProfilePopOver"
+import logo from "../../assets/images/logo.png"
+import s from "./Header.module.css"
 
 export const Header = () => {
-  const { isAuth, login } = useAppSelector(authSelectors.selectAuthState)
-  const photo = useAppSelector(profileSelectors.selectPhoto)
-  const dispatch = useAppDispatch()
-
-  const logoutOnClick = () => {
-    dispatch(logout())
-  }
+  const { isAuth } = useAppSelector(authSelectors.selectAuthState)
+  const userAvatar = useAppSelector(profileSelectors.selectPhoto)
 
   return (
-    <header className={s.headerWrapper}>
-      <Container className={s.header}>
-        <Icon iconId="logo" width="50" height="30" />
-
-        <div className={s.loginBlock}>
-          {isAuth && (
-            <>
-              <img src={photo || userDefaultPhoto} className={s.avatar} alt="avatar" />
-              {login}
-              <br />
-              <button onClick={logoutOnClick}>Logout</button>
-            </>
-          )}
-        </div>
-      </Container>
-    </header>
+    <Layout.Header className={s.header}>
+      <Flex justify="space-between" align="center" className={s.flexWrapper}>
+        <img src={logo} alt="logo" className={s.logo} />
+        {isAuth ? (
+          <Popover content={ProfilePopOver} title="">
+            <Avatar icon={<img src={userAvatar || userDefaultPhoto} alt="avatar" />} />
+          </Popover>
+        ) : (
+          <Button type="primary">Login</Button>
+        )}
+      </Flex>
+    </Layout.Header>
   )
 }

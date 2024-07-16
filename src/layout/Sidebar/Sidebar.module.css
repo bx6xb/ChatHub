@@ -1,33 +1,30 @@
 .sidebar {
-  background-color: #ffaa00;
-  padding: 20px;
+  background-color: #ffaa00 !important;
 }
-.menuItem a {
-  color: white;
-  text-decoration: none;
+.sidebar ul {
+  margin-bottom: 20px;
 }
-.menuItem a.active {
-  color: gold;
+.sidebar h4 {
+  text-align: center;
 }
-.users {
+.friends {
   display: flex;
-  margin-top: 20px;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  padding-left: 30px;
 }
-.link {
+.friend {
   display: flex;
-  align-items: center;
   gap: 5px;
-  text-decoration: none;
+  align-items: center;
+  color: #5500ff;
+}
+.friend:hover {
   color: black;
 }
-.userPhoto {
-  width: 30px;
-  height: 30px;
-  background-color: rgb(81, 255, 0);
-  border-radius: 50%;
-}
 .name {
-  font-size: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 110px;
+  white-space: nowrap;
 }

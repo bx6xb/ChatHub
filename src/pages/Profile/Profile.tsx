@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { ProfileForm } from "./ProfileForm/ProfileForm"
@@ -14,7 +14,7 @@ import { randomProfileBg } from "../../utils/randomProfileBg"
 import userDefaultPhoto from "../../assets/images/userDefaultPhoto.png"
 
 export const Profile = withAuthRedirect(() => {
-  console.log("Profile")
+  const [searchParams, setSearchParams] = useSearchParams()
   const [isProfileEditMode, setProfileEditMode] = useState(false)
   const [profileBg] = useState<string>(randomProfileBg())
 
@@ -32,6 +32,13 @@ export const Profile = withAuthRedirect(() => {
     dispatch(getUserProfile(userId))
     dispatch(getProfileStatus(userId))
   }, [userId])
+
+  useEffect(() => {
+    const param = searchParams.get("edit")
+    if (param !== null) {
+      setSearchParams(param)
+    }
+  }, [searchParams])
 
   let postsElements = posts.map((p) => (
     <Post key={p.id} message={p.message} likesCount={p.likesCount} />

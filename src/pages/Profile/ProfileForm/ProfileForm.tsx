@@ -1,5 +1,4 @@
 import React from "react"
-import { Preloader } from "../../../components/Preloader/Preloader"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { ProfileData, ProfileDataValues } from "../../../api/api"
 import { useAppDispatch, useAppSelector } from "../../../utils/redexUtils"
@@ -26,7 +25,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
   }
 
   if (!userProfile) {
-    return <Preloader />
+    return <div>Preloader</div>
   }
 
   return (

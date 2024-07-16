@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom"
 import userPhoto from "../../assets/images/userDefaultPhoto.png"
 import s from "./Users.module.css"
-import { Preloader } from "../../components/Preloader/Preloader"
+// import { Preloader } from "../../components/Preloader/Preloader"
 import { useUsers } from "./useUsers"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import { Paginator } from "../../components/Paginator/Paginator"
@@ -20,7 +20,8 @@ const Users = withAuthRedirect(() => {
   } = useUsers()
 
   if (isFetching) {
-    return <Preloader />
+    // return <Preloader />
+    return <div>Preloader</div>
   }
 
   return (

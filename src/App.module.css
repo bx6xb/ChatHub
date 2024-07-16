@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 2fr 10fr;
 }
-.appWrapperContent {
-  background-color: #5500ff;
+.app {
+  min-height: 100vh;
 }
 .preloader {
   position: absolute;

@@ -18,7 +18,6 @@ export const LoginForm = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const action = await dispatch(login(data))
-    console.log(action)
     if (login.fulfilled.match(action)) {
       reset()
       clearErrors()

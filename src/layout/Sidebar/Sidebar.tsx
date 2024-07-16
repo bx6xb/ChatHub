@@ -1,23 +1,27 @@
-import s from "./Sidebar.module.css"
-import { NavLink } from "react-router-dom"
-import userPhoto from "../../assets/images/userDefaultPhoto.png"
-import { Preloader } from "../../components/Preloader/Preloader"
 import { useAppSelector } from "../../utils/redexUtils"
 import { authSelectors } from "../../store/authReducer"
 import { sidebarSelectors } from "../../store/sidebarReducer"
+import { Avatar, Layout, Menu, Typography } from "antd"
+import { MessageOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons"
+import { Link } from "react-router-dom"
+import defaultUserPhoto from "../../assets/images/userDefaultPhoto.png"
+import s from "./Sidebar.module.css"
 
 const menuItems = [
   {
-    name: "Profile",
+    label: "Profile",
     path: "/profile",
+    icon: <UserOutlined />,
   },
   {
-    name: "Messages",
+    label: "Messages",
     path: "/dialogs",
+    icon: <MessageOutlined />,
   },
   {
-    name: "Users",
+    label: "Users",
     path: "/users",
+    icon: <TeamOutlined />,
   },
 ]
 
@@ -25,36 +29,41 @@ export const Sidebar = () => {
   const users = useAppSelector(sidebarSelectors.selectUsers)
   const isAuth = useAppSelector(authSelectors.selectIsAuth)
 
+  const mappedMenuItems = menuItems.map((i) => ({
+    key: i.label,
+    icon: i.icon,
+    label: <Link to={i.path}>{i.label}</Link>,
+  }))
+
   return (
-    <aside className={s.sidebar}>
-      <nav>
-        <ul className={s.menu}>
-          {menuItems.map((i) => {
-            return (
-              <li key={i.name} className={s.menuItem}>
-                <NavLink to={i.path} className={({ isActive }) => (isActive ? s.active : "")}>
-                  {i.name}
-                </NavLink>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
+    <Layout.Sider trigger={null} collapsible collapsed={false} className={s.sidebar}>
+      <Menu
+        style={{ backgroundColor: "transparent", color: "green" }}
+        mode="inline"
+        defaultSelectedKeys={["1"]}
+        items={mappedMenuItems}
+      />
 
       {isAuth && (
-        <div className={s.users}>
-          {users ? (
-            users.map((u) => (
-              <NavLink key={u.id} to={"profile/" + u.id.toString()} className={s.link}>
-                <img src={u.photos.small || userPhoto} alt="avatar" className={s.userPhoto} />
-                <span className={s.name}>{u.name}</span>
-              </NavLink>
-            ))
-          ) : (
-            <Preloader />
-          )}
-        </div>
+        <>
+          <Typography.Title level={4}>Friends online</Typography.Title>
+
+          <ul className={s.friends}>
+            {users ? (
+              users.map((u) => (
+                <li key={u.id}>
+                  <Link to={"profile/" + u.id.toString()} className={s.friend}>
+                    <Avatar icon={<img src={u.photos.large || defaultUserPhoto} alt="avatar" />} />
+                    <span className={s.name}>{u.name}</span>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <div>Preloader</div>
+            )}
+          </ul>
+        </>
       )}
-    </aside>
+    </Layout.Sider>
   )
 }
