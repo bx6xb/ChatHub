@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from 'react'
 import { LoadingOutlined } from '@ant-design/icons'
-import { ConfigProvider, Layout, Spin, theme } from 'antd'
+import { ConfigProvider, Layout, Spin } from 'antd'
 import { useAppDispatch, useAppSelector } from './utils/redexUtils'
 import { setUserData } from './store/authReducer/asyncActions'
 import { getSidebarUsers } from './store/sidebarReducer/asyncActions'
@@ -13,15 +13,11 @@ import Dialogs from './pages/Dialogs/Dialogs'
 import Users from './pages/Users/Users'
 import Login from './pages/Login/Login'
 import { Page404 } from './pages/Page404/Page404'
+import { ProfileForm } from './pages/Profile/ProfileForm/ProfileForm'
 
 const App = () => {
   const isAppInitialized = useAppSelector(state => state.app.isAppInitialized)
-
   const dispatch = useAppDispatch()
-
-  const {
-    token: { colorBgContainer, borderRadiusLG }
-  } = theme.useToken()
 
   useEffect(() => {
     dispatch(setUserData())
@@ -54,24 +50,23 @@ const App = () => {
             defaultColor: '#fff'
           }
         }
-      }}
-    >
+      }}>
       <Layout className={s.app}>
         <Sidebar />
         <Layout>
           <Header />
           <Layout.Content
             style={{
-              padding: 24,
-              minHeight: 280,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG
-            }}
-          >
+              padding: '24px',
+              background: '#5500ff',
+              overflow: 'hidden',
+              position: 'relative'
+            }}>
             <Suspense fallback={<div>Preloader</div>}>
               <Routes>
                 <Route path="/" element={<Navigate to="/profile" />} />
                 <Route path="/profile/:id?" element={<Profile />} />
+                <Route path="//edit-profile" element={<ProfileForm />} />
                 <Route path="/dialogs" element={<Dialogs />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/login" element={<Login />} />

@@ -9,7 +9,7 @@ import {
   setProfileStatus
 } from '../../../store/profileReducer/asyncActions'
 
-export const ProfileForm = (props: ProfileFormProps) => {
+export const ProfileForm = () => {
   const { register, handleSubmit } = useForm<Inputs>()
 
   const { userProfile, profileStatus } = useAppSelector(
@@ -32,8 +32,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
 
   return (
     <>
-      <button onClick={() => props.setProfileEditMode(false)}>Back</button>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <br />
         <label>
@@ -98,9 +96,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
 }
 
 // types
-type ProfileFormProps = {
-  setProfileEditMode: (isProfileEditMode: boolean) => void
-}
 type Inputs = ProfileData & {
   profileStatus: string
   photo: File[]

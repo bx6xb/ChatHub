@@ -101,6 +101,7 @@ export type Contacts = {
   github: string | null
   mainLink: string | null
 }
+export type ContactValues = keyof Contacts
 export type ProfileData = {
   aboutMe: string | null
   contacts: Contacts

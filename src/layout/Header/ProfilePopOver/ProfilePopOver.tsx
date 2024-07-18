@@ -29,9 +29,7 @@ export const ProfilePopOver = () => {
         ]}
       />
       <Divider />
-      <Button type="primary" onClick={logoutOnClick}>
-        Logout
-      </Button>
+      <Button onClick={logoutOnClick}>Logout</Button>
     </Flex>
   )
 }
