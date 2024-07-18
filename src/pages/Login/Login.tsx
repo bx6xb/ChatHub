@@ -1,13 +1,13 @@
-import { Navigate } from "react-router-dom"
-import { LoginForm } from "./LoginForm/LoginForm"
-import { useAppSelector } from "../../utils/redexUtils"
-import { authSelectors } from "../../store/authReducer"
+import { Navigate } from 'react-router-dom'
+import { LoginForm } from './LoginForm/LoginForm'
+import { useAppSelector } from '../../utils/redexUtils'
+import { authSelectors } from '../../store/authReducer'
 
 const Login = () => {
   const isAuth = useAppSelector(authSelectors.selectIsAuth)
 
   if (isAuth) {
-    return <Navigate to={"/"} />
+    return <Navigate to={'/'} />
   }
 
   return (

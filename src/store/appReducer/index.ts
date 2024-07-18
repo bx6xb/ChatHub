@@ -1,3 +1,3 @@
-import * as appSelectors from "./selectors"
+import * as appSelectors from './selectors'
 
 export { appSelectors }

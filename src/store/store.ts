@@ -1,12 +1,12 @@
-import { combineReducers, AnyAction } from "redux"
-import { profileReducer } from "./profileReducer/profileReducer"
-import { dialogsReducer } from "./dialogsReducer/dialogsReducer"
-import { sidebarReducer } from "./sidebarReducer/sidebarReducer"
-import { usersReducer } from "./usersReducer/usersReducer"
-import { authReducer } from "./authReducer/authReducer"
-import { thunk } from "redux-thunk"
-import { appReducer } from "./appReducer/appReducer"
-import { configureStore } from "@reduxjs/toolkit"
+import { combineReducers, AnyAction } from 'redux'
+import { profileReducer } from './profileReducer/profileReducer'
+import { dialogsReducer } from './dialogsReducer/dialogsReducer'
+import { sidebarReducer } from './sidebarReducer/sidebarReducer'
+import { usersReducer } from './usersReducer/usersReducer'
+import { authReducer } from './authReducer/authReducer'
+import { thunk } from 'redux-thunk'
+import { appReducer } from './appReducer/appReducer'
+import { configureStore } from '@reduxjs/toolkit'
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -14,12 +14,12 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   dialogs: dialogsReducer,
   users: usersReducer,
-  auth: authReducer,
+  auth: authReducer
 })
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunk)
 })
 
 // types

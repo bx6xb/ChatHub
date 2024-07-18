@@ -1,27 +1,27 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { AppState } from "./types"
-import { setUserData } from "../authReducer/asyncActions"
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { AppState } from './types'
+import { setUserData } from '../authReducer/asyncActions'
 
 const slice = createSlice({
-  name: "app",
+  name: 'app',
   initialState: {
     isAppInitialized: false,
-    error: null,
+    error: null
   } as AppState,
   reducers: {
     setError(state, action: PayloadAction<string>) {
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       }
-    },
+    }
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder.addCase(setUserData.fulfilled, (state, action) => ({
       ...state,
-      isAppInitialized: true,
+      isAppInitialized: true
     }))
-  },
+  }
 })
 
 export const appReducer = slice.reducer

@@ -1,13 +1,15 @@
 // import { Preloader } from "../../../components/Preloader/Preloader"
-import s from "./ProfileData.module.css"
-import { ReactElement } from "react"
-import { Contact } from "./Contact/Contact"
-import { useAppSelector } from "../../../utils/redexUtils"
-import { authSelectors } from "../../../store/authReducer"
-import { profileSelectors } from "../../../store/profileReducer"
+import s from './ProfileData.module.css'
+import { ReactElement } from 'react'
+import { Contact } from './Contact/Contact'
+import { useAppSelector } from '../../../utils/redexUtils'
+import { authSelectors } from '../../../store/authReducer'
+import { profileSelectors } from '../../../store/profileReducer'
 
 export const ProfileData = (props: ProfileDataProps) => {
-  const { userProfile, profileStatus } = useAppSelector(profileSelectors.selectProfileState)
+  const { userProfile, profileStatus } = useAppSelector(
+    profileSelectors.selectProfileState
+  )
   const authUserId = useAppSelector(authSelectors.selectId)
 
   let mappedContacts: ReactElement[] = []
@@ -15,8 +17,10 @@ export const ProfileData = (props: ProfileDataProps) => {
 
   if (userProfile) {
     mappedContacts = Object.entries(userProfile.contacts)
-      .filter((c) => c[1])
-      .map(([contact, link]) => <Contact key={contact} contact={contact} link={link} />)
+      .filter(c => c[1])
+      .map(([contact, link]) => (
+        <Contact key={contact} contact={contact} link={link} />
+      ))
     isOwner = userProfile.userId === authUserId
   }
 
@@ -35,7 +39,7 @@ export const ProfileData = (props: ProfileDataProps) => {
             <b>About me:</b> {userProfile.aboutMe}
           </div>
         )}
-        <b>{`I am${userProfile.lookingForAJob ? "" : " not"} looking for a job`}</b>
+        <b>{`I am${userProfile.lookingForAJob ? '' : ' not'} looking for a job`}</b>
         {userProfile.lookingForAJobDescription && (
           <div>
             <b>Job description:</b> {userProfile.lookingForAJobDescription}
@@ -49,7 +53,11 @@ export const ProfileData = (props: ProfileDataProps) => {
           </div>
         )}
       </div>
-      {isOwner && <button onClick={() => props.setProfileEditMode(true)}>Edit profile</button>}
+      {isOwner && (
+        <button onClick={() => props.setProfileEditMode(true)}>
+          Edit profile
+        </button>
+      )}
     </>
   )
 }

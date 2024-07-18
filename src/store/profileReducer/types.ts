@@ -1,4 +1,4 @@
-import { ProfileDomain } from "../../api/api"
+import { ProfileDomain } from '../../api/api'
 
 export type Post = {
   id: number

@@ -1,26 +1,26 @@
-import { Suspense, useEffect } from "react"
-import { LoadingOutlined } from "@ant-design/icons"
-import { ConfigProvider, Layout, Spin, theme } from "antd"
-import { useAppDispatch, useAppSelector } from "./utils/redexUtils"
-import { setUserData } from "./store/authReducer/asyncActions"
-import { getSidebarUsers } from "./store/sidebarReducer/asyncActions"
-import s from "./App.module.css"
-import { Header } from "./layout/Header/Header"
-import { Sidebar } from "./layout/Sidebar/Sidebar"
-import { Navigate, Route, Routes } from "react-router-dom"
-import { Profile } from "./pages/Profile/Profile"
-import Dialogs from "./pages/Dialogs/Dialogs"
-import Users from "./pages/Users/Users"
-import Login from "./pages/Login/Login"
-import { Page404 } from "./pages/Page404/Page404"
+import { Suspense, useEffect } from 'react'
+import { LoadingOutlined } from '@ant-design/icons'
+import { ConfigProvider, Layout, Spin, theme } from 'antd'
+import { useAppDispatch, useAppSelector } from './utils/redexUtils'
+import { setUserData } from './store/authReducer/asyncActions'
+import { getSidebarUsers } from './store/sidebarReducer/asyncActions'
+import s from './App.module.css'
+import { Header } from './layout/Header/Header'
+import { Sidebar } from './layout/Sidebar/Sidebar'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { Profile } from './pages/Profile/Profile'
+import Dialogs from './pages/Dialogs/Dialogs'
+import Users from './pages/Users/Users'
+import Login from './pages/Login/Login'
+import { Page404 } from './pages/Page404/Page404'
 
 const App = () => {
-  const isAppInitialized = useAppSelector((state) => state.app.isAppInitialized)
+  const isAppInitialized = useAppSelector(state => state.app.isAppInitialized)
 
   const dispatch = useAppDispatch()
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken()
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const App = () => {
   if (!isAppInitialized) {
     return (
       <Spin
-        indicator={<LoadingOutlined style={{ fontSize: "60px" }} spin />}
+        indicator={<LoadingOutlined style={{ fontSize: '60px' }} spin />}
         className={s.preloader}
       />
     )
@@ -42,18 +42,18 @@ const App = () => {
       theme={{
         components: {
           Menu: {
-            itemSelectedBg: "#5500ff",
+            itemSelectedBg: '#5500ff',
             activeBarBorderWidth: 0,
-            itemSelectedColor: "black",
-            itemColor: "black",
+            itemSelectedColor: 'black',
+            itemColor: 'black'
           },
           Button: {
-            defaultBg: "#5500ff",
-            defaultActiveBorderColor: "#5500ff",
-            defaultActiveColor: "#5500ff",
-            defaultColor: "#fff",
-          },
-        },
+            defaultBg: '#5500ff',
+            defaultActiveBorderColor: '#5500ff',
+            defaultActiveColor: '#5500ff',
+            defaultColor: '#fff'
+          }
+        }
       }}
     >
       <Layout className={s.app}>
@@ -65,7 +65,7 @@ const App = () => {
               padding: 24,
               minHeight: 280,
               background: colorBgContainer,
-              borderRadius: borderRadiusLG,
+              borderRadius: borderRadiusLG
             }}
           >
             <Suspense fallback={<div>Preloader</div>}>

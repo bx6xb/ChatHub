@@ -1,8 +1,8 @@
-import * as asyncActinos from "./asyncActions"
-import * as sidebarSelectors from "./selectors"
+import * as asyncActinos from './asyncActions'
+import * as sidebarSelectors from './selectors'
 
 const actions = {
-  ...asyncActinos,
+  ...asyncActinos
 }
 
 export { sidebarSelectors, actions }

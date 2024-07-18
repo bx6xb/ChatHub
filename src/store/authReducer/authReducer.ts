@@ -1,39 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { AuthState } from "./types"
-import { getCaptchaUrl, logout, setUserData } from "./asyncActions"
+import { createSlice } from '@reduxjs/toolkit'
+import { AuthState } from './types'
+import { getCaptchaUrl, logout, setUserData } from './asyncActions'
 
 export const initialState = {
   id: null,
   email: null,
   login: null,
   isAuth: false,
-  captchaUrl: null,
+  captchaUrl: null
 } as AuthState
 
 const slice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(setUserData.fulfilled, (state, action) => ({
         ...state,
-        ...action.payload,
+        ...action.payload
       }))
-      .addCase(logout.fulfilled, (state) => ({
+      .addCase(logout.fulfilled, state => ({
         ...state,
         id: null,
         email: null,
         login: null,
-        isAuth: false,
+        isAuth: false
       }))
       .addCase(getCaptchaUrl.fulfilled, (state, action) => {
         return {
           ...state,
-          captchaUrl: action.payload,
+          captchaUrl: action.payload
         }
       })
-  },
+  }
 })
 
 export const authReducer = slice.reducer

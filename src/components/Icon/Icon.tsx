@@ -1,6 +1,6 @@
-import iconsSprite from "../../assets/svg/sprite.svg"
+import iconsSprite from '../../assets/svg/sprite.svg'
 
-export const Icon = ({ width = "50", height = "50", ...props }: IconProps) => {
+export const Icon = ({ width = '50', height = '50', ...props }: IconProps) => {
   return (
     <svg
       width={width}
@@ -12,7 +12,7 @@ export const Icon = ({ width = "50", height = "50", ...props }: IconProps) => {
       <use xlinkHref={`${iconsSprite}#${props.iconId}`} />
     </svg>
   )
-} 
+}
 
 // types
 type IconProps = {

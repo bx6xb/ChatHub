@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
-import s from "./Snackbar.module.css"
-import { useAppSelector } from "../../utils/redexUtils"
-import { appSelectors } from "../../store/appReducer"
+import { useEffect, useState } from 'react'
+import s from './Snackbar.module.css'
+import { useAppSelector } from '../../utils/redexUtils'
+import { appSelectors } from '../../store/appReducer'
 
 export const Snackbar = () => {
   const error = useAppSelector(appSelectors.selectError)
@@ -22,7 +22,7 @@ export const Snackbar = () => {
     return () => clearInterval(intervalId)
   }, [error])
 
-  const snackbarStyle = s.snackbar + (isOpen ? "" : " " + s.hidden)
+  const snackbarStyle = s.snackbar + (isOpen ? '' : ' ' + s.hidden)
 
   return (
     <div className={snackbarStyle}>

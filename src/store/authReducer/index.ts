@@ -1,3 +1,3 @@
-import * as authSelectors from "./selectors"
+import * as authSelectors from './selectors'
 
 export { authSelectors }

@@ -1,16 +1,19 @@
-import { getCaptchaUrl, logout, setUserData } from "./asyncActions"
-import { authReducer, initialState } from "./authReducer"
-import { AuthState } from "./types"
+import { getCaptchaUrl, logout, setUserData } from './asyncActions'
+import { authReducer, initialState } from './authReducer'
+import { AuthState } from './types'
 
-test("user data should be set", () => {
+test('user data should be set', () => {
   const userData = {
     id: 30880,
-    login: "Yan_Turnt",
-    email: "bx6xbchosen1@gmail.com",
-    isAuth: true,
+    login: 'Yan_Turnt',
+    email: 'bx6xbchosen1@gmail.com',
+    isAuth: true
   }
 
-  const newState = authReducer(initialState, setUserData.fulfilled(userData, "requestId"))
+  const newState = authReducer(
+    initialState,
+    setUserData.fulfilled(userData, 'requestId')
+  )
 
   expect(newState).not.toBe(initialState)
   expect(newState.id).toBe(userData.id)
@@ -18,16 +21,16 @@ test("user data should be set", () => {
   expect(newState.email).toBe(userData.email)
   expect(newState.isAuth).toBeTruthy()
 })
-test("user data should be deleted", () => {
+test('user data should be deleted', () => {
   const state = {
     id: 30880,
-    login: "Yan_Turnt",
-    email: "bx6xbchosen1@gmail.com",
+    login: 'Yan_Turnt',
+    email: 'bx6xbchosen1@gmail.com',
     isAuth: true,
-    captchaUrl: null,
+    captchaUrl: null
   } as AuthState
 
-  const newState = authReducer(state, logout.fulfilled({}, "requestiId"))
+  const newState = authReducer(state, logout.fulfilled({}, 'requestiId'))
 
   expect(newState).not.toBe(initialState)
   expect(newState.id).toBe(null)
@@ -35,9 +38,12 @@ test("user data should be deleted", () => {
   expect(newState.email).toBe(null)
   expect(newState.isAuth).toBeFalsy()
 })
-test("captcha url should be set", () => {
-  const url = "url"
-  const newState = authReducer(initialState, getCaptchaUrl.fulfilled(url, "requestId"))
+test('captcha url should be set', () => {
+  const url = 'url'
+  const newState = authReducer(
+    initialState,
+    getCaptchaUrl.fulfilled(url, 'requestId')
+  )
 
   expect(newState.captchaUrl).toBe(url)
 })

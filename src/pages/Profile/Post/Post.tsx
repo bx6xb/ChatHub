@@ -1,5 +1,5 @@
-import s from "./Post.module.css"
-import avatar from "../../../assets/images/userDefaultPhoto.png"
+import s from './Post.module.css'
+import avatar from '../../../assets/images/userDefaultPhoto.png'
 
 export const Post = (props: PostProps) => {
   return (

@@ -1,8 +1,8 @@
-import { createAsyncThunk } from "@reduxjs/toolkit"
-import { FormData, authAPI, securityAPI } from "../../api/api"
-import { errorHandler, networkErrorHandler } from "../../utils/errorHandler"
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { FormData, authAPI, securityAPI } from '../../api/api'
+import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
 
-export const setUserData = createAsyncThunk("auth/setUserData", async () => {
+export const setUserData = createAsyncThunk('auth/setUserData', async () => {
   const response = await authAPI.me()
   if (response.data.resultCode === 0) {
     return { ...response.data.data, isAuth: true }
@@ -11,7 +11,7 @@ export const setUserData = createAsyncThunk("auth/setUserData", async () => {
   }
 })
 export const login = createAsyncThunk<void, FormData, { rejectValue: string }>(
-  "auth/login",
+  'auth/login',
   async (formData: FormData, { dispatch, rejectWithValue }) => {
     try {
       const response = await authAPI.login(formData)
@@ -31,14 +31,14 @@ export const login = createAsyncThunk<void, FormData, { rejectValue: string }>(
   }
 )
 export const logout = createAsyncThunk(
-  "auth/logout",
+  'auth/logout',
   async (payload, { dispatch, fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await authAPI.logout()
       if (response.data.resultCode === 0) {
         return fulfillWithValue({})
       } else {
-        errorHandler(dispatch, "Failed to logout")
+        errorHandler(dispatch, 'Failed to logout')
         return rejectWithValue(null)
       }
     } catch {
@@ -48,7 +48,7 @@ export const logout = createAsyncThunk(
   }
 )
 export const getCaptchaUrl = createAsyncThunk(
-  "auth/getCaptchaUrl",
+  'auth/getCaptchaUrl',
   async (payload, { dispatch, rejectWithValue }) => {
     try {
       const response = await securityAPI.getCaptcha()

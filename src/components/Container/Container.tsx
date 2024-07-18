@@ -1,9 +1,16 @@
-import { ComponentPropsWithoutRef, ReactNode } from "react"
-import s from "./Container.module.css"
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import s from './Container.module.css'
 
-export const Container = ({ children, className, ...props }: ContainerProps) => {
+export const Container = ({
+  children,
+  className,
+  ...props
+}: ContainerProps) => {
   return (
-    <div className={s.container + (className ? " " + className : "")} {...props}>
+    <div
+      className={s.container + (className ? ' ' + className : '')}
+      {...props}
+    >
       {children}
     </div>
   )
@@ -12,4 +19,4 @@ export const Container = ({ children, className, ...props }: ContainerProps) => 
 // types
 type ContainerProps = {
   children: ReactNode
-} & ComponentPropsWithoutRef<"div">
+} & ComponentPropsWithoutRef<'div'>

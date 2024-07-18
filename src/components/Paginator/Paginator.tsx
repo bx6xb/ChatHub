@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import s from "./Paginator.module.css"
+import { useEffect, useState } from 'react'
+import s from './Paginator.module.css'
 
 export const Paginator = (props: PaginatorProps) => {
   const [firstPaginatorPage, setFirstPaginatorPage] = useState(
@@ -20,7 +20,9 @@ export const Paginator = (props: PaginatorProps) => {
       <span
         onClick={() => props.onPageChange(i)}
         key={i}
-        className={s.page + (props.currentPage === i ? " " + s.selectedPage : "")}
+        className={
+          s.page + (props.currentPage === i ? ' ' + s.selectedPage : '')
+        }
       >
         {i}
       </span>

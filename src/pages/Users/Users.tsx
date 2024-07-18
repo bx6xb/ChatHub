@@ -1,18 +1,28 @@
-import userPhoto from "../../assets/images/userDefaultPhoto.png"
-import s from "./Users.module.css"
-import { withAuthRedirect } from "../../hoc/withAuthRedirect"
-import { Avatar, Button, Flex, List, Pagination, Skeleton } from "antd"
-import { useAppDispatch, useAppSelector } from "../../utils/redexUtils"
-import { usersSelectors } from "../../store/usersReducer"
-import { useEffect } from "react"
-import { follow, getUsers, unfollow } from "../../store/usersReducer/asyncActions"
-import { Link } from "react-router-dom"
-import { Typography } from "antd"
-import { changePageSize } from "../../store/usersReducer/usersReducer"
+import userPhoto from '../../assets/images/userDefaultPhoto.png'
+import s from './Users.module.css'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { Avatar, Button, Flex, List, Pagination, Skeleton } from 'antd'
+import { useAppDispatch, useAppSelector } from '../../utils/redexUtils'
+import { usersSelectors } from '../../store/usersReducer'
+import { useEffect } from 'react'
+import {
+  follow,
+  getUsers,
+  unfollow
+} from '../../store/usersReducer/asyncActions'
+import { Link } from 'react-router-dom'
+import { Typography } from 'antd'
+import { changePageSize } from '../../store/usersReducer/usersReducer'
 
 const Users = withAuthRedirect(() => {
-  const { pageSize, totalUsersCount, currentPage, isFollowingInProgress, isFetching, users } =
-    useAppSelector(usersSelectors.selectUsersState)
+  const {
+    pageSize,
+    totalUsersCount,
+    currentPage,
+    isFollowingInProgress,
+    isFetching,
+    users
+  } = useAppSelector(usersSelectors.selectUsersState)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -40,7 +50,7 @@ const Users = withAuthRedirect(() => {
         total={totalUsersCount}
         pageSize={pageSize}
         showQuickJumper
-        style={{ marginBottom: "20px" }}
+        style={{ marginBottom: '20px' }}
         size="small"
         pageSizeOptions={[4, 6, 8, 10]}
         onShowSizeChange={onShowSizeChange}
@@ -50,8 +60,12 @@ const Users = withAuthRedirect(() => {
           itemLayout="horizontal"
           dataSource={users}
           renderItem={() => (
-            <List.Item style={{ width: "400px" }}>
-              <Flex align="start" justify="space-between" style={{ width: "100%" }}>
+            <List.Item style={{ width: '400px' }}>
+              <Flex
+                align="start"
+                justify="space-between"
+                style={{ width: '100%' }}
+              >
                 <Flex gap={10}>
                   <Skeleton.Avatar active size={70} shape="circle" />
                   <Skeleton.Input active />
@@ -65,13 +79,17 @@ const Users = withAuthRedirect(() => {
         <List
           itemLayout="horizontal"
           dataSource={users}
-          renderItem={(item) => {
-            const isDisabled = isFollowingInProgress.some((id) => id === item.id)
+          renderItem={item => {
+            const isDisabled = isFollowingInProgress.some(id => id === item.id)
 
             return (
-              <List.Item style={{ width: "400px" }}>
-                <Flex align="start" justify="space-between" style={{ width: "100%" }}>
-                  <Link to={"/profile/" + item.id.toString()}>
+              <List.Item style={{ width: '400px' }}>
+                <Flex
+                  align="start"
+                  justify="space-between"
+                  style={{ width: '100%' }}
+                >
+                  <Link to={'/profile/' + item.id.toString()}>
                     <Flex gap={10}>
                       <Avatar
                         size={70}
@@ -96,11 +114,17 @@ const Users = withAuthRedirect(() => {
                   </Link>
 
                   {item.followed ? (
-                    <Button onClick={() => unfollowOnClick(item.id)} disabled={isDisabled}>
+                    <Button
+                      onClick={() => unfollowOnClick(item.id)}
+                      disabled={isDisabled}
+                    >
                       Unfollow
                     </Button>
                   ) : (
-                    <Button onClick={() => followOnClick(item.id)} disabled={isDisabled}>
+                    <Button
+                      onClick={() => followOnClick(item.id)}
+                      disabled={isDisabled}
+                    >
                       Follow
                     </Button>
                   )}

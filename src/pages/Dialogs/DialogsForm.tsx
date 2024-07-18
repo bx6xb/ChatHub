@@ -1,6 +1,6 @@
-import { SubmitHandler, useForm } from "react-hook-form"
-import { addMessage } from "../../store/dialogsReducer/dialogsReducer"
-import { useAppDispatch } from "../../utils/redexUtils"
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { addMessage } from '../../store/dialogsReducer/dialogsReducer'
+import { useAppDispatch } from '../../utils/redexUtils'
 
 export const DialogsForm = () => {
   const dispatch = useAppDispatch()
@@ -8,21 +8,26 @@ export const DialogsForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    reset
   } = useForm<DialogsFormData>()
 
-  const onSubmit: SubmitHandler<DialogsFormData> = (data) => {
+  const onSubmit: SubmitHandler<DialogsFormData> = data => {
     dispatch(addMessage({ message: data.message }))
     reset()
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("message", { required: true, maxLength: 10 })} placeholder="Message" />
-      {errors.message?.type === "maxLength" && (
+      <input
+        {...register('message', { required: true, maxLength: 10 })}
+        placeholder="Message"
+      />
+      {errors.message?.type === 'maxLength' && (
         <span>The message must be less than 10 characters</span>
       )}
-      {errors.message?.type === "required" && <span>This field is required</span>}
+      {errors.message?.type === 'required' && (
+        <span>This field is required</span>
+      )}
 
       <button type="submit">Submit</button>
     </form>

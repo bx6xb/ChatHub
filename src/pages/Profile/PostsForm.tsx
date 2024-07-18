@@ -1,6 +1,6 @@
-import { SubmitHandler, useForm } from "react-hook-form"
-import { addPost } from "../../store/profileReducer/profileReducer"
-import { useAppDispatch } from "../../utils/redexUtils"
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { addPost } from '../../store/profileReducer/profileReducer'
+import { useAppDispatch } from '../../utils/redexUtils'
 
 export const PostsForm = () => {
   const dispatch = useAppDispatch()
@@ -8,21 +8,26 @@ export const PostsForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    reset
   } = useForm<PostsFormData>()
 
-  const onSubmit: SubmitHandler<PostsFormData> = (data) => {
+  const onSubmit: SubmitHandler<PostsFormData> = data => {
     dispatch(addPost({ message: data.message }))
     reset()
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("message", { required: true, maxLength: 10 })} placeholder="Message" />
-      {errors.message?.type === "maxLength" && (
+      <input
+        {...register('message', { required: true, maxLength: 10 })}
+        placeholder="Message"
+      />
+      {errors.message?.type === 'maxLength' && (
         <span>The message must be less than 10 characters</span>
       )}
-      {errors.message?.type === "required" && <span>This field is required</span>}
+      {errors.message?.type === 'required' && (
+        <span>This field is required</span>
+      )}
 
       <button type="submit">Submit</button>
     </form>

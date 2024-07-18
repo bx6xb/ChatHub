@@ -1,21 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { SidebarReducerState } from "./types"
-import { getSidebarUsers } from "./asyncActions"
+import { createSlice } from '@reduxjs/toolkit'
+import { SidebarReducerState } from './types'
+import { getSidebarUsers } from './asyncActions'
 
 const slice = createSlice({
-  name: "sidebar",
+  name: 'sidebar',
   initialState: {
-    users: null,
+    users: null
   } as SidebarReducerState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder.addCase(getSidebarUsers.fulfilled, (state, action) => {
       return {
         ...state,
-        users: action.payload,
+        users: action.payload
       }
     })
-  },
+  }
 })
 
 export const sidebarReducer = slice.reducer

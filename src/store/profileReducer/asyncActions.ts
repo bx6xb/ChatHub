@@ -1,10 +1,10 @@
-import { createAsyncThunk } from "@reduxjs/toolkit"
-import { Photos, ProfileData, profileAPI } from "../../api/api"
-import { errorHandler, networkErrorHandler } from "../../utils/errorHandler"
-import { AppRootState } from "../store"
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { Photos, ProfileData, profileAPI } from '../../api/api'
+import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
+import { AppRootState } from '../store'
 
 export const getUserProfile = createAsyncThunk(
-  "profile/getUserProfile",
+  'profile/getUserProfile',
   async (userId: number, { rejectWithValue, dispatch }) => {
     try {
       const response = await profileAPI.getUserProfile(userId)
@@ -16,7 +16,7 @@ export const getUserProfile = createAsyncThunk(
   }
 )
 export const getProfileStatus = createAsyncThunk(
-  "profile/getProfileStatus",
+  'profile/getProfileStatus',
   async (userId: number, { dispatch, rejectWithValue }) => {
     try {
       const response = await profileAPI.getProfileStatus(userId)
@@ -27,15 +27,19 @@ export const getProfileStatus = createAsyncThunk(
     }
   }
 )
-export const setProfileStatus = createAsyncThunk<string, string, { state: AppRootState }>( // fix this: if request was rejected thunk returns old status
-  "profile/setProfileStatus",
+export const setProfileStatus = createAsyncThunk<
+  string,
+  string,
+  { state: AppRootState }
+>( // fix this: if request was rejected thunk returns old status
+  'profile/setProfileStatus',
   async (status: string, { dispatch, rejectWithValue }) => {
     try {
       const response = await profileAPI.setProfileStatus(status)
       if (response.data.resultCode === 0) {
         return status
       } else {
-        errorHandler(dispatch, "Error while set profile status")
+        errorHandler(dispatch, 'Error while set profile status')
         return rejectWithValue(null)
       }
     } catch {
@@ -45,14 +49,14 @@ export const setProfileStatus = createAsyncThunk<string, string, { state: AppRoo
   }
 )
 export const setProfilePhoto = createAsyncThunk<Photos, File>(
-  "profile/setProfilePhoto",
+  'profile/setProfilePhoto',
   async (photo, { dispatch, rejectWithValue }) => {
     try {
       const response = await profileAPI.setProfilePhoto(photo)
       if (response.data.resultCode === 0) {
         return response.data.data.photos
       } else {
-        errorHandler(dispatch, "Error while set profile photo")
+        errorHandler(dispatch, 'Error while set profile photo')
         return rejectWithValue(null)
       }
     } catch {
@@ -61,8 +65,12 @@ export const setProfilePhoto = createAsyncThunk<Photos, File>(
     }
   }
 )
-export const setProfileData = createAsyncThunk<void, ProfileData, { state: AppRootState }>(
-  "profile/setProfileData",
+export const setProfileData = createAsyncThunk<
+  void,
+  ProfileData,
+  { state: AppRootState }
+>(
+  'profile/setProfileData',
   async (profileData: ProfileData, { dispatch, getState, rejectWithValue }) => {
     try {
       const response = await profileAPI.setProfileData(profileData)
@@ -70,7 +78,7 @@ export const setProfileData = createAsyncThunk<void, ProfileData, { state: AppRo
         const userId = getState().auth.id!
         dispatch(getUserProfile(userId))
       } else {
-        errorHandler(dispatch, "Error while set profile data")
+        errorHandler(dispatch, 'Error while set profile data')
         return rejectWithValue(null)
       }
     } catch {

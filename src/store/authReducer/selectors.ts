@@ -1,4 +1,4 @@
-import { AppRootState } from "../store"
+import { AppRootState } from '../store'
 
 export const selectAuthState = (state: AppRootState) => state.auth
 export const selectIsAuth = (state: AppRootState) => state.auth.isAuth
