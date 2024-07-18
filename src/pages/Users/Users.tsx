@@ -1,66 +1,116 @@
-import { NavLink } from "react-router-dom"
 import userPhoto from "../../assets/images/userDefaultPhoto.png"
 import s from "./Users.module.css"
-// import { Preloader } from "../../components/Preloader/Preloader"
-import { useUsers } from "./useUsers"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
-import { Paginator } from "../../components/Paginator/Paginator"
+import { Avatar, Button, Flex, List, Pagination, Skeleton } from "antd"
+import { useAppDispatch, useAppSelector } from "../../utils/redexUtils"
+import { usersSelectors } from "../../store/usersReducer"
+import { useEffect } from "react"
+import { follow, getUsers, unfollow } from "../../store/usersReducer/asyncActions"
+import { Link } from "react-router-dom"
+import { Typography } from "antd"
+import { changePageSize } from "../../store/usersReducer/usersReducer"
 
 const Users = withAuthRedirect(() => {
-  const {
-    currentPage,
-    totalUsersCount,
-    pageSize,
-    users,
-    isFollowingInProgress,
-    followOnClick,
-    unfollowOnClick,
-    onPageChange,
-    isFetching,
-  } = useUsers()
+  const { pageSize, totalUsersCount, currentPage, isFollowingInProgress, isFetching, users } =
+    useAppSelector(usersSelectors.selectUsersState)
+  const dispatch = useAppDispatch()
 
-  if (isFetching) {
-    // return <Preloader />
-    return <div>Preloader</div>
+  useEffect(() => {
+    dispatch(getUsers({ pageSize, currentPage }))
+  }, [pageSize])
+
+  const onPageChange = (currentPage: number) => {
+    dispatch(getUsers({ pageSize, currentPage }))
+  }
+  const followOnClick = (userId: number) => {
+    dispatch(follow(userId))
+  }
+  const unfollowOnClick = (userId: number) => {
+    dispatch(unfollow(userId))
+  }
+  const onShowSizeChange = (currentPage: number, pageSize: number) => {
+    dispatch(changePageSize({ pageSize }))
   }
 
   return (
-    <div>
-      <Paginator
-        currentPage={currentPage}
-        totalItemsCount={totalUsersCount}
+    <>
+      <Pagination
+        onChange={onPageChange}
+        current={currentPage}
+        total={totalUsersCount}
         pageSize={pageSize}
-        onPageChange={onPageChange}
+        showQuickJumper
+        style={{ marginBottom: "20px" }}
+        size="small"
+        pageSizeOptions={[4, 6, 8, 10]}
+        onShowSizeChange={onShowSizeChange}
       />
-      {users.map((u) => {
-        const isDisabled = isFollowingInProgress.some((id) => id === u.id)
+      {isFetching ? (
+        <List
+          itemLayout="horizontal"
+          dataSource={users}
+          renderItem={() => (
+            <List.Item style={{ width: "400px" }}>
+              <Flex align="start" justify="space-between" style={{ width: "100%" }}>
+                <Flex gap={10}>
+                  <Skeleton.Avatar active size={70} shape="circle" />
+                  <Skeleton.Input active />
+                </Flex>
+                <Skeleton.Button size="large" active />
+              </Flex>
+            </List.Item>
+          )}
+        />
+      ) : (
+        <List
+          itemLayout="horizontal"
+          dataSource={users}
+          renderItem={(item) => {
+            const isDisabled = isFollowingInProgress.some((id) => id === item.id)
 
-        return (
-          <div key={u.id}>
-            <div>
-              <NavLink to={"/profile/" + u.id.toString()}>
-                <img src={u.photos.small || userPhoto} alt="avatar" className={s.userPhoto} />
-              </NavLink>
-            </div>
+            return (
+              <List.Item style={{ width: "400px" }}>
+                <Flex align="start" justify="space-between" style={{ width: "100%" }}>
+                  <Link to={"/profile/" + item.id.toString()}>
+                    <Flex gap={10}>
+                      <Avatar
+                        size={70}
+                        icon={
+                          <img
+                            src={item.photos.small || userPhoto}
+                            alt="avatar"
+                            className={s.userPhoto}
+                          />
+                        }
+                      />
 
-            <div>
-              {u.followed ? (
-                <button onClick={() => unfollowOnClick(u.id)} disabled={isDisabled}>
-                  unfollow
-                </button>
-              ) : (
-                <button onClick={() => followOnClick(u.id)} disabled={isDisabled}>
-                  follow
-                </button>
-              )}
-            </div>
+                      <Flex vertical>
+                        <Typography.Title level={5} style={{ margin: 0 }}>
+                          {item.name}
+                        </Typography.Title>
+                        <Typography.Paragraph style={{ margin: 0 }}>
+                          {item.status}
+                        </Typography.Paragraph>
+                      </Flex>
+                    </Flex>
+                  </Link>
 
-            <div>{u.name}</div>
-            <div>{u.status}</div>
-          </div>
-        )
-      })}
-    </div>
+                  {item.followed ? (
+                    <Button onClick={() => unfollowOnClick(item.id)} disabled={isDisabled}>
+                      Unfollow
+                    </Button>
+                  ) : (
+                    <Button onClick={() => followOnClick(item.id)} disabled={isDisabled}>
+                      Follow
+                    </Button>
+                  )}
+                </Flex>
+              </List.Item>
+            )
+          }}
+        />
+      )}
+    </>
   )
 })
 

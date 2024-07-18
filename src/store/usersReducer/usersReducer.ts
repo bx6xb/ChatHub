@@ -6,7 +6,7 @@ const slice = createSlice({
   name: "users",
   initialState: {
     users: [],
-    pageSize: 6,
+    pageSize: 10,
     totalUsersCount: 28,
     currentPage: 1,
     isFetching: false,
