@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import defaultUserPhoto from '../../assets/images/userDefaultPhoto.png'
 import s from './Sidebar.module.scss'
 import { useEffect, useState } from 'react'
+import { ItemType } from 'antd/es/menu/interface'
 
 const menuItems = [
   {
@@ -68,10 +69,11 @@ export const Sidebar = () => {
   }
 
   // jsx variables
-  const mappedMenuItems = menuItems.map(i => ({
+  const mappedMenuItems: ItemType[] = menuItems.map(i => ({
     key: i.label,
     icon: i.icon,
-    label: <Link to={i.path}>{i.label}</Link>
+    label: <Link to={i.path}>{i.label}</Link>,
+    onClick: () => setIsCollapsed(true)
   }))
 
   return (
