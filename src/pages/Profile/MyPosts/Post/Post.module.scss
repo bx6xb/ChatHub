@@ -1,0 +1,13 @@
+.avatar {
+  flex-shrink: 0;
+}
+.buttonsWrapper {
+  width: 60px;
+  div {
+    width: 50%;
+    span {
+      cursor: pointer;
+      margin-right: 2px;
+    }
+  }
+}

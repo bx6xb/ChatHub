@@ -19,7 +19,11 @@ export const ProfileCard = () => {
 
   return (
     <Flex justify="space-between" wrap className={s.profileCard}>
-      <Flex gap={10} align="center" style={{ marginBottom: '10px' }}>
+      <Flex
+        gap={10}
+        align="center"
+        style={{ marginBottom: '10px', marginRight: '30px' }}
+      >
         <Avatar
           size={102}
           icon={<img src={userPhoto || userDefaultPhoto} alt="user" />}

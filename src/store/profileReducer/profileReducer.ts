@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Post, PostData, ProfileState } from './types'
+import { PostData, ProfileState } from './types'
 import {
   getProfileStatus,
   getUserProfile,

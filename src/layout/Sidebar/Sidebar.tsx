@@ -32,9 +32,9 @@ export const Sidebar = () => {
   const isAuth = useAppSelector(authSelectors.selectIsAuth)
 
   // local state
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(true)
 
-  // add listeners on first init
+  // add swipe listeners on first init
   useEffect(() => {
     document.addEventListener('touchstart', touchstart, false)
     document.addEventListener('touchend', touchend, false)
@@ -48,13 +48,13 @@ export const Sidebar = () => {
   let touchstartX = 0
   let touchendX = 0
 
-  // functions
+  // swipe functions
   const swipeHandler = () => {
-    if (touchendX < touchstartX && touchstartX - touchendX > 150) {
+    if (touchendX < touchstartX && touchstartX - touchendX > 120) {
       // left swipe
       setIsCollapsed(true)
     }
-    if (touchendX > touchstartX && touchendX - touchstartX > 150) {
+    if (touchendX > touchstartX && touchendX - touchstartX > 120) {
       // right swipe
       setIsCollapsed(false)
     }
@@ -75,43 +75,48 @@ export const Sidebar = () => {
   }))
 
   return (
-    <Layout.Sider
-      trigger={null}
-      className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}
-    >
-      <div className={s.blackScreen} />
-      <Menu
-        style={{ backgroundColor: 'transparent' }}
-        mode="inline"
-        defaultSelectedKeys={['1']}
-        items={mappedMenuItems}
-      />
-      {isAuth && (
-        <>
-          <Typography.Title level={4}>Friends online</Typography.Title>
+    <>
+      <div className={isCollapsed ? '' : s.blackScreen} />
+      <Layout.Sider
+        trigger={null}
+        className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}
+      >
+        <Menu
+          style={{ backgroundColor: 'transparent' }}
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          items={mappedMenuItems}
+        />
+        {isAuth && (
+          <>
+            <Typography.Title level={4}>Friends online</Typography.Title>
 
-          <ul className={s.friends}>
-            {users &&
-              users.map(u => (
-                <li key={u.id}>
-                  <Link to={'profile/' + u.id.toString()} className={s.friend}>
-                    <Flex align="center" gap={5}>
-                      <Avatar
-                        icon={
-                          <img
-                            src={u.photos.large || defaultUserPhoto}
-                            alt="avatar"
-                          />
-                        }
-                      />
-                      <span className={s.name}>{u.name}</span>
-                    </Flex>
-                  </Link>
-                </li>
-              ))}
-          </ul>
-        </>
-      )}
-    </Layout.Sider>
+            <ul className={s.friends}>
+              {users &&
+                users.map(u => (
+                  <li key={u.id}>
+                    <Link
+                      to={'profile/' + u.id.toString()}
+                      className={s.friend}
+                    >
+                      <Flex align="center" gap={5}>
+                        <Avatar
+                          icon={
+                            <img
+                              src={u.photos.large || defaultUserPhoto}
+                              alt="avatar"
+                            />
+                          }
+                        />
+                        <span className={s.name}>{u.name}</span>
+                      </Flex>
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </>
+        )}
+      </Layout.Sider>
+    </>
   )
 }

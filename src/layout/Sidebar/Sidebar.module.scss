@@ -3,6 +3,7 @@
   transition: 0.3s;
   position: relative;
   z-index: 10 !important;
+  left: 0;
   ul {
     margin-bottom: 20px;
   }
@@ -10,25 +11,29 @@
     text-align: center;
   }
   @media (max-width: 768px) {
+    transition: 0.3s;
     position: fixed !important;
     height: 100vh;
     z-index: 10 !important;
     top: 0;
     &.collapsed {
       left: -200px;
+      transition: 0.3s;
     }
   }
 }
-// .blackScreen {
-//   width: 100vw;
-//   height: 100vh;
-//   position: fixed;
-//   display: block;
-//   z-index: -100;
-//   background-color: rgba(0, 0, 0, 0.7);
-//   top: 0;
-//   left: 0;
-// }
+.blackScreen {
+  @media (max-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    display: block;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 0;
+    left: 0;
+  }
+}
 .friends {
   display: flex;
   flex-direction: column;

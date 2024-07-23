@@ -1,4 +1,4 @@
-import s from './Post.module.css'
+import s from './Post.module.scss'
 import { Post as PostType } from '../../../../store/profileReducer/types'
 import {
   DislikeFilled,
@@ -22,8 +22,22 @@ export const Post = ({ post, photo }: PostProps) => {
   // dispatch
   const dispatch = useAppDispatch()
 
-  // callbacks
-  const increaseLikes = () => {
+  // callbacks for like/dislike buttons
+  const toggleLike = () => {
+    // cancel like
+    if (isLike) {
+      dispatch(
+        changePostData({
+          id,
+          data: {
+            likesCount: likesCount - 1
+          }
+        })
+      )
+      setIsLike(false)
+      return
+    }
+    // cancel dislike
     if (isDislike) {
       dispatch(
         changePostData({
@@ -34,6 +48,7 @@ export const Post = ({ post, photo }: PostProps) => {
         })
       )
     }
+    // increase likes
     dispatch(
       changePostData({
         id,
@@ -42,11 +57,25 @@ export const Post = ({ post, photo }: PostProps) => {
         }
       })
     )
+    // set state
     setIsLike(true)
     setIsDislike(false)
   }
-
-  const increaseDislikes = () => {
+  const toggleDislike = () => {
+    // cancel dislike
+    if (isDislike) {
+      dispatch(
+        changePostData({
+          id,
+          data: {
+            dislikesCount: dislikesCount - 1
+          }
+        })
+      )
+      setIsDislike(false)
+      return
+    }
+    // cancel like
     if (isLike) {
       dispatch(
         changePostData({
@@ -65,37 +94,39 @@ export const Post = ({ post, photo }: PostProps) => {
         }
       })
     )
+    // set state
     setIsDislike(true)
     setIsLike(false)
   }
 
   return (
     <Flex gap={8}>
-      <Avatar size={52} icon={<img src={photo} alt="user photo" />} />
+      <Avatar
+        size={52}
+        icon={<img src={photo} alt="user photo" />}
+        className={s.avatar}
+      />
       <Flex vertical justify="space-around">
         <Typography.Text>{message}</Typography.Text>
 
-        <Flex gap={5}>
-          <div>
-            <button
-              className={s.button}
-              onClick={increaseLikes}
-              disabled={isLike}
-            >
-              {isLike ? <LikeFilled /> : <LikeOutlined />}
-            </button>
+        {/* buttons */}
+        <Flex gap={5} className={s.buttonsWrapper}>
+          <Flex>
+            {isLike ? (
+              <LikeFilled onClick={toggleLike} />
+            ) : (
+              <LikeOutlined onClick={toggleLike} />
+            )}
             {likesCount}
-          </div>
-          <div>
-            <button
-              className={s.button}
-              onClick={increaseDislikes}
-              disabled={isDislike}
-            >
-              {isDislike ? <DislikeFilled /> : <DislikeOutlined />}
-            </button>
+          </Flex>
+          <Flex>
+            {isDislike ? (
+              <DislikeFilled onClick={toggleDislike} />
+            ) : (
+              <DislikeOutlined onClick={toggleDislike} />
+            )}
             {dislikesCount}
-          </div>
+          </Flex>
         </Flex>
       </Flex>
     </Flex>

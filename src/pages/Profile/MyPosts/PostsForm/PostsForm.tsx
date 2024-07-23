@@ -2,6 +2,7 @@ import { SubmitHandler, useController, useForm } from 'react-hook-form'
 import { addPost } from '../../../../store/profileReducer/profileReducer'
 import { useAppDispatch } from '../../../../utils/redexUtils'
 import { Button, Flex, Input, Space } from 'antd'
+import s from './PostsForm.module.scss'
 
 export const PostsForm = () => {
   // dispatch
@@ -37,7 +38,7 @@ export const PostsForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex vertical>
         {/* input */}
-        <Space.Compact style={{ width: '300px' }}>
+        <Space.Compact className={s.input}>
           <Input onChange={onChange} value={value} placeholder="Message" />
           <Button htmlType="submit">Submit</Button>
         </Space.Compact>
