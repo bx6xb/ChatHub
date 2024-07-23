@@ -1,0 +1,49 @@
+.sidebar {
+  background-color: #ffaa00 !important;
+  transition: 0.3s;
+  position: relative;
+  z-index: 10 !important;
+  ul {
+    margin-bottom: 20px;
+  }
+  h4 {
+    text-align: center;
+  }
+  @media (max-width: 768px) {
+    position: fixed !important;
+    height: 100vh;
+    z-index: 10 !important;
+    top: 0;
+    &.collapsed {
+      left: -200px;
+    }
+  }
+}
+// .blackScreen {
+//   width: 100vw;
+//   height: 100vh;
+//   position: fixed;
+//   display: block;
+//   z-index: -100;
+//   background-color: rgba(0, 0, 0, 0.7);
+//   top: 0;
+//   left: 0;
+// }
+.friends {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 30px;
+}
+.friend {
+  color: #5500ff;
+  &:hover {
+    color: black;
+  }
+  .name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 110px;
+    white-space: nowrap;
+  }
+}

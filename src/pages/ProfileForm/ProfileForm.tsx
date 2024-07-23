@@ -1,13 +1,13 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { ProfileData, ProfileDataValues } from '../../../api/api'
-import { useAppDispatch, useAppSelector } from '../../../utils/redexUtils'
-import { profileSelectors } from '../../../store/profileReducer'
+import { useAppDispatch, useAppSelector } from '../../utils/redexUtils'
+import { profileSelectors } from '../../store/profileReducer'
 import {
   setProfileData,
   setProfilePhoto,
   setProfileStatus
-} from '../../../store/profileReducer/asyncActions'
+} from '../../store/profileReducer/asyncActions'
+import { ProfileData, ProfileDataValues } from '../../api/api'
 
 export const ProfileForm = () => {
   const { register, handleSubmit } = useForm<Inputs>()

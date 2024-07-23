@@ -1,25 +1,34 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ProfileState } from './types'
+import { Post, PostData, ProfileState } from './types'
 import {
   getProfileStatus,
   getUserProfile,
   setProfilePhoto,
   setProfileStatus
 } from './asyncActions'
+import { randomPosts } from '../../utils/randomPosts'
+import { getRandomNumber } from '../../utils/randomNumber'
 
 const slice = createSlice({
   name: 'profile',
   initialState: {
-    posts: [
-      { id: 1, message: 'Hi, how are you?', likesCount: 12 },
-      { id: 2, message: "It's my first post", likesCount: 11 },
-      { id: 3, message: 'Blabla', likesCount: 10 },
-      { id: 4, message: 'Dada', likesCount: 9 }
-    ],
+    posts: [],
     userProfile: null,
     profileStatus: ''
   } as ProfileState,
   reducers: {
+    generatePosts(state) {
+      const randomPostsArray = randomPosts()
+      return {
+        ...state,
+        posts: randomPostsArray.map((message, i) => ({
+          id: i + 1,
+          message,
+          likesCount: getRandomNumber(0, 10),
+          dislikesCount: getRandomNumber(0, 2)
+        }))
+      }
+    },
     addPost(state, action: PayloadAction<{ message: string }>) {
       return {
         ...state,
@@ -27,10 +36,30 @@ const slice = createSlice({
           {
             id: state.posts.length + 1,
             message: action.payload.message,
-            likesCount: 0
+            likesCount: 0,
+            dislikesCount: 0
           },
           ...state.posts
         ]
+      }
+    },
+    changePostData(
+      state,
+      action: PayloadAction<{
+        id: number
+        data: Partial<PostData>
+      }>
+    ) {
+      return {
+        ...state,
+        posts: state.posts.map(p =>
+          p.id === action.payload.id
+            ? {
+                ...p,
+                ...action.payload.data
+              }
+            : p
+        )
       }
     }
   },
@@ -71,4 +100,4 @@ const slice = createSlice({
 })
 
 export const profileReducer = slice.reducer
-export const { addPost } = slice.actions
+export const { generatePosts, addPost, changePostData } = slice.actions

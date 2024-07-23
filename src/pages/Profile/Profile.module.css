@@ -8,11 +8,5 @@
   left: 0;
 }
 .profileWrapper {
-  padding: 0 24px;
   margin-top: 120px;
-}
-.profileSection {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 20px;
 }

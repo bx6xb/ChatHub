@@ -7,10 +7,7 @@ export const Container = ({
   ...props
 }: ContainerProps) => {
   return (
-    <div
-      className={s.container + (className ? ' ' + className : '')}
-      {...props}
-    >
+    <div className={`${s.container} ${className}`} {...props}>
       {children}
     </div>
   )

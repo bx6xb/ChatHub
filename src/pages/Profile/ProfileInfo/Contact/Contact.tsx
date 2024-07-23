@@ -8,7 +8,7 @@ import {
   YoutubeOutlined
 } from '@ant-design/icons'
 import { Flex } from 'antd'
-import { ContactValues } from '../../../api/api'
+import { ContactValues } from '../../../../api/api'
 
 const contactIcons = {
   github: <GithubOutlined />,
@@ -25,13 +25,14 @@ const contactIcons = {
 
 export const Contact = ({ contact, link }: ContactProps) => {
   return (
-    <Flex gap={5}>
+    <Flex gap={5} align="center">
       {contactIcons[contact]}
       <a
         href={link}
         target="_blank"
         rel="noreferrer"
-        style={{ color: '#ffaa00', textDecoration: 'underline' }}>
+        style={{ color: '#ffaa00', textDecoration: 'underline' }}
+      >
         {contact}
       </a>
     </Flex>

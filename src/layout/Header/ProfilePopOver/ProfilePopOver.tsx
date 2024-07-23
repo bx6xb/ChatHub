@@ -22,7 +22,7 @@ export const ProfilePopOver = () => {
             icon: <UserOutlined />
           },
           {
-            label: <Link to="/profile?edit=true">Edit profile</Link>,
+            label: <Link to="/edit-profile">Edit profile</Link>,
             key: 'Edit profile',
             icon: <EditOutlined />
           }
