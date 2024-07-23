@@ -1,0 +1,16 @@
+.userPhoto {
+  flex-shrink: 0;
+}
+.userItem {
+  width: 400px;
+  div {
+    width: 100%;
+    column-gap: 10px;
+  }
+  button {
+    margin-top: 10px;
+  }
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+}

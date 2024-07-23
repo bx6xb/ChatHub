@@ -1,5 +1,5 @@
 import userPhoto from '../../assets/images/userDefaultPhoto.png'
-import s from './Users.module.css'
+import s from './Users.module.scss'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import {
   Avatar,
@@ -81,7 +81,7 @@ const Users = withAuthRedirect(() => {
       {isFetching ? (
         <List
           itemLayout="horizontal"
-          dataSource={users}
+          dataSource={Array(pageSize).fill({})}
           renderItem={() => (
             <List.Item style={{ width: '400px' }}>
               <Flex
@@ -106,21 +106,18 @@ const Users = withAuthRedirect(() => {
             const isDisabled = isFollowingInProgress.some(id => id === item.id)
 
             return (
-              <List.Item style={{ width: '400px' }}>
-                <Flex
-                  align="start"
-                  justify="space-between"
-                  style={{ width: '100%' }}
-                >
+              <List.Item className={s.userItem}>
+                <Flex align="start" justify="space-between" wrap>
+                  {/* user card */}
                   <Link to={'/profile/' + item.id.toString()}>
                     <Flex gap={10}>
                       <Avatar
                         size={70}
+                        className={s.userPhoto}
                         icon={
                           <img
                             src={item.photos.small || userPhoto}
                             alt="avatar"
-                            className={s.userPhoto}
                           />
                         }
                       />
@@ -136,6 +133,7 @@ const Users = withAuthRedirect(() => {
                     </Flex>
                   </Link>
 
+                  {/* button */}
                   {item.followed ? (
                     <Button
                       onClick={() => unfollowOnClick(item.id)}
