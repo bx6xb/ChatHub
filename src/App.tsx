@@ -17,7 +17,7 @@ import { Container } from './components/Container/Container'
 import { Colors } from './styles/Colors'
 import { ProfileForm } from './pages/ProfileForm/ProfileForm'
 import { Loading } from './components/Loading/Loading'
-import { StyleProvider } from '@ant-design/cssinjs'
+// import { StyleProvider } from '@ant-design/cssinjs'
 
 const App = () => {
   const isAppInitialized = useAppSelector(state => state.app.isAppInitialized)
@@ -33,70 +33,68 @@ const App = () => {
   }
 
   return (
-    <StyleProvider>
-      <ConfigProvider
-        theme={{
-          components: {
-            Menu: {
-              itemSelectedBg: Colors.secondary,
-              activeBarBorderWidth: 0,
-              itemSelectedColor: Colors.black,
-              itemColor: Colors.black
-            },
-            Button: {
-              // default
-              defaultBg: Colors.primary,
-              defaultColor: Colors.white,
-              defaultBorderColor: Colors.primary,
-              // hover
-              defaultHoverBg: Colors.secondary,
-              defaultHoverColor: Colors.white,
-              defaultHoverBorderColor: Colors.white,
-              // active
-              defaultActiveBg: Colors.secondary,
-              defaultActiveColor: Colors.primary,
-              defaultActiveBorderColor: Colors.primary
-            },
-            Typography: {
-              colorTextHeading: Colors.white,
-              colorText: Colors.white
-            }
+    <ConfigProvider
+      theme={{
+        components: {
+          Menu: {
+            itemSelectedBg: Colors.secondary,
+            activeBarBorderWidth: 0,
+            itemSelectedColor: Colors.black,
+            itemColor: Colors.black
           },
-          token: {
-            colorSplit: Colors.primary
+          Button: {
+            // default
+            defaultBg: Colors.primary,
+            defaultColor: Colors.white,
+            defaultBorderColor: Colors.primary,
+            // hover
+            defaultHoverBg: Colors.secondary,
+            defaultHoverColor: Colors.white,
+            defaultHoverBorderColor: Colors.white,
+            // active
+            defaultActiveBg: Colors.secondary,
+            defaultActiveColor: Colors.primary,
+            defaultActiveBorderColor: Colors.primary
+          },
+          Typography: {
+            colorTextHeading: Colors.white,
+            colorText: Colors.white
           }
-        }}
-      >
-        <Container>
-          <Layout className={s.app}>
-            <Header />
-            <Layout>
-              <Sidebar />
-              <Layout.Content
-                style={{
-                  padding: '24px',
-                  background: Colors.secondary,
-                  overflow: 'hidden',
-                  position: 'relative'
-                }}
-              >
-                <Suspense fallback={<Loading />}>
-                  <Routes>
-                    <Route path="/" element={<Navigate to="/profile" />} />
-                    <Route path="/profile/:id?" element={<Profile />} />
-                    <Route path="/edit-profile" element={<ProfileForm />} />
-                    <Route path="/dialogs" element={<Dialogs />} />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="*" element={<Page404 />} />
-                  </Routes>
-                </Suspense>
-              </Layout.Content>
-            </Layout>
+        },
+        token: {
+          colorSplit: Colors.white
+        }
+      }}
+    >
+      <Container>
+        <Layout className={s.app}>
+          <Header />
+          <Layout>
+            <Sidebar />
+            <Layout.Content
+              style={{
+                padding: '24px',
+                background: Colors.secondary,
+                overflow: 'hidden',
+                position: 'relative'
+              }}
+            >
+              <Suspense fallback={<Loading />}>
+                <Routes>
+                  <Route path="/" element={<Navigate to="/profile" />} />
+                  <Route path="/profile/:id?" element={<Profile />} />
+                  <Route path="/edit-profile" element={<ProfileForm />} />
+                  <Route path="/dialogs" element={<Dialogs />} />
+                  <Route path="/users" element={<Users />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="*" element={<Page404 />} />
+                </Routes>
+              </Suspense>
+            </Layout.Content>
           </Layout>
-        </Container>
-      </ConfigProvider>
-    </StyleProvider>
+        </Layout>
+      </Container>
+    </ConfigProvider>
   )
 }
 

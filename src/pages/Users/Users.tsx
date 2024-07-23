@@ -1,7 +1,15 @@
 import userPhoto from '../../assets/images/userDefaultPhoto.png'
 import s from './Users.module.css'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
-import { Avatar, Button, Flex, List, Pagination, Skeleton } from 'antd'
+import {
+  Avatar,
+  Button,
+  ConfigProvider,
+  Flex,
+  List,
+  Pagination,
+  Skeleton
+} from 'antd'
 import { useAppDispatch, useAppSelector } from '../../utils/redexUtils'
 import { usersSelectors } from '../../store/usersReducer'
 import { useEffect } from 'react'
@@ -13,6 +21,7 @@ import {
 import { Link } from 'react-router-dom'
 import { Typography } from 'antd'
 import { changePageSize } from '../../store/usersReducer/usersReducer'
+import { Colors } from '../../styles/Colors'
 
 const Users = withAuthRedirect(() => {
   const {
@@ -43,7 +52,21 @@ const Users = withAuthRedirect(() => {
   }
 
   return (
-    <>
+    <ConfigProvider
+      theme={{
+        components: {
+          Pagination: {
+            itemBg: Colors.primary
+          }
+        },
+        token: {
+          colorPrimary: Colors.white,
+          colorText: Colors.primary,
+          colorBgContainer: Colors.transparent,
+          colorBorder: Colors.primary
+        }
+      }}
+    >
       <Pagination
         onChange={onPageChange}
         current={currentPage}
@@ -134,7 +157,7 @@ const Users = withAuthRedirect(() => {
           }}
         />
       )}
-    </>
+    </ConfigProvider>
   )
 })
 
