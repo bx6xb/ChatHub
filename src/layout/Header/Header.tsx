@@ -4,8 +4,8 @@ import userDefaultPhoto from '../../assets/images/userDefaultPhoto.png'
 import { profileSelectors } from '../../store/profileReducer'
 import { Avatar, Button, Flex, Layout, Popover } from 'antd'
 import { ProfilePopOver } from './ProfilePopOver/ProfilePopOver'
-import logo from '../../assets/images/logo.png'
 import s from './Header.module.css'
+import { Icon } from '../../components/Icon/Icon'
 
 export const Header = () => {
   const { isAuth } = useAppSelector(authSelectors.selectAuthState)
@@ -14,7 +14,7 @@ export const Header = () => {
   return (
     <Layout.Header className={s.header}>
       <Flex justify="space-between" align="center" className={s.flexWrapper}>
-        <img src={logo} alt="logo" className={s.logo} />
+        <Icon iconId="logo" width="164" height="40" viewBox="0 0 82 20" />
         {isAuth ? (
           <Popover content={ProfilePopOver} title="">
             <Avatar

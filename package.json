@@ -1,10 +1,9 @@
 {
-  "name": "social-media",
+  "name": "chathub",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://bx6xb.github.io/social-media",
   "dependencies": {
-    "@ant-design/cssinjs": "^1.21.0",
     "@ant-design/icons": "^5.3.7",
     "@fontsource/inter": "^5.0.19",
     "@reduxjs/toolkit": "^2.2.6",

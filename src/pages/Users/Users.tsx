@@ -63,10 +63,10 @@ const Users = withAuthRedirect(() => {
           colorPrimary: Colors.white,
           colorText: Colors.primary,
           colorBgContainer: Colors.transparent,
-          colorBorder: Colors.primary
+          colorBorder: Colors.primary,
+          colorSplit: Colors.white
         }
-      }}
-    >
+      }}>
       <Pagination
         onChange={onPageChange}
         current={currentPage}
@@ -87,8 +87,7 @@ const Users = withAuthRedirect(() => {
               <Flex
                 align="start"
                 justify="space-between"
-                style={{ width: '100%' }}
-              >
+                style={{ width: '100%' }}>
                 <Flex gap={10}>
                   <Skeleton.Avatar active size={70} shape="circle" />
                   <Skeleton.Input active />
@@ -137,15 +136,13 @@ const Users = withAuthRedirect(() => {
                   {item.followed ? (
                     <Button
                       onClick={() => unfollowOnClick(item.id)}
-                      disabled={isDisabled}
-                    >
+                      disabled={isDisabled}>
                       Unfollow
                     </Button>
                   ) : (
                     <Button
                       onClick={() => followOnClick(item.id)}
-                      disabled={isDisabled}
-                    >
+                      disabled={isDisabled}>
                       Follow
                     </Button>
                   )}

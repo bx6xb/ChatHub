@@ -1,5 +1,4 @@
 import { Suspense, useEffect } from 'react'
-import { LoadingOutlined } from '@ant-design/icons'
 import { ConfigProvider, Layout, Spin } from 'antd'
 import { useAppDispatch, useAppSelector } from './utils/redexUtils'
 import { setUserData } from './store/authReducer/asyncActions'
@@ -17,7 +16,6 @@ import { Container } from './components/Container/Container'
 import { Colors } from './styles/Colors'
 import { ProfileForm } from './pages/ProfileForm/ProfileForm'
 import { Loading } from './components/Loading/Loading'
-// import { StyleProvider } from '@ant-design/cssinjs'
 
 const App = () => {
   const isAppInitialized = useAppSelector(state => state.app.isAppInitialized)
@@ -60,12 +58,8 @@ const App = () => {
             colorTextHeading: Colors.white,
             colorText: Colors.white
           }
-        },
-        token: {
-          colorSplit: Colors.white
         }
-      }}
-    >
+      }}>
       <Container>
         <Layout className={s.app}>
           <Header />
@@ -77,8 +71,7 @@ const App = () => {
                 background: Colors.secondary,
                 overflow: 'hidden',
                 position: 'relative'
-              }}
-            >
+              }}>
               <Suspense fallback={<Loading />}>
                 <Routes>
                   <Route path="/" element={<Navigate to="/profile" />} />
