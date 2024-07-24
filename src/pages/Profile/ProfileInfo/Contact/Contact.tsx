@@ -9,10 +9,11 @@ import {
 } from '@ant-design/icons'
 import { Flex } from 'antd'
 import { ContactValues } from '../../../../api/api'
+import { Icon } from '../../../../components/Icon/Icon'
 
 const contactIcons = {
   github: <GithubOutlined />,
-  vk: <FacebookOutlined />,
+  vk: <Icon iconId="vk" width="12.5" height="12.5" viewBox="0 0 360 360" />,
   facebook: <FacebookOutlined />,
   instagram: <InstagramOutlined />,
   twitter: <TwitterOutlined />,
@@ -31,8 +32,7 @@ export const Contact = ({ contact, link }: ContactProps) => {
         href={link}
         target="_blank"
         rel="noreferrer"
-        style={{ color: '#ffaa00', textDecoration: 'underline' }}
-      >
+        style={{ color: '#ffaa00', textDecoration: 'underline' }}>
         {contact}
       </a>
     </Flex>

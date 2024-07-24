@@ -18,7 +18,9 @@ export const Header = () => {
         {isAuth ? (
           <Popover content={ProfilePopOver} title="">
             <Avatar
-              icon={<img src={userAvatar || userDefaultPhoto} alt="avatar" />}
+              icon={
+                <img src={userAvatar || userDefaultPhoto} alt="avatar" />
+              }
             />
           </Popover>
         ) : (
