@@ -1,9 +1,20 @@
+import { Button, ConfigProvider, Result } from 'antd'
+import { Colors } from '../../styles/Colors'
+
 export const Page404 = () => {
   return (
-    <div>
-      404
-      <br />
-      Page not found
-    </div>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorTextHeading: Colors.primary,
+          colorTextDescription: Colors.white
+        }
+      }}>
+      <Result
+        status="404"
+        title="404"
+        subTitle="Sorry, the page you visited does not exist."
+      />
+    </ConfigProvider>
   )
 }

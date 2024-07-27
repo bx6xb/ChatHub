@@ -2,7 +2,7 @@ import { useAppSelector } from '../../utils/redexUtils'
 import { authSelectors } from '../../store/authReducer'
 import { sidebarSelectors } from '../../store/sidebarReducer'
 import { Avatar, Flex, Layout, Menu, Typography } from 'antd'
-import { MessageOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
+import { TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import defaultUserPhoto from '../../assets/images/userDefaultPhoto.png'
 import s from './Sidebar.module.scss'
@@ -14,11 +14,6 @@ const menuItems = [
     label: 'Profile',
     path: '/profile',
     icon: <UserOutlined />
-  },
-  {
-    label: 'Messages',
-    path: '/dialogs',
-    icon: <MessageOutlined />
   },
   {
     label: 'Users',
@@ -81,8 +76,7 @@ export const Sidebar = () => {
       <div className={isCollapsed ? '' : s.blackScreen} />
       <Layout.Sider
         trigger={null}
-        className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}
-      >
+        className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}>
         <Menu
           className={s.menu}
           mode="inline"

@@ -1,14 +1,13 @@
 import { Suspense, useEffect } from 'react'
-import { ConfigProvider, Layout, Spin } from 'antd'
+import { ConfigProvider, Layout } from 'antd'
 import { useAppDispatch, useAppSelector } from './utils/redexUtils'
 import { setUserData } from './store/authReducer/asyncActions'
 import { getSidebarUsers } from './store/sidebarReducer/asyncActions'
-import s from './App.module.scss'
+import s from './styles/App.module.scss'
 import { Header } from './layout/Header/Header'
 import { Sidebar } from './layout/Sidebar/Sidebar'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Profile } from './pages/Profile/Profile'
-import Dialogs from './pages/Dialogs/Dialogs'
 import Users from './pages/Users/Users'
 import Login from './pages/Login/Login'
 import { Page404 } from './pages/Page404/Page404'
@@ -58,8 +57,7 @@ const App = () => {
             colorText: Colors.white
           }
         }
-      }}
-    >
+      }}>
       <Layout className={s.app}>
         <Header />
         <Layout>
@@ -70,7 +68,6 @@ const App = () => {
                 <Route path="/" element={<Navigate to="/profile" />} />
                 <Route path="/profile/:id?" element={<Profile />} />
                 <Route path="/edit-profile" element={<ProfileForm />} />
-                <Route path="/dialogs" element={<Dialogs />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<Page404 />} />
