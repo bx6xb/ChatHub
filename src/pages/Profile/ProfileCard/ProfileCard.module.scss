@@ -1,0 +1,11 @@
+.profileCard {
+  position: relative;
+  z-index: 1;
+  & > div {
+    margin-bottom: 10px;
+    margin-right: 30px;
+  }
+  span {
+    flex-shrink: 0;
+  }
+}

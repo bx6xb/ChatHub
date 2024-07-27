@@ -4,7 +4,7 @@ import userDefaultPhoto from '../../../assets/images/userDefaultPhoto.png'
 import { profileSelectors } from '../../../store/profileReducer'
 import { useAppSelector } from '../../../utils/redexUtils'
 import { authSelectors } from '../../../store/authReducer'
-import s from './ProfileCard.module.css'
+import s from './ProfileCard.module.scss'
 
 export const ProfileCard = () => {
   // get data from state
@@ -19,22 +19,14 @@ export const ProfileCard = () => {
 
   return (
     <Flex justify="space-between" wrap className={s.profileCard}>
-      <Flex
-        gap={10}
-        align="center"
-        style={{ marginBottom: '10px', marginRight: '30px' }}
-      >
+      <Flex gap={10} align="center">
         <Avatar
           size={102}
           icon={<img src={userPhoto || userDefaultPhoto} alt="user" />}
         />
         <Flex vertical>
-          <Typography.Title level={3} style={{ margin: 0 }}>
-            {fullName}
-          </Typography.Title>
-          <Typography.Paragraph style={{ margin: 0 }}>
-            {profileStatus}
-          </Typography.Paragraph>
+          <Typography.Title level={3}>{fullName}</Typography.Title>
+          <Typography.Paragraph>{profileStatus}</Typography.Paragraph>
         </Flex>
       </Flex>
 

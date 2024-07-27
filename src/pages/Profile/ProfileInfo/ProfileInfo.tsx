@@ -4,6 +4,7 @@ import { profileSelectors } from '../../../store/profileReducer'
 import { ReactElement } from 'react'
 import { Contact } from './Contact/Contact'
 import { ContactValues } from '../../../api/api'
+import s from './ProfileInfo.module.scss'
 
 export const ProfileInfo = () => {
   // get data from state
@@ -21,28 +22,24 @@ export const ProfileInfo = () => {
 
   return (
     <Flex wrap>
-      <div style={{ width: '300px', marginBottom: '20px' }}>
+      <div className={s.profileInfo}>
         {userProfile.aboutMe && (
-          <Typography.Paragraph style={{ margin: 0 }}>
+          <Typography.Paragraph>
             <b>About me:</b> {userProfile.aboutMe}
           </Typography.Paragraph>
         )}
         {userProfile.lookingForAJob && (
-          <Typography.Paragraph
-            style={{
-              margin: 0
-            }}
-          >{`I am looking for a job`}</Typography.Paragraph>
+          <Typography.Paragraph>{`I am looking for a job`}</Typography.Paragraph>
         )}
         {userProfile.lookingForAJobDescription && (
-          <Typography.Paragraph style={{ margin: 0 }}>
+          <Typography.Paragraph>
             <b>Job description:</b> {userProfile.lookingForAJobDescription}
           </Typography.Paragraph>
         )}
       </div>
 
       {!!mappedContacts.length && (
-        <Flex vertical gap={4} style={{ width: '100px' }}>
+        <Flex vertical gap={4} className={s.contacts}>
           <Typography.Title level={5}>Contacts</Typography.Title>
           {mappedContacts}
         </Flex>

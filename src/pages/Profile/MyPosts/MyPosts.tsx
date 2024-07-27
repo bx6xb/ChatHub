@@ -17,9 +17,7 @@ export const MyPosts = () => {
 
   return (
     <Flex vertical gap={16}>
-      <Typography.Title level={3} style={{ margin: 0 }}>
-        My posts
-      </Typography.Title>
+      <Typography.Title level={3}>My posts</Typography.Title>
       <PostsForm />
       <Flex vertical gap={12}>
         {mappedPosts}

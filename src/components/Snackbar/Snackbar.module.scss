@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
   color: black;
-}
-.snackbar.hidden {
-  display: none;
+  &.hidden {
+    display: none;
+  }
 }

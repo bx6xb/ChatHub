@@ -54,11 +54,6 @@ const Users = withAuthRedirect(() => {
   return (
     <ConfigProvider
       theme={{
-        components: {
-          Pagination: {
-            itemBg: Colors.primary
-          }
-        },
         token: {
           colorPrimary: Colors.white,
           colorText: Colors.primary,
@@ -66,14 +61,15 @@ const Users = withAuthRedirect(() => {
           colorBorder: Colors.primary,
           colorSplit: Colors.white
         }
-      }}>
+      }}
+    >
       <Pagination
         onChange={onPageChange}
         current={currentPage}
         total={totalUsersCount}
         pageSize={pageSize}
         showQuickJumper
-        style={{ marginBottom: '20px' }}
+        className={s.pagination}
         size="small"
         pageSizeOptions={[4, 6, 8, 10]}
         onShowSizeChange={onShowSizeChange}
@@ -83,11 +79,8 @@ const Users = withAuthRedirect(() => {
           itemLayout="horizontal"
           dataSource={Array(pageSize).fill({})}
           renderItem={() => (
-            <List.Item style={{ width: '400px' }}>
-              <Flex
-                align="start"
-                justify="space-between"
-                style={{ width: '100%' }}>
+            <List.Item className={s.user}>
+              <Flex align="start" justify="space-between">
                 <Flex gap={10}>
                   <Skeleton.Avatar active size={70} shape="circle" />
                   <Skeleton.Input active />
@@ -105,7 +98,7 @@ const Users = withAuthRedirect(() => {
             const isDisabled = isFollowingInProgress.some(id => id === item.id)
 
             return (
-              <List.Item className={s.userItem}>
+              <List.Item className={s.user}>
                 <Flex align="start" justify="space-between" wrap>
                   {/* user card */}
                   <Link to={'/profile/' + item.id.toString()}>
@@ -122,10 +115,10 @@ const Users = withAuthRedirect(() => {
                       />
 
                       <Flex vertical>
-                        <Typography.Title level={5} style={{ margin: 0 }}>
+                        <Typography.Title level={5}>
                           {item.name}
                         </Typography.Title>
-                        <Typography.Paragraph style={{ margin: 0 }}>
+                        <Typography.Paragraph>
                           {item.status}
                         </Typography.Paragraph>
                       </Flex>
@@ -136,13 +129,15 @@ const Users = withAuthRedirect(() => {
                   {item.followed ? (
                     <Button
                       onClick={() => unfollowOnClick(item.id)}
-                      disabled={isDisabled}>
+                      disabled={isDisabled}
+                    >
                       Unfollow
                     </Button>
                   ) : (
                     <Button
                       onClick={() => followOnClick(item.id)}
-                      disabled={isDisabled}>
+                      disabled={isDisabled}
+                    >
                       Follow
                     </Button>
                   )}

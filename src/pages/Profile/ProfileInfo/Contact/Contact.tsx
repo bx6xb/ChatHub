@@ -10,6 +10,7 @@ import {
 import { Flex } from 'antd'
 import { ContactValues } from '../../../../api/api'
 import { Icon } from '../../../../components/Icon/Icon'
+import s from './Contact.module.scss'
 
 const contactIcons = {
   github: <GithubOutlined />,
@@ -28,11 +29,7 @@ export const Contact = ({ contact, link }: ContactProps) => {
   return (
     <Flex gap={5} align="center">
       {contactIcons[contact]}
-      <a
-        href={link}
-        target="_blank"
-        rel="noreferrer"
-        style={{ color: '#ffaa00', textDecoration: 'underline' }}>
+      <a href={link} target="_blank" rel="noreferrer" className={s.link}>
         {contact}
       </a>
     </Flex>

@@ -1,5 +1,5 @@
 import { FormData } from '../../../api/api'
-import s from './LoginForm.module.css'
+import s from './LoginForm.module.scss'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../../utils/redexUtils'
 import { authSelectors } from '../../../store/authReducer'

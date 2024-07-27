@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import s from './Snackbar.module.css'
+import s from './Snackbar.module.scss'
 import { useAppSelector } from '../../utils/redexUtils'
 import { appSelectors } from '../../store/appReducer'
 

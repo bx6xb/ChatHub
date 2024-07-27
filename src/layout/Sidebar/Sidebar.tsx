@@ -84,7 +84,7 @@ export const Sidebar = () => {
         className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}
       >
         <Menu
-          style={{ backgroundColor: 'transparent' }}
+          className={s.menu}
           mode="inline"
           defaultSelectedKeys={['1']}
           items={mappedMenuItems}
@@ -97,10 +97,7 @@ export const Sidebar = () => {
               {users &&
                 users.map(u => (
                   <li key={u.id}>
-                    <Link
-                      to={'profile/' + u.id.toString()}
-                      className={s.friend}
-                    >
+                    <Link to={'profile/' + u.id.toString()}>
                       <Flex align="center" gap={5}>
                         <Avatar
                           icon={
@@ -110,7 +107,7 @@ export const Sidebar = () => {
                             />
                           }
                         />
-                        <span className={s.name}>{u.name}</span>
+                        <span>{u.name}</span>
                       </Flex>
                     </Link>
                   </li>

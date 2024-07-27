@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
-import s from './Profile.module.css'
+import s from './Profile.module.scss'
 import { useAppDispatch, useAppSelector } from '../../utils/redexUtils'
 import { authSelectors } from '../../store/authReducer'
 import { profileSelectors } from '../../store/profileReducer'

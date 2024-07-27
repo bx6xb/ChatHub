@@ -1,6 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
-import s from './Loading.module.css'
+import s from './Loading.module.scss'
 
 export const Loading = () => {
   return (
