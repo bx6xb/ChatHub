@@ -1,5 +1,5 @@
 .sidebar {
-  background-color: #ffaa00 !important;
+  background-color: var(--primary-color);
   transition: 0.3s;
   position: relative;
   z-index: 10 !important;
@@ -23,6 +23,9 @@
     }
   }
 }
+.menuItem {
+  color: var(--white-color);
+}
 .blackScreen {
   @media (max-width: 768px) {
     width: 100vw;
@@ -44,7 +47,7 @@
   gap: 8px;
   padding-left: 30px;
   a {
-    color: #5500ff;
+    color: var(--secondary-color);
     &:hover {
       color: black;
     }

@@ -68,7 +68,8 @@ export const Sidebar = () => {
     key: i.label,
     icon: i.icon,
     label: <Link to={i.path}>{i.label}</Link>,
-    onClick: () => setIsCollapsed(true)
+    onClick: () => setIsCollapsed(true),
+    className: s.menuItem
   }))
 
   return (
