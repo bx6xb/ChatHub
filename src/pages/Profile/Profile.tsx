@@ -5,10 +5,6 @@ import s from './Profile.module.scss'
 import { useAppDispatch, useAppSelector } from '../../utils/redexUtils'
 import { authSelectors } from '../../store/authReducer'
 import { profileSelectors } from '../../store/profileReducer'
-import {
-  getProfileStatus,
-  getUserProfile
-} from '../../store/profileReducer/asyncActions'
 import { randomProfileBg } from '../../utils/randomProfileBg'
 import { generatePosts } from '../../store/profileReducer/profileReducer'
 import { ProfileInfo } from './ProfileInfo/ProfileInfo'
@@ -16,11 +12,17 @@ import { ProfileCard } from './ProfileCard/ProfileCard'
 import { MyPosts } from './MyPosts/MyPosts'
 import { Flex } from 'antd'
 import { Loading } from '../../components/Loading/Loading'
+import { setUserPhoto } from '../../store/authReducer/authReducer'
+import userDefaultPhoto from '../../assets/images/userDefaultPhoto.png'
+import {
+  getProfileStatus,
+  getUserProfile
+} from '../../store/profileReducer/asyncActions'
 
 export const Profile = withAuthRedirect(() => {
   // get data from state
   const userProfile = useAppSelector(profileSelectors.selectUserProfile)
-  const authorizedUserId = useAppSelector(authSelectors.selectId)
+  const authorizedUserId = useAppSelector(authSelectors.selectId)!
 
   // dispatch
   const dispatch = useAppDispatch()
@@ -31,6 +33,17 @@ export const Profile = withAuthRedirect(() => {
   // get uri params from url
   const urlParams = useParams<UrlParams>()
   const userId = urlParams.id ? +urlParams.id : authorizedUserId! // define id of user
+
+  useEffect(() => {
+    // get authorized user data to set user photo for header pop overw
+    dispatch(getUserProfile(authorizedUserId)).then(data => {
+      if (getUserProfile.fulfilled.match(data)) {
+        const userPhoto = data.payload.photos.large || userDefaultPhoto
+        dispatch(setUserPhoto(userPhoto))
+      }
+    })
+    dispatch(getProfileStatus(authorizedUserId))
+  }, [])
 
   useEffect(() => {
     dispatch(getUserProfile(userId))

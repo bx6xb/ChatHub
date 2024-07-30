@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { Photos, ProfileData, profileAPI } from '../../api/api'
+import { Photos, ProfileData, ProfileDomain, profileAPI } from '../../api/api'
 import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
 import { AppRootState } from '../store'
 
-export const getUserProfile = createAsyncThunk(
+export const getUserProfile = createAsyncThunk<ProfileDomain, number>(
   'profile/getUserProfile',
-  async (userId: number, { rejectWithValue, dispatch }) => {
+  async (userId, { rejectWithValue, dispatch }) => {
     try {
       const response = await profileAPI.getUserProfile(userId)
       return response.data

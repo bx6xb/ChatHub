@@ -9,7 +9,7 @@ import { Icon } from '../../components/Icon/Icon'
 
 export const Header = () => {
   const { isAuth } = useAppSelector(authSelectors.selectAuthState)
-  const userAvatar = useAppSelector(profileSelectors.selectPhoto)
+  const authorizedUserAvatar = useAppSelector(authSelectors.selectUserPhoto)
 
   return (
     <Layout.Header className={s.header}>
@@ -18,7 +18,12 @@ export const Header = () => {
         {isAuth ? (
           <Popover content={ProfilePopOver} title="">
             <Avatar
-              icon={<img src={userAvatar || userDefaultPhoto} alt="avatar" />}
+              icon={
+                <img
+                  src={authorizedUserAvatar || userDefaultPhoto}
+                  alt="avatar"
+                />
+              }
             />
           </Popover>
         ) : (

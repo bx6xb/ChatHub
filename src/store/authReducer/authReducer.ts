@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthState } from './types'
 import { getCaptchaUrl, logout, setUserData } from './asyncActions'
 
@@ -7,13 +7,21 @@ export const initialState = {
   email: null,
   login: null,
   isAuth: false,
-  captchaUrl: null
+  captchaUrl: null,
+  userPhoto: null
 } as AuthState
 
 const slice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserPhoto(state, action: PayloadAction<string>) {
+      return {
+        ...state,
+        userPhoto: action.payload
+      }
+    }
+  },
   extraReducers: builder => {
     builder
       .addCase(setUserData.fulfilled, (state, action) => ({
@@ -37,3 +45,4 @@ const slice = createSlice({
 })
 
 export const authReducer = slice.reducer
+export const { setUserPhoto } = slice.actions
