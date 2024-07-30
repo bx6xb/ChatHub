@@ -1,5 +1,5 @@
 .sidebar {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color) !important;
   transition: 0.3s;
   position: relative;
   z-index: 10 !important;
@@ -24,7 +24,7 @@
   }
 }
 .menuItem {
-  color: var(--white-color);
+  color: var(--white-color) !important;
 }
 .blackScreen {
   @media (max-width: 768px) {
