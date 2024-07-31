@@ -103,7 +103,9 @@ const Login = () => {
             </Flex>
           </label>
 
-          <Button htmlType="submit">Login</Button>
+          <Button htmlType="submit" className="submitFormButton">
+            Login
+          </Button>
         </Flex>
       </form>
     </Flex>

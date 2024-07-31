@@ -123,7 +123,7 @@ export const ProfileForm = withAuthRedirect(() => {
         })}
       </Flex>
 
-      <Button htmlType="submit" className={s.submit}>
+      <Button htmlType="submit" className="submitFormButton">
         Submit
       </Button>
     </form>

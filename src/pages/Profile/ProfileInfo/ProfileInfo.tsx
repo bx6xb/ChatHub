@@ -21,7 +21,7 @@ export const ProfileInfo = () => {
     ))
 
   return (
-    <Flex wrap>
+    <Flex wrap gap={5}>
       <div className={s.profileInfo}>
         {userProfile.aboutMe && (
           <Typography.Paragraph>
@@ -39,7 +39,7 @@ export const ProfileInfo = () => {
       </div>
 
       {!!mappedContacts.length && (
-        <Flex vertical gap={4} className={s.contacts}>
+        <Flex vertical gap={3} className={s.contacts}>
           <Typography.Title level={5}>Contacts</Typography.Title>
           {mappedContacts}
         </Flex>

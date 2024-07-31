@@ -15,10 +15,16 @@ import { Colors } from './styles/Colors'
 import { ProfileForm } from './pages/ProfileForm/ProfileForm'
 import { Loading } from './components/Loading/Loading'
 import { Snackbar } from './components/Snackbar/Snackbar'
+import { getUserProfile } from './store/profileReducer/asyncActions'
+import { authSelectors } from './store/authReducer'
+import userDefaultPhoto from './assets/images/userDefaultPhoto.png'
+import { setUserPhoto } from './store/authReducer/authReducer'
+import { appSelectors } from './store/appReducer'
 
 const App = () => {
   // get data from the state
-  const isAppInitialized = useAppSelector(state => state.app.isAppInitialized)
+  const isAppInitialized = useAppSelector(appSelectors.selectIsAppInitialized)
+  const authorizedUserId = useAppSelector(authSelectors.selectId)!
 
   // dispatch
   const dispatch = useAppDispatch()
@@ -27,6 +33,18 @@ const App = () => {
     dispatch(setUserData())
     dispatch(getSidebarUsers())
   }, [])
+
+  useEffect(() => {
+    // get authorized user data to set user photo for header pop over
+    if (authorizedUserId) {
+      dispatch(getUserProfile(authorizedUserId)).then(data => {
+        if (getUserProfile.fulfilled.match(data)) {
+          const userPhoto = data.payload.photos.large || userDefaultPhoto
+          dispatch(setUserPhoto(userPhoto))
+        }
+      })
+    }
+  }, [authorizedUserId])
 
   // show loading
   if (!isAppInitialized) {
@@ -38,7 +56,7 @@ const App = () => {
       theme={{
         components: {
           Menu: {
-            itemSelectedBg: Colors.secondary,
+            itemSelectedBg: Colors.transparent,
             activeBarBorderWidth: 0,
             itemSelectedColor: Colors.black,
             itemColor: Colors.black

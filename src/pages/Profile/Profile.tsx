@@ -12,8 +12,6 @@ import { ProfileCard } from './ProfileCard/ProfileCard'
 import { MyPosts } from './MyPosts/MyPosts'
 import { Flex } from 'antd'
 import { Loading } from '../../components/Loading/Loading'
-import { setUserPhoto } from '../../store/authReducer/authReducer'
-import userDefaultPhoto from '../../assets/images/userDefaultPhoto.png'
 import {
   getProfileStatus,
   getUserProfile
@@ -33,17 +31,6 @@ export const Profile = withAuthRedirect(() => {
   // get uri params from url
   const urlParams = useParams<UrlParams>()
   const userId = urlParams.id ? +urlParams.id : authorizedUserId! // define id of user
-
-  useEffect(() => {
-    // get authorized user data to set user photo for header pop over
-    dispatch(getUserProfile(authorizedUserId)).then(data => {
-      if (getUserProfile.fulfilled.match(data)) {
-        const userPhoto = data.payload.photos.large || userDefaultPhoto
-        dispatch(setUserPhoto(userPhoto))
-      }
-    })
-    dispatch(getProfileStatus(authorizedUserId))
-  }, [])
 
   useEffect(() => {
     dispatch(getUserProfile(userId))
