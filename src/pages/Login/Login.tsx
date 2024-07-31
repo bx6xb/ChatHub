@@ -7,6 +7,7 @@ import { login } from '../../store/authReducer/asyncActions'
 import { ControlledInput } from '../../components/ControlledInput/ControlledInput'
 import s from './Login.module.scss'
 import { Button, Flex, Typography } from 'antd'
+import { setAppMessage } from '../../store/appReducer/appReducer'
 
 const createErrorElement = (text: string) => (
   <div className={s.error}>{text}</div>
@@ -34,6 +35,7 @@ const Login = () => {
     if (login.fulfilled.match(action)) {
       reset()
       clearErrors()
+      dispatch(setAppMessage('You are successfully logged in!'))
     }
   }
 

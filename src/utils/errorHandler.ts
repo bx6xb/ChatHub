@@ -1,10 +1,15 @@
 import { Dispatch } from 'redux'
-import { setError } from '../store/appReducer/appReducer'
+import { setAppMessage, setIsError } from '../store/appReducer/appReducer'
 
 export const errorHandler = (dispatch: Dispatch, message: string) => {
-  dispatch(setError(message))
+  dispatch(setIsError(true))
+  dispatch(setAppMessage(message))
 }
 export const networkErrorHandler = (dispatch: Dispatch) => {
-  dispatch(setError('Network error'))
+  dispatch(setIsError(true))
+  dispatch(setAppMessage('Network error'))
 }
-export const resetAppError = (dispatch: Dispatch) => dispatch(setError(null))
+export const resetAppMessageAndError = (dispatch: Dispatch) => {
+  dispatch(setIsError(false))
+  dispatch(setAppMessage(null))
+}

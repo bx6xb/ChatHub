@@ -4,5 +4,5 @@ export type AuthState = {
   login: string | null
   isAuth: boolean
   captchaUrl: string | null
-  userPhoto: string | null
+  authorizedUserPhoto: string | null
 }

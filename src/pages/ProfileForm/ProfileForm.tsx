@@ -7,14 +7,15 @@ import {
   setProfilePhoto,
   setProfileStatus
 } from '../../store/profileReducer/asyncActions'
-import { ProfileData, ProfileDataValues } from '../../api/api'
+import { Photos, ProfileData, ProfileDataValues } from '../../api/api'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { Loading } from '../../components/Loading/Loading'
 import { authSelectors } from '../../store/authReducer'
 import { ControlledInput } from '../../components/ControlledInput/ControlledInput'
 import s from './ProfileForm.module.scss'
 import { Button, Flex } from 'antd'
-import { errorHandler } from '../../utils/errorHandler'
+import { setAppMessage, setIsError } from '../../store/appReducer/appReducer'
+import { setAuthorizedUserPhoto } from '../../store/authReducer/authReducer'
 
 type Inputs = ProfileData & {
   profileStatus: string
@@ -41,15 +42,28 @@ export const ProfileForm = withAuthRedirect(() => {
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
     const { photo, profileStatus, ...profileData } = data
-    let error = false
-    dispatch(setProfileData(profileData))
-    dispatch(setProfileStatus(profileStatus))
+
+    // getting payload data to find errors when publishing data
+    const result1 = (await dispatch(setProfileData(profileData))).payload
+    const result2 = (await dispatch(setProfileStatus(profileStatus))).payload
+    let result3: Photos | null | undefined
+
     if (photo.length) {
-      dispatch(setProfilePhoto(photo[0]))
+      result3 = (await dispatch(setProfilePhoto(photo[0]))).payload
     }
 
-    if (!error) {
-      errorHandler(dispatch, 'Data updated successfully')
+    // set new authorized user photo
+    if (result3) {
+      dispatch(setAuthorizedUserPhoto(result3.large))
+    }
+
+    // if any of the results are null, it is an error
+    const isError = [result1, result2, result3].includes(null)
+
+    // if there are no errors, display publication information
+    if (!isError) {
+      dispatch(setAppMessage('Data updated successfully'))
+      dispatch(setIsError(false))
     }
   }
 

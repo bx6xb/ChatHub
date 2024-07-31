@@ -2,4 +2,5 @@ import { AppRootState } from '../store'
 
 export const selectIsAppInitialized = (state: AppRootState) =>
   state.app.isAppInitialized
-export const selectError = (state: AppRootState) => state.app.error
+export const selectIsError = (state: AppRootState) => state.app.isError
+export const selectAppMessage = (state: AppRootState) => state.app.appMessage

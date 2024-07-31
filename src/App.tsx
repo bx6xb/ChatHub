@@ -18,7 +18,7 @@ import { Snackbar } from './components/Snackbar/Snackbar'
 import { getUserProfile } from './store/profileReducer/asyncActions'
 import { authSelectors } from './store/authReducer'
 import userDefaultPhoto from './assets/images/userDefaultPhoto.png'
-import { setUserPhoto } from './store/authReducer/authReducer'
+import { setAuthorizedUserPhoto } from './store/authReducer/authReducer'
 import { appSelectors } from './store/appReducer'
 
 const App = () => {
@@ -40,7 +40,7 @@ const App = () => {
       dispatch(getUserProfile(authorizedUserId)).then(data => {
         if (getUserProfile.fulfilled.match(data)) {
           const userPhoto = data.payload.photos.large || userDefaultPhoto
-          dispatch(setUserPhoto(userPhoto))
+          dispatch(setAuthorizedUserPhoto(userPhoto))
         }
       })
     }

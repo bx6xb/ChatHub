@@ -1,18 +1,25 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { AppState, Error } from './types'
+import { AppState, AppMessage } from './types'
 import { setUserData } from '../authReducer/asyncActions'
 
-const slice = createSlice({
+export const slice = createSlice({
   name: 'app',
   initialState: {
     isAppInitialized: false,
-    error: null
+    appMessage: null,
+    isError: false
   } as AppState,
   reducers: {
-    setError(state, action: PayloadAction<Error>) {
+    setIsError(state, action: PayloadAction<boolean>) {
       return {
         ...state,
-        error: action.payload
+        isError: action.payload
+      }
+    },
+    setAppMessage(state, action: PayloadAction<AppMessage>) {
+      return {
+        ...state,
+        appMessage: action.payload
       }
     }
   },
@@ -25,4 +32,4 @@ const slice = createSlice({
 })
 
 export const appReducer = slice.reducer
-export const { setError } = slice.actions
+export const { setIsError, setAppMessage } = slice.actions

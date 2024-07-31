@@ -1,5 +1,6 @@
 export type AppState = {
   isAppInitialized: boolean
-  error: Error
+  appMessage: AppMessage
+  isError: boolean
 }
-export type Error = string | null
+export type AppMessage = string | null

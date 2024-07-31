@@ -1,9 +1,11 @@
 import { setUserData } from '../authReducer/asyncActions'
-import { appReducer, setError } from './appReducer'
+import { appReducer, setAppMessage, setIsError, slice } from './appReducer'
+
+const initialState = slice.getInitialState()
 
 test('isAppInitialized value should be changed', () => {
   const newState = appReducer(
-    { isAppInitialized: false, error: null },
+    initialState,
     setUserData.fulfilled(
       { email: 'example@gmail.com', id: 1, login: 'login', isAuth: true },
       'requestId'
@@ -12,12 +14,14 @@ test('isAppInitialized value should be changed', () => {
 
   expect(newState.isAppInitialized).toBeTruthy()
 })
-test('error value should be changed', () => {
-  const error = 'network error'
-  const newState = appReducer(
-    { isAppInitialized: false, error: null },
-    setError(error)
-  )
+test('isError value should be changed', () => {
+  const newState = appReducer(initialState, setIsError(true))
 
-  expect(newState.error).toBe(error)
+  expect(newState.isError).toBeTruthy()
+})
+test('app message should be changed', () => {
+  const appMessage = 'Network error'
+  const newState = appReducer(initialState, setAppMessage(appMessage))
+
+  expect(newState.appMessage).toBe(appMessage)
 })

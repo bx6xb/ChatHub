@@ -8,7 +8,9 @@ import { Icon } from '../../components/Icon/Icon'
 
 export const Header = () => {
   const { isAuth } = useAppSelector(authSelectors.selectAuthState)
-  const authorizedUserAvatar = useAppSelector(authSelectors.selectUserPhoto)
+  const authorizedUserAvatar = useAppSelector(
+    authSelectors.selectAuthorizedUserPhoto
+  )
 
   return (
     <Layout.Header className={s.header}>

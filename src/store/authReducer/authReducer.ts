@@ -8,17 +8,17 @@ export const initialState = {
   login: null,
   isAuth: false,
   captchaUrl: null,
-  userPhoto: null
+  authorizedUserPhoto: null
 } as AuthState
 
 const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUserPhoto(state, action: PayloadAction<string>) {
+    setAuthorizedUserPhoto(state, action: PayloadAction<string | null>) {
       return {
         ...state,
-        userPhoto: action.payload
+        authorizedUserPhoto: action.payload
       }
     }
   },
@@ -45,4 +45,4 @@ const slice = createSlice({
 })
 
 export const authReducer = slice.reducer
-export const { setUserPhoto } = slice.actions
+export const { setAuthorizedUserPhoto } = slice.actions

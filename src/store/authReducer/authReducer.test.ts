@@ -1,5 +1,9 @@
 import { getCaptchaUrl, logout, setUserData } from './asyncActions'
-import { authReducer, initialState, setUserPhoto } from './authReducer'
+import {
+  authReducer,
+  initialState,
+  setAuthorizedUserPhoto
+} from './authReducer'
 import { AuthState } from './types'
 
 test('user data should be set', () => {
@@ -49,7 +53,7 @@ test('captcha url should be set', () => {
 })
 test('user photo should be set', () => {
   const photo = 'url/to/photo'
-  const newState = authReducer(initialState, setUserPhoto(photo))
+  const newState = authReducer(initialState, setAuthorizedUserPhoto(photo))
 
-  expect(newState.userPhoto).toBe(photo)
+  expect(newState.authorizedUserPhoto).toBe(photo)
 })

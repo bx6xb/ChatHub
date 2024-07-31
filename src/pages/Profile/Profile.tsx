@@ -42,7 +42,7 @@ export const Profile = withAuthRedirect(() => {
     dispatch(generatePosts())
   }, [userId]) // get data for profile
 
-  // redirect
+  // loading while fetching data
   if (!userProfile) {
     return <Loading />
   }

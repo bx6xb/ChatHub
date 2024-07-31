@@ -3,11 +3,12 @@ import s from './Snackbar.module.scss'
 import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { appSelectors } from '../../store/appReducer'
 import { Alert } from 'antd'
-import { resetAppError } from '../../utils/errorHandler'
+import { resetAppMessageAndError } from '../../utils/errorHandler'
 
 export const Snackbar = () => {
   // get data from the state
-  const error = useAppSelector(appSelectors.selectError)
+  const isError = useAppSelector(appSelectors.selectIsError)
+  const appMessage = useAppSelector(appSelectors.selectAppMessage)
 
   // dispatch
   const dispatch = useAppDispatch()
@@ -16,32 +17,33 @@ export const Snackbar = () => {
   const [isOpen, setOpen] = useState(false)
   const [timeoutId, setTimeoutId] = useState<number>()
 
+  // callbacks
+  const onClose = () => {
+    resetAppMessageAndError(dispatch)
+    setOpen(false)
+  }
+
   // to show and hide snackbar
   useEffect(() => {
-    if (error) {
+    if (appMessage) {
       setOpen(true)
-      setTimeoutId(
-        +setTimeout(() => {
-          setOpen(false)
-          resetAppError(dispatch)
-        }, 4000)
-      )
+      setTimeoutId(+setTimeout(onClose, 4000))
     }
 
     return () => clearTimeout(timeoutId)
-  }, [error])
+  }, [appMessage])
 
   return (
     <>
       {isOpen && (
         <Alert
-          message="Error"
-          description={error}
-          type="error"
+          message={isError ? 'Error' : 'Success'}
+          description={appMessage}
+          type={isError ? 'error' : 'success'}
           showIcon
           closable
           className={s.snackbar}
-          onClose={() => resetAppError(dispatch)}
+          onClose={onClose}
         />
       )}
     </>
