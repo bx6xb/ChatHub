@@ -61,14 +61,14 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
     <>
       {
         // for default positioning if label exists
-        (labelPosition === 'left' || label) && (
+        label && labelPosition !== 'right' && (
           <label htmlFor={id} className={s.label}>
             {label}
           </label>
         )
       }
       <Component {...ComponentProps} id={id} />
-      {labelPosition === 'right' && (
+      {label && labelPosition === 'right' && (
         <label htmlFor={id} className={s.label}>
           {label}
         </label>
