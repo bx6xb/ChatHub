@@ -6,7 +6,7 @@ import { profileSelectors } from '../../../store/profileReducer'
 import { useAppSelector } from '../../../utils/reduxUtils'
 
 export const MyPosts = () => {
-  // get data from state
+  // get data from the state
   const posts = useAppSelector(profileSelectors.selectPosts)
   const userPhoto = useAppSelector(profileSelectors.selectPhoto)
 

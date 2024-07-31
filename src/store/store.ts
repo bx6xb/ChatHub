@@ -1,4 +1,4 @@
-import { combineReducers, AnyAction } from 'redux'
+import { combineReducers } from 'redux'
 import { profileReducer } from './profileReducer/profileReducer'
 import { dialogsReducer } from './dialogsReducer/dialogsReducer'
 import { sidebarReducer } from './sidebarReducer/sidebarReducer'

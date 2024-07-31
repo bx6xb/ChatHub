@@ -1,7 +1,7 @@
 import { Checkbox, Input, InputProps } from 'antd'
 import { useId } from 'react'
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
-import s from './ControlledInput.module.scss'
+import s from './ControlledUpload.module.scss'
 
 type ControlledInputProps<TFieldValues extends FieldValues> =
   UseControllerProps<TFieldValues> &

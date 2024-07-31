@@ -1,98 +1,132 @@
-import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { profileSelectors } from '../../store/profileReducer'
 import {
+  getUserProfile,
   setProfileData,
   setProfilePhoto,
   setProfileStatus
 } from '../../store/profileReducer/asyncActions'
 import { ProfileData, ProfileDataValues } from '../../api/api'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { Loading } from '../../components/Loading/Loading'
+import { authSelectors } from '../../store/authReducer'
+import { ControlledInput } from '../../components/ControlledInput/ControlledInput'
+import s from './ProfileForm.module.scss'
+import { Button, Flex } from 'antd'
+import { errorHandler } from '../../utils/errorHandler'
 
 export const ProfileForm = withAuthRedirect(() => {
-  const { register, handleSubmit } = useForm<Inputs>()
+  // get data from the state
+  const userProfile = useAppSelector(profileSelectors.selectUserProfile)
+  const profileStatus = useAppSelector(profileSelectors.selectProfileStatus)
+  const authorizedUserId = useAppSelector(authSelectors.selectId)!
 
-  const { userProfile, profileStatus } = useAppSelector(
-    profileSelectors.selectProfileState
-  )
+  // dispatch
   const dispatch = useAppDispatch()
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
+  // form init
+  const { register, handleSubmit, control } = useForm<Inputs>()
+
+  if (!userProfile) {
+    // get authorized user profile if user reload webstite on this page
+    dispatch(getUserProfile(authorizedUserId))
+    return <Loading />
+  }
+
+  const onSubmit: SubmitHandler<Inputs> = async data => {
     const { photo, profileStatus, ...profileData } = data
+    let error = false
     dispatch(setProfileData(profileData))
     dispatch(setProfileStatus(profileStatus))
     if (photo.length) {
       dispatch(setProfilePhoto(photo[0]))
     }
-  }
 
-  if (!userProfile) {
-    return <div>Preloader</div>
+    if (!error) {
+      errorHandler(dispatch, 'Data updated successfully')
+    }
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <br />
+    <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+      <Flex gap={3} vertical>
         <label>
           Set photo <input type="file" {...register('photo')} />
         </label>
-        <br />
-        <label>
-          Full name{' '}
-          <input
+
+        <Flex justify="space-between" align="center">
+          <ControlledInput
             defaultValue={userProfile.fullName}
-            {...register('fullName')}
+            name="fullName"
+            control={control}
+            className={s.input}
+            label="Full name"
           />
-        </label>
-        <br />
-        <label>
-          Status{' '}
-          <input defaultValue={profileStatus} {...register('profileStatus')} />
-        </label>
-        <br />
-        <label>
-          About me{' '}
-          <input
+        </Flex>
+        <Flex justify="space-between" align="center">
+          <ControlledInput
+            defaultValue={profileStatus}
+            name="profileStatus"
+            control={control}
+            className={s.input}
+            label="Status"
+          />
+        </Flex>
+        <Flex justify="space-between" align="center">
+          <ControlledInput
             defaultValue={userProfile.aboutMe?.toString()}
-            {...register('aboutMe', { required: true })}
+            name="aboutMe"
+            control={control}
+            className={s.input}
+            label="About me"
+            rules={{ required: true }}
           />
-        </label>
-        <br />
-        <label>
-          Looking for a job{' '}
-          <input
-            type="checkbox"
+        </Flex>
+        <Flex justify="space-between" align="center">
+          <ControlledInput
             defaultChecked={userProfile.lookingForAJob}
-            {...register('lookingForAJob')}
+            name="lookingForAJob"
+            control={control}
+            label="Looking for a job"
+            as="checkbox"
+            type="checkbox"
           />
-        </label>
-        <div>
-          Job description{' '}
-          <input
+        </Flex>
+        <Flex justify="space-between" align="center">
+          <ControlledInput
             defaultValue={userProfile.lookingForAJobDescription?.toString()}
-            {...register('lookingForAJobDescription', { required: true })}
+            name="lookingForAJobDescription"
+            control={control}
+            rules={{ required: true }}
+            label="Job description"
+            className={s.input}
           />
-        </div>
+        </Flex>
+
+        {/* Contacts */}
         {Object.entries(userProfile.contacts).map(([contact, link]) => {
+          const label = contact[0].toUpperCase() + contact.slice(1)
+
           return (
-            <React.Fragment key={contact}>
-              <label>
-                {contact}{' '}
-                <input
-                  defaultValue={link?.toString()}
-                  placeholder="link"
-                  {...register(`contacts.${contact}` as ProfileDataValues)}
-                />
-              </label>
-              <br />
-            </React.Fragment>
+            <Flex justify="space-between" align="center" key={contact}>
+              <ControlledInput
+                defaultValue={link?.toString()}
+                name={`contacts.${contact}` as ProfileDataValues}
+                control={control}
+                label={label}
+                placeholder="link"
+                className={s.input}
+              />
+            </Flex>
           )
         })}
-        <button type="submit">Submit</button>
-      </form>
-    </>
+      </Flex>
+
+      <Button htmlType="submit" className={s.submit}>
+        Submit
+      </Button>
+    </form>
   )
 })
 

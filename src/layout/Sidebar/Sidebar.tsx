@@ -23,7 +23,7 @@ const menuItems = [
 ]
 
 export const Sidebar = () => {
-  // get data from state
+  // get data from the state
   const users = useAppSelector(sidebarSelectors.selectUsers)
   const isAuth = useAppSelector(authSelectors.selectIsAuth)
 

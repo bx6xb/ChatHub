@@ -17,7 +17,10 @@ import { Loading } from './components/Loading/Loading'
 import { Snackbar } from './components/Snackbar/Snackbar'
 
 const App = () => {
+  // get data from the state
   const isAppInitialized = useAppSelector(state => state.app.isAppInitialized)
+
+  // dispatch
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -25,6 +28,7 @@ const App = () => {
     dispatch(getSidebarUsers())
   }, [])
 
+  // show loading
   if (!isAppInitialized) {
     return <Loading />
   }

@@ -7,7 +7,7 @@ import { authSelectors } from '../../../store/authReducer'
 import s from './ProfileCard.module.scss'
 
 export const ProfileCard = () => {
-  // get data from state
+  // get data from the state
   const fullName = useAppSelector(profileSelectors.selectFullName)
   const userPhoto = useAppSelector(profileSelectors.selectPhoto)
   const profileStatus = useAppSelector(profileSelectors.selectProfileStatus)

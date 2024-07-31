@@ -91,14 +91,15 @@ const Login = () => {
 
           {/* Remember me checkbox */}
           <label>
-            <Flex gap={3}>
+            <Flex gap={3} align="center">
               <ControlledInput
                 as="checkbox"
                 type="checkbox"
                 name="rememberMe"
                 control={control}
+                label="Remember me"
+                labelPosition="right"
               />
-              <Typography.Paragraph>Remember me</Typography.Paragraph>
             </Flex>
           </label>
 

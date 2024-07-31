@@ -20,7 +20,7 @@ import {
 } from '../../store/profileReducer/asyncActions'
 
 export const Profile = withAuthRedirect(() => {
-  // get data from state
+  // get data from the state
   const userProfile = useAppSelector(profileSelectors.selectUserProfile)
   const authorizedUserId = useAppSelector(authSelectors.selectId)!
 
@@ -35,7 +35,7 @@ export const Profile = withAuthRedirect(() => {
   const userId = urlParams.id ? +urlParams.id : authorizedUserId! // define id of user
 
   useEffect(() => {
-    // get authorized user data to set user photo for header pop overw
+    // get authorized user data to set user photo for header pop over
     dispatch(getUserProfile(authorizedUserId)).then(data => {
       if (getUserProfile.fulfilled.match(data)) {
         const userPhoto = data.payload.photos.large || userDefaultPhoto

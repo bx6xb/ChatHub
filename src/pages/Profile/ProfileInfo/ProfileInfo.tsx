@@ -7,7 +7,7 @@ import { ContactValues } from '../../../api/api'
 import s from './ProfileInfo.module.scss'
 
 export const ProfileInfo = () => {
-  // get data from state
+  // get data from the state
   const userProfile = useAppSelector(profileSelectors.selectUserProfile)
   // for ts
   if (!userProfile) {
