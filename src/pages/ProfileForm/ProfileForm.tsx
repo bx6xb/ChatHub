@@ -8,8 +8,9 @@ import {
   setProfileStatus
 } from '../../store/profileReducer/asyncActions'
 import { ProfileData, ProfileDataValues } from '../../api/api'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 
-export const ProfileForm = () => {
+export const ProfileForm = withAuthRedirect(() => {
   const { register, handleSubmit } = useForm<Inputs>()
 
   const { userProfile, profileStatus } = useAppSelector(
@@ -93,7 +94,7 @@ export const ProfileForm = () => {
       </form>
     </>
   )
-}
+})
 
 // types
 type Inputs = ProfileData & {
