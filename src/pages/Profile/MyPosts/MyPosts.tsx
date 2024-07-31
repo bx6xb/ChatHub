@@ -3,7 +3,7 @@ import { PostsForm } from './PostsForm/PostsForm'
 import { Post } from './Post/Post'
 import userDefaultPhoto from '../../../assets/images/userDefaultPhoto.png'
 import { profileSelectors } from '../../../store/profileReducer'
-import { useAppSelector } from '../../../utils/redexUtils'
+import { useAppSelector } from '../../../utils/reduxUtils'
 
 export const MyPosts = () => {
   // get data from state

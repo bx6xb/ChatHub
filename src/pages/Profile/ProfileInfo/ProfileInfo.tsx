@@ -1,5 +1,5 @@
 import { Flex, Typography } from 'antd'
-import { useAppSelector } from '../../../utils/redexUtils'
+import { useAppSelector } from '../../../utils/reduxUtils'
 import { profileSelectors } from '../../../store/profileReducer'
 import { ReactElement } from 'react'
 import { Contact } from './Contact/Contact'

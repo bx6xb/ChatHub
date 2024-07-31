@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../utils/redexUtils'
+import { useAppSelector } from '../../utils/reduxUtils'
 import { authSelectors } from '../../store/authReducer'
 import { sidebarSelectors } from '../../store/sidebarReducer'
 import { Avatar, Flex, Layout, Menu, Typography } from 'antd'
@@ -72,45 +72,43 @@ export const Sidebar = () => {
     className: s.menuItem
   }))
 
-  return (
+  return isAuth ? (
     <>
       <div className={isCollapsed ? '' : s.blackScreen} />
       <Layout.Sider
         trigger={null}
-        className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}>
+        className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}
+      >
+        <Typography.Title level={4}>Navigation</Typography.Title>
         <Menu
           className={s.menu}
           mode="inline"
           defaultSelectedKeys={['1']}
           items={mappedMenuItems}
         />
-        {isAuth && (
-          <>
-            <Typography.Title level={4}>Friends online</Typography.Title>
+        <Typography.Title level={4}>Friends online</Typography.Title>
 
-            <ul className={s.friends}>
-              {users &&
-                users.map(u => (
-                  <li key={u.id}>
-                    <Link to={'profile/' + u.id.toString()}>
-                      <Flex align="center" gap={5}>
-                        <Avatar
-                          icon={
-                            <img
-                              src={u.photos.large || defaultUserPhoto}
-                              alt="avatar"
-                            />
-                          }
+        <ul className={s.friends}>
+          {users &&
+            users.map(u => (
+              <li key={u.id}>
+                <Link to={'profile/' + u.id.toString()}>
+                  <Flex align="center" gap={5}>
+                    <Avatar
+                      icon={
+                        <img
+                          src={u.photos.large || defaultUserPhoto}
+                          alt="avatar"
                         />
-                        <span>{u.name}</span>
-                      </Flex>
-                    </Link>
-                  </li>
-                ))}
-            </ul>
-          </>
-        )}
+                      }
+                    />
+                    <span>{u.name}</span>
+                  </Flex>
+                </Link>
+              </li>
+            ))}
+        </ul>
       </Layout.Sider>
     </>
-  )
+  ) : null
 }

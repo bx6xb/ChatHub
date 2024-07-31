@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../utils/redexUtils'
+import { useAppSelector } from '../../utils/reduxUtils'
 import { authSelectors } from '../../store/authReducer'
 import userDefaultPhoto from '../../assets/images/userDefaultPhoto.png'
 import { Avatar, Flex, Layout, Popover } from 'antd'
@@ -12,7 +12,7 @@ export const Header = () => {
 
   return (
     <Layout.Header className={s.header}>
-      <Flex justify="space-between" align="center">
+      <Flex justify={isAuth ? 'space-between' : 'center'} align="center">
         <Icon iconId="logo" width="164" height="40" viewBox="0 0 82 20" />
         {isAuth && (
           <Popover content={ProfilePopOver} title="">

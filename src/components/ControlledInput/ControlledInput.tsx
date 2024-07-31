@@ -26,6 +26,7 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
     ...rest
   } = props
 
+  // controller for custom inputs
   const {
     field: { value, onChange }
   } = useController({
@@ -35,7 +36,7 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
     defaultValue,
     disabled,
     shouldUnregister
-  }) // controller from react hook form for custom component
+  })
 
   const Component = as ? components[as] : Input // choose component
 

@@ -6,7 +6,7 @@ import {
   LikeFilled,
   LikeOutlined
 } from '@ant-design/icons'
-import { useAppDispatch } from '../../../../utils/redexUtils'
+import { useAppDispatch } from '../../../../utils/reduxUtils'
 import { changePostData } from '../../../../store/profileReducer/profileReducer'
 import { useState } from 'react'
 import { Avatar, Flex, Typography } from 'antd'

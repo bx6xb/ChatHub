@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom'
-import { useAppSelector } from '../utils/redexUtils'
+import { useAppSelector } from '../utils/reduxUtils'
 import { authSelectors } from '../store/authReducer'
 
 export function withAuthRedirect<T extends {}>(

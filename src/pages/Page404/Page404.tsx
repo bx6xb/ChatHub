@@ -10,7 +10,8 @@ export const Page404 = withAuthRedirect(() => {
           colorTextHeading: Colors.primary,
           colorTextDescription: Colors.white
         }
-      }}>
+      }}
+    >
       <Result
         status="404"
         title="404"

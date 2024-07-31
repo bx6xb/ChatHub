@@ -7,3 +7,4 @@ export const errorHandler = (dispatch: Dispatch, message: string) => {
 export const networkErrorHandler = (dispatch: Dispatch) => {
   dispatch(setError('Network error'))
 }
+export const resetAppError = (dispatch: Dispatch) => dispatch(setError(null))

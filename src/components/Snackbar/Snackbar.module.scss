@@ -1,6 +1,6 @@
 .snackbar {
-  width: 400px;
-  height: 50px;
+  max-width: 400px;
+  width: 90%;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
@@ -10,7 +10,5 @@
   justify-content: center;
   align-items: center;
   color: black;
-  &.hidden {
-    display: none;
-  }
+  z-index: 10;
 }

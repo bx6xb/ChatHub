@@ -2,7 +2,7 @@ import { Avatar, Button, Flex, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import userDefaultPhoto from '../../../assets/images/userDefaultPhoto.png'
 import { profileSelectors } from '../../../store/profileReducer'
-import { useAppSelector } from '../../../utils/redexUtils'
+import { useAppSelector } from '../../../utils/reduxUtils'
 import { authSelectors } from '../../../store/authReducer'
 import s from './ProfileCard.module.scss'
 

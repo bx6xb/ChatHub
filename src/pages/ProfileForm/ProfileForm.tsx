@@ -1,6 +1,6 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useAppDispatch, useAppSelector } from '../../utils/redexUtils'
+import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { profileSelectors } from '../../store/profileReducer'
 import {
   setProfileData,

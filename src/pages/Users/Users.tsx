@@ -10,7 +10,7 @@ import {
   Pagination,
   Skeleton
 } from 'antd'
-import { useAppDispatch, useAppSelector } from '../../utils/redexUtils'
+import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { usersSelectors } from '../../store/usersReducer'
 import { useEffect } from 'react'
 import {

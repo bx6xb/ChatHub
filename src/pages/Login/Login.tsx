@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../utils/redexUtils'
+import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { authSelectors } from '../../store/authReducer'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormData } from '../../api/api'
@@ -8,13 +8,20 @@ import { ControlledInput } from '../../components/ControlledInput/ControlledInpu
 import s from './Login.module.scss'
 import { Button, Flex, Typography } from 'antd'
 
+const createErrorElement = (text: string) => (
+  <div className={s.error}>{text}</div>
+)
+
 const Login = () => {
+  // get data from the state
   const isAuth = useAppSelector(authSelectors.selectIsAuth)
   const captchaUrl = useAppSelector(authSelectors.selectCaptchaUrl)
 
+  // dispatch
   const dispatch = useAppDispatch()
+
+  // form init
   const {
-    register,
     handleSubmit,
     formState: { errors },
     reset,
@@ -35,50 +42,70 @@ const Login = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex align="start" gap={5} vertical>
-        <Typography.Title level={2}>Login</Typography.Title>
-        <ControlledInput
-          name="email"
-          placeholder="Email"
-          control={control}
-          rules={{
-            required: true,
-            pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-          }}
-          className={s.input}
-        />
-        {<div className={s.error}>{errors.email?.message}</div>}
-        <ControlledInput
-          type="password"
-          name="password"
-          placeholder="Password"
-          control={control}
-          rules={{ required: 'Password is required' }}
-          className={s.input}
-        />
-        {<div className={s.error}>{errors.password?.message}</div>}
-        <label>
-          <Flex gap={3}>
-            <ControlledInput
-              as="checkbox"
-              type="checkbox"
-              name="rememberMe"
-              control={control}
-            />
-            <Typography.Paragraph>Remember me</Typography.Paragraph>
-          </Flex>
-        </label>
-        {captchaUrl && (
-          <Flex align="center" gap={3}>
-            <img src={captchaUrl} alt="captcha" />
-            <input {...register('captcha')} />
-          </Flex>
-        )}
-        {<div className={s.error}>{errors.captcha?.message}</div>}
-        <Button htmlType="submit">Login</Button>
-      </Flex>
-    </form>
+    <Flex justify="center">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Flex align="start" gap={5} vertical>
+          <Typography.Title level={2}>Login</Typography.Title>
+          {/* Email input */}
+          <ControlledInput
+            name="email"
+            placeholder="Email"
+            control={control}
+            rules={{
+              required: 'Email is required',
+              pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+            }}
+            className={s.input}
+          />
+          {/* Email error */}
+          {errors.email?.type === 'required'
+            ? createErrorElement('Email is required')
+            : errors.email?.type === 'pattern'
+              ? createErrorElement('Email is incorrect')
+              : null}
+
+          {/* Password input */}
+          <ControlledInput
+            type="password"
+            name="password"
+            placeholder="Password"
+            control={control}
+            rules={{ required: true }}
+            className={s.input}
+          />
+          {/* Password error */}
+          {errors.password?.type === 'required' &&
+            createErrorElement('Password is required')}
+
+          {/* Captcha input */}
+          {captchaUrl && (
+            <Flex gap={3} vertical>
+              <img src={captchaUrl} alt="captcha" />
+              <ControlledInput
+                name="captcha"
+                control={control}
+                placeholder="Captcha"
+              />
+            </Flex>
+          )}
+
+          {/* Remember me checkbox */}
+          <label>
+            <Flex gap={3}>
+              <ControlledInput
+                as="checkbox"
+                type="checkbox"
+                name="rememberMe"
+                control={control}
+              />
+              <Typography.Paragraph>Remember me</Typography.Paragraph>
+            </Flex>
+          </label>
+
+          <Button htmlType="submit">Login</Button>
+        </Flex>
+      </form>
+    </Flex>
   )
 }
 

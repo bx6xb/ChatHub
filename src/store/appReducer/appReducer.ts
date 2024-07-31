@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { AppState } from './types'
+import { AppState, Error } from './types'
 import { setUserData } from '../authReducer/asyncActions'
 
 const slice = createSlice({
@@ -9,7 +9,7 @@ const slice = createSlice({
     error: null
   } as AppState,
   reducers: {
-    setError(state, action: PayloadAction<string>) {
+    setError(state, action: PayloadAction<Error>) {
       return {
         ...state,
         error: action.payload
@@ -17,7 +17,7 @@ const slice = createSlice({
     }
   },
   extraReducers: builder => {
-    builder.addCase(setUserData.fulfilled, (state, action) => ({
+    builder.addCase(setUserData.fulfilled, state => ({
       ...state,
       isAppInitialized: true
     }))

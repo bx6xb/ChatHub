@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from 'react'
 import { ConfigProvider, Layout } from 'antd'
-import { useAppDispatch, useAppSelector } from './utils/redexUtils'
+import { useAppDispatch, useAppSelector } from './utils/reduxUtils'
 import { setUserData } from './store/authReducer/asyncActions'
 import { getSidebarUsers } from './store/sidebarReducer/asyncActions'
 import s from './styles/App.module.scss'
@@ -14,6 +14,7 @@ import { Page404 } from './pages/Page404/Page404'
 import { Colors } from './styles/Colors'
 import { ProfileForm } from './pages/ProfileForm/ProfileForm'
 import { Loading } from './components/Loading/Loading'
+import { Snackbar } from './components/Snackbar/Snackbar'
 
 const App = () => {
   const isAppInitialized = useAppSelector(state => state.app.isAppInitialized)
@@ -57,8 +58,10 @@ const App = () => {
             colorText: Colors.white
           }
         }
-      }}>
+      }}
+    >
       <Layout className={s.app}>
+        <Snackbar />
         <Header />
         <Layout>
           <Sidebar />
