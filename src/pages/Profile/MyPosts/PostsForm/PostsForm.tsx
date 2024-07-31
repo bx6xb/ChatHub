@@ -4,6 +4,10 @@ import { useAppDispatch } from '../../../../utils/reduxUtils'
 import { Button, Flex, Input, Space } from 'antd'
 import s from './PostsForm.module.scss'
 
+type PostsFormData = {
+  message: string
+}
+
 export const PostsForm = () => {
   // dispatch
   const dispatch = useAppDispatch()
@@ -53,9 +57,4 @@ export const PostsForm = () => {
       </Flex>
     </form>
   )
-}
-
-// types
-export type PostsFormData = {
-  message: string
 }

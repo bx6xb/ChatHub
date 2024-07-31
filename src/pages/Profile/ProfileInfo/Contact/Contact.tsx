@@ -12,6 +12,11 @@ import { ContactValues } from '../../../../api/api'
 import { Icon } from '../../../../components/Icon/Icon'
 import s from './Contact.module.scss'
 
+type ContactProps = {
+  contact: ContactValues
+  link: string
+}
+
 const contactIcons = {
   github: <GithubOutlined />,
   vk: <Icon iconId="vk" width="12.5" height="12.5" viewBox="0 0 360 360" />,
@@ -34,10 +39,4 @@ export const Contact = ({ contact, link }: ContactProps) => {
       </a>
     </Flex>
   )
-}
-
-// types
-type ContactProps = {
-  contact: ContactValues
-  link: string
 }

@@ -16,6 +16,11 @@ import s from './ProfileForm.module.scss'
 import { Button, Flex } from 'antd'
 import { errorHandler } from '../../utils/errorHandler'
 
+type Inputs = ProfileData & {
+  profileStatus: string
+  photo: File[]
+}
+
 export const ProfileForm = withAuthRedirect(() => {
   // get data from the state
   const userProfile = useAppSelector(profileSelectors.selectUserProfile)
@@ -129,9 +134,3 @@ export const ProfileForm = withAuthRedirect(() => {
     </form>
   )
 })
-
-// types
-type Inputs = ProfileData & {
-  profileStatus: string
-  photo: File[]
-}

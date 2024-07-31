@@ -17,6 +17,10 @@ import {
   getUserProfile
 } from '../../store/profileReducer/asyncActions'
 
+type UrlParams = {
+  id: string
+}
+
 export const Profile = withAuthRedirect(() => {
   // get data from the state
   const userProfile = useAppSelector(profileSelectors.selectUserProfile)
@@ -55,8 +59,3 @@ export const Profile = withAuthRedirect(() => {
     </>
   )
 })
-
-// types
-type UrlParams = {
-  id: string
-}

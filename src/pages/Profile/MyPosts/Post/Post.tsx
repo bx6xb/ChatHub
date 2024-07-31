@@ -11,6 +11,11 @@ import { changePostData } from '../../../../store/profileReducer/profileReducer'
 import { useState } from 'react'
 import { Avatar, Flex, Typography } from 'antd'
 
+type PostProps = {
+  post: PostType
+  photo: string
+}
+
 export const Post = ({ post, photo }: PostProps) => {
   // destructuring post object
   const { id, message, likesCount, dislikesCount } = post
@@ -131,10 +136,4 @@ export const Post = ({ post, photo }: PostProps) => {
       </Flex>
     </Flex>
   )
-}
-
-// types
-type PostProps = {
-  post: PostType
-  photo: string
 }
