@@ -15,7 +15,10 @@ import { Colors } from './styles/Colors'
 import { ProfileForm } from './pages/ProfileForm/ProfileForm'
 import { Loading } from './components/Loading/Loading'
 import { Snackbar } from './components/Snackbar/Snackbar'
-import { getUserProfile } from './store/profileReducer/asyncActions'
+import {
+  getProfileStatus,
+  getUserProfile
+} from './store/profileReducer/asyncActions'
 import { authSelectors } from './store/authReducer'
 import userDefaultPhoto from './assets/images/userDefaultPhoto.png'
 import { setAuthorizedUserPhoto } from './store/authReducer/authReducer'
@@ -35,7 +38,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    // get authorized user data to set user photo for header pop over
+    // get authorized user data to set user photo for pop over header
     if (authorizedUserId) {
       dispatch(getUserProfile(authorizedUserId)).then(data => {
         if (getUserProfile.fulfilled.match(data)) {
@@ -43,6 +46,8 @@ const App = () => {
           dispatch(setAuthorizedUserPhoto(userPhoto))
         }
       })
+      // get the user's logged in status to set it on the profile form page if the user reloads the page here
+      dispatch(getProfileStatus(authorizedUserId))
     }
   }, [authorizedUserId])
 
@@ -80,8 +85,7 @@ const App = () => {
             colorText: Colors.white
           }
         }
-      }}
-    >
+      }}>
       <Layout className={s.app}>
         <Snackbar />
         <Header />
