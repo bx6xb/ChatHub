@@ -2,7 +2,6 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { profileSelectors } from '../../store/profileReducer'
 import {
-  getUserProfile,
   setProfileData,
   setProfilePhoto,
   setProfileStatus
@@ -10,7 +9,6 @@ import {
 import { Photos, ProfileData, ProfileDataValues } from '../../api/api'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { Loading } from '../../components/Loading/Loading'
-import { authSelectors } from '../../store/authReducer'
 import { ControlledInput } from '../../components/ControlledInput/ControlledInput'
 import s from './ProfileForm.module.scss'
 import { Button, Flex } from 'antd'
@@ -26,7 +24,6 @@ export const ProfileForm = withAuthRedirect(() => {
   // get data from the state
   const userProfile = useAppSelector(profileSelectors.selectUserProfile)
   const profileStatus = useAppSelector(profileSelectors.selectProfileStatus)
-  const authorizedUserId = useAppSelector(authSelectors.selectId)!
 
   // dispatch
   const dispatch = useAppDispatch()
@@ -35,8 +32,6 @@ export const ProfileForm = withAuthRedirect(() => {
   const { register, handleSubmit, control } = useForm<Inputs>()
 
   if (!userProfile) {
-    // get authorized user profile if user reload webstite on this page
-    dispatch(getUserProfile(authorizedUserId))
     return <Loading />
   }
 
