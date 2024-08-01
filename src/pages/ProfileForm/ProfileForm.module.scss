@@ -1,9 +1,16 @@
 .form {
-  width: 300px;
+  width: 320px;
 }
 .input {
   width: 180px;
   height: 25px;
+}
+.inputWrapper {
+  @media (max-width: 375px) {
+    flex-direction: column;
+    align-items: start;
+    gap: 2px;
+  }
 }
 .submit {
   margin-top: 10px;

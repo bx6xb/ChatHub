@@ -1,3 +1,4 @@
+import { RcFile } from 'antd/es/upload'
 import axios from 'axios'
 
 // axios instance

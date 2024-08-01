@@ -13,7 +13,7 @@ const createErrorElement = (text: string) => (
   <div className={s.error}>{text}</div>
 )
 
-const Login = () => {
+export const Login = () => {
   // get data from the state
   const isAuth = useAppSelector(authSelectors.selectIsAuth)
   const captchaUrl = useAppSelector(authSelectors.selectCaptchaUrl)
@@ -68,7 +68,7 @@ const Login = () => {
 
           {/* Password input */}
           <ControlledInput
-            type="password"
+            // type="password"
             name="password"
             placeholder="Password"
             control={control}
@@ -95,7 +95,7 @@ const Login = () => {
           <Flex gap={3} align="center">
             <ControlledInput
               as="checkbox"
-              type="checkbox"
+              // type="checkbox"
               name="rememberMe"
               control={control}
               label="Remember me"
@@ -111,5 +111,3 @@ const Login = () => {
     </Flex>
   )
 }
-
-export default Login

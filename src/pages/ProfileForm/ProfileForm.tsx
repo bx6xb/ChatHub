@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { profileSelectors } from '../../store/profileReducer'
 import {
@@ -9,15 +9,33 @@ import {
 import { Photos, ProfileData, ProfileDataValues } from '../../api/api'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { Loading } from '../../components/Loading/Loading'
-import { ControlledInput } from '../../components/ControlledInput/ControlledInput'
+import {
+  ControlledInput,
+  ControlledInputProps as ControlledInputPropsWithoutGeneric
+} from '../../components/ControlledInput/ControlledInput'
 import s from './ProfileForm.module.scss'
-import { Button, Flex } from 'antd'
+import { Avatar, Button, Flex } from 'antd'
 import { setAppMessage, setIsError } from '../../store/appReducer/appReducer'
 import { setAuthorizedUserPhoto } from '../../store/authReducer/authReducer'
+import { useEffect, useState } from 'react'
 
-type Inputs = ProfileData & {
+type ControlledInputProps = ControlledInputPropsWithoutGeneric<FormValues>
+
+export type FormValues = ProfileData & {
   profileStatus: string
-  photo: File[]
+  photo: {
+    file: {
+      uid: string
+      lastModified: number
+      lastModifiedDate: string
+      name: string
+      size: number
+      type: string
+      percent: number
+      originFileObj: File
+      status: string
+    }
+  }
 }
 
 export const ProfileForm = withAuthRedirect(() => {
@@ -28,14 +46,27 @@ export const ProfileForm = withAuthRedirect(() => {
   // dispatch
   const dispatch = useAppDispatch()
 
+  // local state
+  const [photoPreview, setPhotoPreview] = useState<string>()
+
   // form init
-  const { register, handleSubmit, control } = useForm<Inputs>()
+  const { handleSubmit, control } = useForm<FormValues>()
+
+  // watch photo
+  const photoFromForm = useWatch({ control, name: 'photo.file.originFileObj' })
+
+  useEffect(() => {
+    if (photoFromForm) {
+      const photoUrl = URL.createObjectURL(photoFromForm)
+      setPhotoPreview(photoUrl)
+    }
+  }, [photoFromForm])
 
   if (!userProfile) {
     return <Loading />
   }
 
-  const onSubmit: SubmitHandler<Inputs> = async data => {
+  const onSubmit: SubmitHandler<FormValues> = async data => {
     const { photo, profileStatus, ...profileData } = data
 
     // getting payload data to find errors when publishing data
@@ -43,8 +74,9 @@ export const ProfileForm = withAuthRedirect(() => {
     const result2 = (await dispatch(setProfileStatus(profileStatus))).payload
     let result3: Photos | null | undefined
 
-    if (photo.length) {
-      result3 = (await dispatch(setProfilePhoto(photo[0]))).payload
+    if (photo) {
+      result3 = (await dispatch(setProfilePhoto(photo.file.originFileObj)))
+        .payload
     }
 
     // set new authorized user photo
@@ -62,81 +94,86 @@ export const ProfileForm = withAuthRedirect(() => {
     }
   }
 
+  // variables
+  const inputsData: ControlledInputProps[] = [
+    {
+      name: 'photo',
+      as: 'upload',
+      label: 'Set profile photo',
+      customRequest: () => {}, // to override and cancel upload
+      maxCount: 1,
+      showUploadList: false,
+      className: '' // to override and not add styles to upload, and also to avoid duplicating the class name for other inputs
+    },
+    {
+      name: 'fullName',
+      label: 'Full name',
+      defaultValue: userProfile.fullName
+    },
+    {
+      name: 'profileStatus',
+      label: 'Status',
+      defaultValue: profileStatus
+    },
+    {
+      name: 'aboutMe',
+      label: 'About me',
+      defaultValue: userProfile.aboutMe?.toString(),
+      rules: { required: true }
+    },
+    {
+      name: 'lookingForAJob',
+      as: 'checkbox',
+      label: 'Looking for a job',
+      defaultChecked: userProfile.lookingForAJob
+    },
+    {
+      name: 'lookingForAJobDescription',
+      label: 'Job description',
+      defaultValue: userProfile.lookingForAJobDescription?.toString(),
+      rules: { required: true }
+    },
+    ...(Object.entries(userProfile.contacts).map(([contact, link]) => ({
+      name: `contacts.${contact}` as ProfileDataValues,
+      label: contact[0].toUpperCase() + contact.slice(1),
+      defaultValue: link && link.toString()
+    })) as ControlledInputProps[])
+  ]
+
+  const mappedInputs = inputsData.map((input, i) => {
+    const componentProps: ControlledInputProps = {
+      className: s.input,
+      control: control,
+      ...input
+    }
+
+    return (
+      <Flex
+        justify="space-between"
+        align="center"
+        key={i}
+        className={s.inputWrapper}
+      >
+        <ControlledInput {...componentProps} />
+      </Flex>
+    )
+  })
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-      <Flex gap={3} vertical>
-        <label>
-          Set photo <input type="file" {...register('photo')} />
-        </label>
+      <Flex gap={6} vertical>
+        {/* Photo preview */}
+        {photoPreview && (
+          <Flex justify="start">
+            <Avatar size={64} icon={<img src={photoPreview} />} />
+          </Flex>
+        )}
 
-        <Flex justify="space-between" align="center">
-          <ControlledInput
-            defaultValue={userProfile.fullName}
-            name="fullName"
-            control={control}
-            className={s.input}
-            label="Full name"
-          />
-        </Flex>
-        <Flex justify="space-between" align="center">
-          <ControlledInput
-            defaultValue={profileStatus}
-            name="profileStatus"
-            control={control}
-            className={s.input}
-            label="Status"
-          />
-        </Flex>
-        <Flex justify="space-between" align="center">
-          <ControlledInput
-            defaultValue={userProfile.aboutMe?.toString()}
-            name="aboutMe"
-            control={control}
-            className={s.input}
-            label="About me"
-            rules={{ required: true }}
-          />
-        </Flex>
-        <Flex justify="space-between" align="center">
-          <ControlledInput
-            defaultChecked={userProfile.lookingForAJob}
-            name="lookingForAJob"
-            control={control}
-            label="Looking for a job"
-            as="checkbox"
-            type="checkbox"
-          />
-        </Flex>
-        <Flex justify="space-between" align="center">
-          <ControlledInput
-            defaultValue={userProfile.lookingForAJobDescription?.toString()}
-            name="lookingForAJobDescription"
-            control={control}
-            rules={{ required: true }}
-            label="Job description"
-            className={s.input}
-          />
-        </Flex>
-
-        {/* Contacts */}
-        {Object.entries(userProfile.contacts).map(([contact, link]) => {
-          const label = contact[0].toUpperCase() + contact.slice(1)
-
-          return (
-            <Flex justify="space-between" align="center" key={contact}>
-              <ControlledInput
-                defaultValue={link?.toString()}
-                name={`contacts.${contact}` as ProfileDataValues}
-                control={control}
-                label={label}
-                placeholder="link"
-                className={s.input}
-              />
-            </Flex>
-          )
-        })}
+        {/* inputs */}
+        {mappedInputs}
       </Flex>
 
+      {/* submit button */}
       <Button htmlType="submit" className="submitFormButton">
         Submit
       </Button>

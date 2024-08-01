@@ -1,19 +1,25 @@
-import { Checkbox, Input, InputProps } from 'antd'
+import { Button, Checkbox, Input, InputProps, Upload, UploadProps } from 'antd'
 import { useId } from 'react'
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
 import s from './ControlledInput.module.scss'
+import { UploadOutlined } from '@ant-design/icons'
 
-type ControlledInputProps<TFieldValues extends FieldValues> =
+type WithoutValueAndOnChange<T> = Omit<T, 'onChange' | 'value'>
+
+export type ControlledInputProps<TFieldValues extends FieldValues> =
   UseControllerProps<TFieldValues> &
-    Omit<InputProps, 'onChange' | 'value'> & {
-      as?: keyof typeof components
+    WithoutValueAndOnChange<InputProps> &
+    WithoutValueAndOnChange<UploadProps> & {
+      as?: 'input' | 'checkbox' | 'upload'
       label?: string
       labelPosition?: 'left' | 'right'
     }
 
-const components = {
-  input: Input,
-  checkbox: Checkbox
+type ComponentProps = {
+  onChange?: (e: any) => void
+  value?: any
+  checked?: boolean
+  [key: string]: any
 }
 
 export const ControlledInput = <TFieldValues extends FieldValues>(
@@ -47,27 +53,41 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
     shouldUnregister
   })
 
-  // choose component
-  const Component = as ? components[as] : Input
-
   // create component props object
-  const ComponentProps = {
+  const ComponentProps: ComponentProps = {
     [as === 'checkbox' ? 'checked' : 'value']: value,
     onChange,
     ...rest
   }
 
+  if (as === 'upload') {
+    delete ComponentProps.value
+  }
+
   return (
     <>
-      {
-        // for default positioning if label exists
-        label && labelPosition !== 'right' && (
+      {/* left label */}
+      {label &&
+        labelPosition !== 'right' && ( // for default positioning if label exists
           <label htmlFor={id} className={s.label}>
             {label}
           </label>
-        )
-      }
-      <Component {...ComponentProps} id={id} />
+        )}
+
+      {as === 'checkbox' ? (
+        // checkbox
+        <Checkbox {...ComponentProps} id={id} />
+      ) : as === 'upload' ? (
+        // upload
+        <Upload {...ComponentProps} id={id}>
+          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        </Upload>
+      ) : (
+        // input
+        <Input {...ComponentProps} id={id} />
+      )}
+
+      {/* right label */}
       {label && labelPosition === 'right' && (
         <label htmlFor={id} className={s.label}>
           {label}
