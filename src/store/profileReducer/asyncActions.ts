@@ -31,7 +31,7 @@ export const setProfileStatus = createAsyncThunk<
   string,
   string,
   { state: AppRootState }
->( // fix this: if request was rejected thunk returns old status
+>(
   'profile/setProfileStatus',
   async (status: string, { dispatch, rejectWithValue }) => {
     try {

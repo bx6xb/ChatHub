@@ -72,9 +72,29 @@ export const Sidebar = () => {
     className: s.menuItem
   }))
 
+  // callbacks
+  const toggleIsCollapsed = () => {
+    setIsCollapsed(prev => !prev)
+  }
+
   return isAuth ? (
     <>
-      <div className={isCollapsed ? '' : s.blackScreen} />
+      <div
+        className={isCollapsed ? '' : s.blackScreen}
+        onClick={toggleIsCollapsed}
+      />
+
+      <Flex
+        justify="space-between"
+        vertical
+        className={s.hamb}
+        onClick={toggleIsCollapsed}
+      >
+        <span />
+        <span />
+        <span />
+      </Flex>
+
       <Layout.Sider
         trigger={null}
         className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}

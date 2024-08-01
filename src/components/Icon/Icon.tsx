@@ -1,3 +1,4 @@
+import { ComponentPropsWithoutRef } from 'react'
 import iconsSprite from '../../assets/svg/sprite.svg'
 
 type IconProps = {
@@ -6,7 +7,7 @@ type IconProps = {
   height?: string
   fillColor?: string
   viewBox?: string
-}
+} & ComponentPropsWithoutRef<'svg'>
 
 export const Icon = ({ width = '50', height = '50', ...props }: IconProps) => {
   return (

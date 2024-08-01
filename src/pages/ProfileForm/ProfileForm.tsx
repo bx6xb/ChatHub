@@ -94,7 +94,7 @@ export const ProfileForm = withAuthRedirect(() => {
     }
   }
 
-  // variables
+  // jsx variables
   const inputsData: ControlledInputProps[] = [
     {
       name: 'photo',

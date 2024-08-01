@@ -14,8 +14,15 @@ export const Header = () => {
 
   return (
     <Layout.Header className={s.header}>
-      <Flex justify={isAuth ? 'space-between' : 'center'} align="center">
+      <Flex
+        justify={isAuth ? 'space-between' : 'center'}
+        align="center"
+        className={s.headerContent}
+      >
+        {/* logo */}
         <Icon iconId="logo" width="164" height="40" viewBox="0 0 82 20" />
+
+        {/* Popover */}
         {isAuth && (
           <Popover content={ProfilePopOver} title="">
             <Avatar

@@ -14,7 +14,7 @@ export const ProfileCard = () => {
   const userId = useAppSelector(profileSelectors.selectUserId)
   const authorizedUserId = useAppSelector(authSelectors.selectId)
 
-  // variables
+  // jsx variables
   const isOwner = userId === authorizedUserId
 
   return (

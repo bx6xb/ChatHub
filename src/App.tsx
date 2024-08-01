@@ -85,7 +85,8 @@ const App = () => {
             colorText: Colors.white
           }
         }
-      }}>
+      }}
+    >
       <Layout className={s.app}>
         <Snackbar />
         <Header />
