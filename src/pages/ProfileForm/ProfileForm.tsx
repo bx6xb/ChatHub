@@ -125,7 +125,8 @@ export const ProfileForm = withAuthRedirect(() => {
       name: 'lookingForAJob',
       as: 'checkbox',
       label: 'Looking for a job',
-      defaultChecked: userProfile.lookingForAJob
+      defaultChecked: userProfile.lookingForAJob,
+      type: 'checkbox'
     },
     {
       name: 'lookingForAJobDescription',
@@ -136,7 +137,9 @@ export const ProfileForm = withAuthRedirect(() => {
     ...(Object.entries(userProfile.contacts).map(([contact, link]) => ({
       name: `contacts.${contact}` as ProfileDataValues,
       label: contact[0].toUpperCase() + contact.slice(1),
-      defaultValue: link && link.toString()
+      defaultValue: link && link.toString(),
+      placeholder: 'Link',
+      type: 'url'
     })) as ControlledInputProps[])
   ]
 

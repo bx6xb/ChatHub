@@ -50,6 +50,7 @@ export const Login = () => {
           <Typography.Title level={2}>Login</Typography.Title>
           {/* Email input */}
           <ControlledInput
+            type="email"
             name="email"
             placeholder="Email"
             control={control}
@@ -68,7 +69,7 @@ export const Login = () => {
 
           {/* Password input */}
           <ControlledInput
-            // type="password"
+            type="password"
             name="password"
             placeholder="Password"
             control={control}
@@ -95,7 +96,7 @@ export const Login = () => {
           <Flex gap={3} align="center">
             <ControlledInput
               as="checkbox"
-              // type="checkbox"
+              type="checkbox"
               name="rememberMe"
               control={control}
               label="Remember me"

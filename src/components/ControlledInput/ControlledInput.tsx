@@ -1,4 +1,12 @@
-import { Button, Checkbox, Input, InputProps, Upload, UploadProps } from 'antd'
+import {
+  Button,
+  Checkbox,
+  CheckboxProps,
+  Input,
+  InputProps,
+  Upload,
+  UploadProps
+} from 'antd'
 import { useId } from 'react'
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
 import s from './ControlledInput.module.scss'
@@ -8,8 +16,11 @@ type WithoutValueAndOnChange<T> = Omit<T, 'onChange' | 'value'>
 
 export type ControlledInputProps<TFieldValues extends FieldValues> =
   UseControllerProps<TFieldValues> &
-    WithoutValueAndOnChange<InputProps> &
-    WithoutValueAndOnChange<UploadProps> & {
+    (
+      | WithoutValueAndOnChange<InputProps>
+      | WithoutValueAndOnChange<CheckboxProps>
+      | WithoutValueAndOnChange<UploadProps>
+    ) & {
       as?: 'input' | 'checkbox' | 'upload'
       label?: string
       labelPosition?: 'left' | 'right'
