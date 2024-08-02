@@ -1,0 +1,64 @@
+{
+  "component": "Snackbar",
+  "Snackbar_error": "Ошибка",
+  "Snackbar_message": "Успех",
+
+  "component": "HeaderPopoverContent",
+  "HeaderPopoverContent_profile": "Профиль",
+  "HeaderPopoverContent_edit_profile": "Редактировать профиль",
+  "HeaderPopoverContent_logout": "Выйти",
+
+  "component": "Sidebar",
+  "Sidebar_users": "Пользователи",
+  "Sidebar_navigation": "Навигация",
+  "Sidebar_friends_online": "Друзья онлайн",
+
+  "component": "ProfileInfo",
+  "ProfileInfo_about_me": "Обо мне",
+  "ProfileInfo_looking_for_a_job": "Ищу работу",
+  "ProfileInfo_job_description": "Описание работы",
+  "ProfileInfo_contacts": "Контакты",
+
+  "component": "MyPosts",
+  "MyPosts_posts": "Посты",
+
+  "component": "PostsForm",
+  "PostsForm_post_input_placeholder": "Сообщение",
+  "PostsForm_submit": "Сохранить",
+  "PostsForm_max_length_error": "Сообщение должно быть менее 100 символов",
+  "PostsForm_required_error": "Это поле обязательно для заполнения",
+
+  "component": "ProfileForm",
+  "ProfileForm_data_updated": "Данные успешно обновлены",
+  "ProfileForm_set_profile_photo": "Установить фото профиля",
+  "ProfileForm_click_to_upload": "Загрузить фото",
+  "ProfileForm_full_name": "Имя",
+  "ProfileForm_status": "Статус",
+  "ProfileForm_looking_for_a_job": "Ищу ли я работу",
+  "ProfileForm_job_description": "Описание работы",
+
+  "component": "Users",
+  "Users_follow": "Подписаться",
+  "Users_unfollow": "Отписаться",
+
+  "component": "Login",
+  "Login_logged_in": "Вы успешно вошли в систему",
+  "Login_login": "Вход",
+  "Login_email_required": "Требуется email",
+  "Login_email_incorrect": "Некорректный email",
+  "Login_password_placeholder": "Пароль",
+  "Login_password_incorrect": "Требуется пароль",
+  "Login_remember_me": "Запомнить меня",
+  "Login_button": "Войти",
+
+  "__comment__": "Сообщения Snackbar",
+  "network_error": "Ошибка сети",
+  "captcha_error": "Некорректные символы в капче",
+  "email_or_password_error": "Некорректный email или пароль",
+  "logout_error": "Не удалось выйти из системы",
+  "status_error": "Максимальная длина статуса - 300 символов",
+  "photo_error": "Файл должен быть с расширением .jpg, .jpeg или .png",
+  "url_error": "Неверный формат URL",
+  "follow_error": "Не удалось подписаться на пользователя",
+  "unfollow_error": "Не удалось отписаться от пользователя"
+}

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ChatHub/static/css/main.beaf6717.css",
-    "main.js": "/ChatHub/static/js/main.9eccd051.js",
+    "main.css": "/ChatHub/static/css/main.5ca318c4.css",
+    "main.js": "/ChatHub/static/js/main.54d62f44.js",
     "static/media/1.jpg": "/ChatHub/static/media/1.3487c6e65e51f4155259.jpg",
     "static/media/7.jpg": "/ChatHub/static/media/7.195e2fef734709c124c8.jpg",
     "static/media/6.jpg": "/ChatHub/static/media/6.e002b941c51c1ebb32fe.jpg",
@@ -29,11 +29,12 @@
     "static/media/inter-greek-ext-400-normal.woff2": "/ChatHub/static/media/inter-greek-ext-400-normal.1e2b9039d9ecdbea5d80.woff2",
     "static/media/inter-vietnamese-400-normal.woff2": "/ChatHub/static/media/inter-vietnamese-400-normal.5952d3d3c5df5a2f8e09.woff2",
     "index.html": "/ChatHub/index.html",
-    "main.beaf6717.css.map": "/ChatHub/static/css/main.beaf6717.css.map",
-    "main.9eccd051.js.map": "/ChatHub/static/js/main.9eccd051.js.map"
+    "static/media/getFetch.cjs": "/ChatHub/static/media/getFetch.c4cca45e22bc1b2c7d0d.cjs",
+    "main.5ca318c4.css.map": "/ChatHub/static/css/main.5ca318c4.css.map",
+    "main.54d62f44.js.map": "/ChatHub/static/js/main.54d62f44.js.map"
   },
   "entrypoints": [
-    "static/css/main.beaf6717.css",
-    "static/js/main.9eccd051.js"
+    "static/css/main.5ca318c4.css",
+    "static/js/main.54d62f44.js"
   ]
 }
