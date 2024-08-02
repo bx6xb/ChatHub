@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import { profileReducer } from './profileReducer/profileReducer'
-import { dialogsReducer } from './dialogsReducer/dialogsReducer'
 import { sidebarReducer } from './sidebarReducer/sidebarReducer'
 import { usersReducer } from './usersReducer/usersReducer'
 import { authReducer } from './authReducer/authReducer'
@@ -12,7 +11,6 @@ const rootReducer = combineReducers({
   app: appReducer,
   sidebar: sidebarReducer,
   profile: profileReducer,
-  dialogs: dialogsReducer,
   users: usersReducer,
   auth: authReducer
 })

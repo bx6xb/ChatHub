@@ -16,10 +16,8 @@ import {
   getProfileStatus,
   getUserProfile
 } from '../../store/profileReducer/asyncActions'
-
-type UrlParams = {
-  id: string
-}
+import { useTranslation } from 'react-i18next'
+import { Languages } from '../../utils/randomPosts'
 
 export const Profile = withAuthRedirect(() => {
   // get data from the state
@@ -29,18 +27,26 @@ export const Profile = withAuthRedirect(() => {
   // dispatch
   const dispatch = useAppDispatch()
 
+  // localization
+  const { i18n } = useTranslation()
+
   // local state
   const [profileBg] = useState<string>(randomProfileBg())
 
   // get uri params from url
-  const urlParams = useParams<UrlParams>()
+  const urlParams = useParams<{
+    id: string
+  }>()
   const userId = urlParams.id ? +urlParams.id : authorizedUserId! // define id of user
 
   useEffect(() => {
     dispatch(getUserProfile(userId))
     dispatch(getProfileStatus(userId))
-    dispatch(generatePosts())
   }, [userId]) // get data for profile
+
+  useEffect(() => {
+    dispatch(generatePosts(i18n.language as Languages))
+  }, [i18n.language]) // generate posts
 
   // loading while fetching data
   if (!userProfile) {

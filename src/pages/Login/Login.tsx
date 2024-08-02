@@ -8,6 +8,7 @@ import { ControlledInput } from '../../components/ControlledInput/ControlledInpu
 import s from './Login.module.scss'
 import { Button, Flex, Typography } from 'antd'
 import { setAppMessage } from '../../store/appReducer/appReducer'
+import { useTranslation } from 'react-i18next'
 
 const createErrorElement = (text: string) => (
   <div className={s.error}>{text}</div>
@@ -20,6 +21,9 @@ export const Login = () => {
 
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t } = useTranslation()
 
   // form init
   const {
@@ -35,7 +39,7 @@ export const Login = () => {
     if (login.fulfilled.match(action)) {
       reset()
       clearErrors()
-      dispatch(setAppMessage('You are successfully logged in!'))
+      dispatch(setAppMessage(t('Login_logged_in')))
     }
   }
 
@@ -47,7 +51,7 @@ export const Login = () => {
     <Flex justify="center">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Flex align="start" gap={5} vertical>
-          <Typography.Title level={2}>Login</Typography.Title>
+          <Typography.Title level={2}>{t('Login_login')}</Typography.Title>
           {/* Email input */}
           <ControlledInput
             type="email"
@@ -55,30 +59,30 @@ export const Login = () => {
             placeholder="Email"
             control={control}
             rules={{
-              required: 'Email is required',
+              required: true,
               pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
             }}
             className={s.input}
           />
           {/* Email error */}
           {errors.email?.type === 'required'
-            ? createErrorElement('Email is required')
+            ? createErrorElement(t('Login_email_required'))
             : errors.email?.type === 'pattern'
-              ? createErrorElement('Email is incorrect')
+              ? createErrorElement(t('Login_email_incorrect'))
               : null}
 
           {/* Password input */}
           <ControlledInput
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder={t('Login_password_placeholder')}
             control={control}
             rules={{ required: true }}
             className={s.input}
           />
           {/* Password error */}
           {errors.password?.type === 'required' &&
-            createErrorElement('Password is required')}
+            createErrorElement(t('Login_password_incorrect'))}
 
           {/* Captcha input */}
           {captchaUrl && (
@@ -99,13 +103,13 @@ export const Login = () => {
               type="checkbox"
               name="rememberMe"
               control={control}
-              label="Remember me"
+              label={t('Login_remember_me')}
               labelPosition="right"
             />
           </Flex>
 
           <Button htmlType="submit" className="submitFormButton">
-            Login
+            {t('Login_button')}
           </Button>
         </Flex>
       </form>

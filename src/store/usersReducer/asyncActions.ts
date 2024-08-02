@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { changeIsFetching, changeIsFollowingInProgress } from './usersReducer'
 import { followAPI, usersAPI } from '../../api/api'
 import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
+import { t } from 'i18next'
 
 export const getUsers = createAsyncThunk(
   'users/getUsers',
@@ -19,7 +20,7 @@ export const getUsers = createAsyncThunk(
         currentPage
       }
     } catch {
-      errorHandler(dispatch, 'Network error: failed to load users')
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     } finally {
       dispatch(changeIsFetching({ isFetching: false }))
@@ -36,11 +37,11 @@ export const follow = createAsyncThunk(
       if (response.data.resultCode === 0) {
         return userId
       } else {
-        errorHandler(dispatch, 'Failed to follow user')
+        errorHandler(dispatch, t('follow_error'))
         return rejectWithValue(null)
       }
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     } finally {
       dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
@@ -57,11 +58,11 @@ export const unfollow = createAsyncThunk(
       if (response.data.resultCode === 0) {
         return userId
       } else {
-        errorHandler(dispatch, 'Failed to unfollow user')
+        errorHandler(dispatch, t('unfollow_error'))
         return rejectWithValue(null)
       }
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     } finally {
       dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))

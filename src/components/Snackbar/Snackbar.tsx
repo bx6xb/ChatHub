@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { appSelectors } from '../../store/appReducer'
 import { Alert } from 'antd'
 import { resetAppMessageAndError } from '../../utils/errorHandler'
+import { useTranslation } from 'react-i18next'
 
 export const Snackbar = () => {
   // get data from the state
@@ -12,6 +13,9 @@ export const Snackbar = () => {
 
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t, i18n } = useTranslation()
 
   // local state
   const [isOpen, setOpen] = useState(false)
@@ -37,7 +41,7 @@ export const Snackbar = () => {
     <>
       {isOpen && (
         <Alert
-          message={isError ? 'Error' : 'Success'}
+          message={isError ? t('Snackbar_error') : t('Snackbar_message')}
           description={appMessage}
           type={isError ? 'error' : 'success'}
           showIcon

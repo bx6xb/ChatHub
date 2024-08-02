@@ -24,6 +24,7 @@ export type ControlledInputProps<TFieldValues extends FieldValues> =
       as?: 'input' | 'checkbox' | 'upload'
       label?: string
       labelPosition?: 'left' | 'right'
+      uploadButtonText?: string
     }
 
 type ComponentProps = {
@@ -46,6 +47,7 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
     defaultValue,
     disabled,
     shouldUnregister,
+    uploadButtonText,
     ...rest
   } = props
 
@@ -91,7 +93,7 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
       ) : as === 'upload' ? (
         // upload
         <Upload {...ComponentProps} id={id}>
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          <Button icon={<UploadOutlined />}>{uploadButtonText}</Button>
         </Upload>
       ) : (
         // input

@@ -22,8 +22,10 @@ import { Link } from 'react-router-dom'
 import { Typography } from 'antd'
 import { changePageSize } from '../../store/usersReducer/usersReducer'
 import { Colors } from '../../styles/Colors'
+import { useTranslation } from 'react-i18next'
 
 const Users = withAuthRedirect(() => {
+  // get data from the state
   const {
     pageSize,
     totalUsersCount,
@@ -32,12 +34,19 @@ const Users = withAuthRedirect(() => {
     isFetching,
     users
   } = useAppSelector(usersSelectors.selectUsersState)
+
+  // dispatch
   const dispatch = useAppDispatch()
 
+  // localization
+  const { t } = useTranslation()
+
+  // get users on page size change
   useEffect(() => {
     dispatch(getUsers({ pageSize, currentPage }))
   }, [pageSize])
 
+  // callbacks
   const onPageChange = (currentPage: number) => {
     dispatch(getUsers({ pageSize, currentPage }))
   }
@@ -131,14 +140,14 @@ const Users = withAuthRedirect(() => {
                       onClick={() => unfollowOnClick(item.id)}
                       disabled={isDisabled}
                     >
-                      Unfollow
+                      {t('Users_unfollow')}
                     </Button>
                   ) : (
                     <Button
                       onClick={() => followOnClick(item.id)}
                       disabled={isDisabled}
                     >
-                      Follow
+                      {t('Users_follow')}
                     </Button>
                   )}
                 </Flex>

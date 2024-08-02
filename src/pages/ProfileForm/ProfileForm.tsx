@@ -18,6 +18,7 @@ import { Avatar, Button, Flex } from 'antd'
 import { setAppMessage, setIsError } from '../../store/appReducer/appReducer'
 import { setAuthorizedUserPhoto } from '../../store/authReducer/authReducer'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type ControlledInputProps = ControlledInputPropsWithoutGeneric<FormValues>
 
@@ -45,6 +46,9 @@ export const ProfileForm = withAuthRedirect(() => {
 
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t } = useTranslation()
 
   // local state
   const [photoPreview, setPhotoPreview] = useState<string>()
@@ -89,7 +93,7 @@ export const ProfileForm = withAuthRedirect(() => {
 
     // if there are no errors, display publication information
     if (!isError) {
-      dispatch(setAppMessage('Data updated successfully'))
+      dispatch(setAppMessage(t('ProfileForm_data_updated')))
       dispatch(setIsError(false))
     }
   }
@@ -99,38 +103,39 @@ export const ProfileForm = withAuthRedirect(() => {
     {
       name: 'photo',
       as: 'upload',
-      label: 'Set profile photo',
+      label: t('ProfileForm_set_profile_photo'),
       customRequest: () => {}, // to override and cancel upload
       maxCount: 1,
       showUploadList: false,
-      className: '' // to override and not add styles to upload, and also to avoid duplicating the class name for other inputs
+      className: '', // to override and not add styles to upload, and also to avoid duplicating the class name for other inputs
+      uploadButtonText: t('ProfileForm_click_to_upload')
     },
     {
       name: 'fullName',
-      label: 'Full name',
+      label: t('ProfileForm_full_name'),
       defaultValue: userProfile.fullName
     },
     {
       name: 'profileStatus',
-      label: 'Status',
+      label: t('ProfileForm_status'),
       defaultValue: profileStatus
     },
     {
       name: 'aboutMe',
-      label: 'About me',
+      label: t('ProfileInfo_about_me'),
       defaultValue: userProfile.aboutMe?.toString(),
       rules: { required: true }
     },
     {
       name: 'lookingForAJob',
       as: 'checkbox',
-      label: 'Looking for a job',
+      label: t('ProfileForm_looking_for_a_job'),
       defaultChecked: userProfile.lookingForAJob,
       type: 'checkbox'
     },
     {
       name: 'lookingForAJobDescription',
-      label: 'Job description',
+      label: t('ProfileForm_job_description'),
       defaultValue: userProfile.lookingForAJobDescription?.toString(),
       rules: { required: true }
     },
@@ -138,7 +143,6 @@ export const ProfileForm = withAuthRedirect(() => {
       name: `contacts.${contact}` as ProfileDataValues,
       label: contact[0].toUpperCase() + contact.slice(1),
       defaultValue: link && link.toString(),
-      placeholder: 'Link',
       type: 'url'
     })) as ControlledInputProps[])
   ]
@@ -178,7 +182,7 @@ export const ProfileForm = withAuthRedirect(() => {
 
       {/* submit button */}
       <Button htmlType="submit" className="submitFormButton">
-        Submit
+        {t('ProfileForm_save')}
       </Button>
     </form>
   )

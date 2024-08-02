@@ -1,0 +1,65 @@
+{
+  "component": "Snackbar",
+  "Snackbar_error": "Error",
+  "Snackbar_message": "Success",
+
+  "component": "HeaderPopoverContent",
+  "HeaderPopoverContent_profile": "Profile",
+  "HeaderPopoverContent_edit_profile": "Edit profile",
+  "HeaderPopoverContent_logout": "Logout",
+
+  "component": "Sidebar",
+  "Sidebar_users": "Users",
+  "Sidebar_navigation": "Navigation",
+  "Sidebar_friends_online": "Friends online",
+
+  "component": "ProfileInfo",
+  "ProfileInfo_about_me": "About me",
+  "ProfileInfo_looking_for_a_job": "I am looking for a job",
+  "ProfileInfo_job_description": "Job description",
+  "ProfileInfo_contacts": "Contacts",
+
+  "component": "MyPosts",
+  "MyPosts_posts": "My posts",
+
+  "component": "PostsForm",
+  "PostsForm_post_input_placeholder": "Message",
+  "PostsForm_submit": "Submit",
+  "PostsForm_max_length_error": "The message must be less than 100 characters",
+  "PostsForm_required_error": "This field is required",
+
+  "component": "ProfileForm",
+  "ProfileForm_data_updated": "Data updated successfully",
+  "ProfileForm_set_profile_photo": "Set profile photo",
+  "ProfileForm_click_to_upload": "Click to Upload",
+  "ProfileForm_full_name": "Full name",
+  "ProfileForm_status": "Status",
+  "ProfileForm_looking_for_a_job": "Looking for a job",
+  "ProfileForm_job_description": "Job description",
+  "ProfileForm_save": "Save",
+
+  "component": "Users",
+  "Users_follow": "Follow",
+  "Users_unfollow": "Unfollow",
+
+  "component": "Login",
+  "Login_logged_in": "You have successfully logged in",
+  "Login_login": "Login",
+  "Login_email_required": "Email is required",
+  "Login_email_incorrect": "Email is incorrect",
+  "Login_password_placeholder": "Password",
+  "Login_password_incorrect": "Password is required",
+  "Login_remember_me": "Remember me",
+  "Login_button": "Login",
+
+  "__comment__": "Snackbar messages",
+  "network_error": "Network error",
+  "captcha_error": "Incorrect anti-bot symbols",
+  "email_or_password_error": "Incorrect Email or Password",
+  "logout_error": "Failed to logout",
+  "status_error": "Max Status length is 300 symbols",
+  "photo_error": "File should has .jpg, .jpeg or .png extendion",
+  "url_error": "Invalid url format",
+  "follow_error": "Failed to follow user",
+  "unfollow_error": "Failed to unfollow user"
+}

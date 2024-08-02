@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Photos, ProfileData, ProfileDomain, profileAPI } from '../../api/api'
 import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
 import { AppRootState } from '../store'
+import { t } from 'i18next'
 
 export const getUserProfile = createAsyncThunk<ProfileDomain, number>(
   'profile/getUserProfile',
@@ -10,7 +11,7 @@ export const getUserProfile = createAsyncThunk<ProfileDomain, number>(
       const response = await profileAPI.getUserProfile(userId)
       return response.data
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     }
   }
@@ -22,7 +23,7 @@ export const getProfileStatus = createAsyncThunk(
       const response = await profileAPI.getProfileStatus(userId)
       return response.data
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     }
   }
@@ -39,11 +40,11 @@ export const setProfileStatus = createAsyncThunk<
       if (response.data.resultCode === 0) {
         return status
       } else {
-        errorHandler(dispatch, response.data.messages[0])
+        errorHandler(dispatch, t('status_error'))
         return rejectWithValue(null)
       }
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     }
   }
@@ -58,11 +59,11 @@ export const setProfilePhoto = createAsyncThunk<
     if (response.data.resultCode === 0) {
       return response.data.data.photos
     } else {
-      errorHandler(dispatch, response.data.messages[0])
+      errorHandler(dispatch, t('photo_error'))
       return rejectWithValue(null)
     }
   } catch {
-    networkErrorHandler(dispatch)
+    errorHandler(dispatch, t('network_error'))
     return rejectWithValue(null)
   }
 })
@@ -79,11 +80,14 @@ export const setProfileData = createAsyncThunk<
         const userId = getState().auth.id!
         dispatch(getUserProfile(userId))
       } else {
-        errorHandler(dispatch, response.data.messages[0])
+        // parse error field
+        const errorMessage = response.data.messages[0]
+        const errorField = errorMessage.match(/\(Contacts->([^)]+)\)/)![1]
+        errorHandler(dispatch, t('url_error') + ` - ${errorField}`)
         return rejectWithValue(null)
       }
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     }
   }

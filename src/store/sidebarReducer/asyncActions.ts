@@ -2,7 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { usersAPI } from '../../api/api'
 import { getRandomNumber } from '../../utils/randomNumber'
 import { SidebarUsersArray } from './types'
-import { networkErrorHandler } from '../../utils/errorHandler'
+import { errorHandler } from '../../utils/errorHandler'
+import { t } from 'i18next'
 
 export const getSidebarUsers = createAsyncThunk(
   'sidebar/getSidebarUsers',
@@ -11,7 +12,7 @@ export const getSidebarUsers = createAsyncThunk(
       const response = await usersAPI.getUsers(3, getRandomNumber(1, 5000))
       return response.data.items as SidebarUsersArray
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     }
   }

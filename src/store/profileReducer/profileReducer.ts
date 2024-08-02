@@ -6,7 +6,7 @@ import {
   setProfilePhoto,
   setProfileStatus
 } from './asyncActions'
-import { randomPosts } from '../../utils/randomPosts'
+import { Languages, randomPosts } from '../../utils/randomPosts'
 import { getRandomNumber } from '../../utils/randomNumber'
 
 const slice = createSlice({
@@ -17,8 +17,8 @@ const slice = createSlice({
     profileStatus: ''
   } as ProfileState,
   reducers: {
-    generatePosts(state) {
-      const randomPostsArray = randomPosts()
+    generatePosts(state, action: PayloadAction<Languages>) {
+      const randomPostsArray = randomPosts(action.payload)
       return {
         ...state,
         posts: randomPostsArray.map((message, i) => ({

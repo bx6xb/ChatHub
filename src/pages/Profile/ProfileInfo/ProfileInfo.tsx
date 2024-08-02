@@ -5,10 +5,15 @@ import { ReactElement } from 'react'
 import { Contact } from './Contact/Contact'
 import { ContactValues } from '../../../api/api'
 import s from './ProfileInfo.module.scss'
+import { useTranslation } from 'react-i18next'
 
 export const ProfileInfo = () => {
   // get data from the state
   const userProfile = useAppSelector(profileSelectors.selectUserProfile)
+
+  // localization
+  const { t } = useTranslation()
+
   // for ts
   if (!userProfile) {
     return null
@@ -25,22 +30,27 @@ export const ProfileInfo = () => {
       <div className={s.profileInfo}>
         {userProfile.aboutMe && (
           <Typography.Paragraph>
-            <b>About me:</b> {userProfile.aboutMe}
+            <b>{t('ProfileInfo_about_me')}:</b> {userProfile.aboutMe}
           </Typography.Paragraph>
         )}
         {userProfile.lookingForAJob && (
-          <Typography.Paragraph>{`I am looking for a job`}</Typography.Paragraph>
+          <Typography.Paragraph>
+            {t('ProfileInfo_looking_for_a_job')}
+          </Typography.Paragraph>
         )}
         {userProfile.lookingForAJobDescription && (
           <Typography.Paragraph>
-            <b>Job description:</b> {userProfile.lookingForAJobDescription}
+            <b>{t('ProfileInfo_job_description')}:</b>{' '}
+            {userProfile.lookingForAJobDescription}
           </Typography.Paragraph>
         )}
       </div>
 
       {!!mappedContacts.length && (
         <Flex vertical gap={3} className={s.contacts}>
-          <Typography.Title level={5}>Contacts</Typography.Title>
+          <Typography.Title level={5}>
+            {t('ProfileInfo_contacts')}
+          </Typography.Title>
           {mappedContacts}
         </Flex>
       )}

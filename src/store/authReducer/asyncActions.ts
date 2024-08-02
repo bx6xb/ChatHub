@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { FormData, authAPI, securityAPI } from '../../api/api'
 import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
+import { t } from 'i18next'
 
 export const setUserData = createAsyncThunk('auth/setUserData', async () => {
   const response = await authAPI.me()
@@ -10,7 +11,7 @@ export const setUserData = createAsyncThunk('auth/setUserData', async () => {
     return { isAuth: false }
   }
 })
-export const login = createAsyncThunk<void, FormData, { rejectValue: string }>(
+export const login = createAsyncThunk<void, FormData>(
   'auth/login',
   async (formData: FormData, { dispatch, rejectWithValue }) => {
     try {
@@ -19,14 +20,15 @@ export const login = createAsyncThunk<void, FormData, { rejectValue: string }>(
         dispatch(setUserData())
       } else if (response.data.resultCode === 10) {
         dispatch(getCaptchaUrl())
-        errorHandler(dispatch, response.data.messages[0])
-        return rejectWithValue(response.data.messages[0])
+        errorHandler(dispatch, t('captcha_error'))
+        return rejectWithValue(null)
       } else {
-        errorHandler(dispatch, response.data.messages[0])
-        return rejectWithValue(response.data.messages[0])
+        errorHandler(dispatch, t('email_or_password_error'))
+        return rejectWithValue(null)
       }
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
+      return rejectWithValue(null)
     }
   }
 )
@@ -38,11 +40,11 @@ export const logout = createAsyncThunk(
       if (response.data.resultCode === 0) {
         return fulfillWithValue({})
       } else {
-        errorHandler(dispatch, 'Failed to logout')
+        errorHandler(dispatch, t('logout_error'))
         return rejectWithValue(null)
       }
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     }
   }
@@ -54,7 +56,7 @@ export const getCaptchaUrl = createAsyncThunk(
       const response = await securityAPI.getCaptcha()
       return response.data.url
     } catch {
-      networkErrorHandler(dispatch)
+      errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     }
   }

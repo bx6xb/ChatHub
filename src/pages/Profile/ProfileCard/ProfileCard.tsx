@@ -5,6 +5,7 @@ import { profileSelectors } from '../../../store/profileReducer'
 import { useAppSelector } from '../../../utils/reduxUtils'
 import { authSelectors } from '../../../store/authReducer'
 import s from './ProfileCard.module.scss'
+import { useTranslation } from 'react-i18next'
 
 export const ProfileCard = () => {
   // get data from the state
@@ -13,6 +14,9 @@ export const ProfileCard = () => {
   const profileStatus = useAppSelector(profileSelectors.selectProfileStatus)
   const userId = useAppSelector(profileSelectors.selectUserId)
   const authorizedUserId = useAppSelector(authSelectors.selectId)
+
+  // localization
+  const { t } = useTranslation()
 
   // jsx variables
   const isOwner = userId === authorizedUserId
@@ -32,7 +36,7 @@ export const ProfileCard = () => {
 
       {isOwner && (
         <Link to="/edit-profile">
-          <Button>Edit profile</Button>
+          <Button>{t('HeaderPopoverContent_edit_profile')}</Button>
         </Link>
       )}
     </Flex>

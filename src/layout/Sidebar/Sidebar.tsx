@@ -8,19 +8,7 @@ import defaultUserPhoto from '../../assets/images/userDefaultPhoto.png'
 import s from './Sidebar.module.scss'
 import { useEffect, useState } from 'react'
 import { ItemType } from 'antd/es/menu/interface'
-
-const menuItems = [
-  {
-    label: 'Profile',
-    path: '/profile',
-    icon: <UserOutlined />
-  },
-  {
-    label: 'Users',
-    path: '/users',
-    icon: <TeamOutlined />
-  }
-]
+import { useTranslation } from 'react-i18next'
 
 export const Sidebar = () => {
   // get data from the state
@@ -29,6 +17,9 @@ export const Sidebar = () => {
 
   // local state
   const [isCollapsed, setIsCollapsed] = useState(true)
+
+  // localization
+  const { t } = useTranslation()
 
   // add swipe listeners on first init
   useEffect(() => {
@@ -64,6 +55,19 @@ export const Sidebar = () => {
   }
 
   // jsx variables
+  const menuItems = [
+    {
+      label: t('HeaderPopoverContent_profile'),
+      path: '/profile',
+      icon: <UserOutlined />
+    },
+    {
+      label: t('Sidebar_users'),
+      path: '/users',
+      icon: <TeamOutlined />
+    }
+  ]
+
   const mappedMenuItems: ItemType[] = menuItems.map(i => ({
     key: i.label,
     icon: i.icon,
@@ -99,14 +103,16 @@ export const Sidebar = () => {
         trigger={null}
         className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}
       >
-        <Typography.Title level={4}>Navigation</Typography.Title>
+        <Typography.Title level={4}>{t('Sidebar_navigation')}</Typography.Title>
         <Menu
           className={s.menu}
           mode="inline"
           defaultSelectedKeys={['1']}
           items={mappedMenuItems}
         />
-        <Typography.Title level={4}>Friends online</Typography.Title>
+        <Typography.Title level={4}>
+          {t('Sidebar_friends_online')}
+        </Typography.Title>
 
         <ul className={s.friends}>
           {users &&
