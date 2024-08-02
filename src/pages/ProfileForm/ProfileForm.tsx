@@ -6,7 +6,6 @@ import {
   setProfilePhoto,
   setProfileStatus
 } from '../../store/profileReducer/asyncActions'
-import { Photos, ProfileData, ProfileDataValues } from '../../api/api'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { Loading } from '../../components/Loading/Loading'
 import {
@@ -19,6 +18,7 @@ import { setAppMessage, setIsError } from '../../store/appReducer/appReducer'
 import { setAuthorizedUserPhoto } from '../../store/authReducer/authReducer'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Photos, ProfileData, ProfileDataValues } from '../../api/types'
 
 type ControlledInputProps = ControlledInputPropsWithoutGeneric<FormValues>
 

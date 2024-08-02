@@ -8,9 +8,9 @@ import {
   YoutubeOutlined
 } from '@ant-design/icons'
 import { Flex } from 'antd'
-import { ContactValues } from '../../../../api/api'
 import { Icon } from '../../../../components/Icon/Icon'
 import s from './Contact.module.scss'
+import { ContactValues } from '../../../../api/types'
 
 type ContactProps = {
   contact: ContactValues

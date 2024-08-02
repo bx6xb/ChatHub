@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { Photos, ProfileData, ProfileDomain, profileAPI } from '../../api/api'
+import { profileAPI } from '../../api/api'
 import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
 import { AppRootState } from '../store'
 import { t } from 'i18next'
+import { Photos, ProfileData, ProfileDomain } from '../../api/types'
 
 export const getUserProfile = createAsyncThunk<ProfileDomain, number>(
   'profile/getUserProfile',

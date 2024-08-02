@@ -5,7 +5,7 @@ import { Button, Flex, Input, Space } from 'antd'
 import s from './PostsForm.module.scss'
 import { useTranslation } from 'react-i18next'
 
-type PostsFormData = {
+type PostsDataForm = {
   message: string
 }
 
@@ -22,7 +22,7 @@ export const PostsForm = () => {
     formState: { errors },
     reset,
     control
-  } = useForm<PostsFormData>()
+  } = useForm<PostsDataForm>()
 
   // controller for custom input
   const {
@@ -37,7 +37,7 @@ export const PostsForm = () => {
   })
 
   // callbacks
-  const onSubmit: SubmitHandler<PostsFormData> = data => {
+  const onSubmit: SubmitHandler<PostsDataForm> = data => {
     dispatch(addPost({ message: data.message }))
     reset()
   }

@@ -3,9 +3,9 @@ import { useAppSelector } from '../../../utils/reduxUtils'
 import { profileSelectors } from '../../../store/profileReducer'
 import { ReactElement } from 'react'
 import { Contact } from './Contact/Contact'
-import { ContactValues } from '../../../api/api'
 import s from './ProfileInfo.module.scss'
 import { useTranslation } from 'react-i18next'
+import { ContactValues } from '../../../api/types'
 
 export const ProfileInfo = () => {
   // get data from the state

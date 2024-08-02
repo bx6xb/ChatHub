@@ -1,4 +1,4 @@
-import { ProfileDomain } from '../../api/api'
+import { ProfileDomain } from '../../api/types'
 
 export type PostData = {
   message: string

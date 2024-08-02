@@ -1,4 +1,4 @@
-import { User } from '../../api/api'
+import { User } from '../../api/types'
 
 export type UsersPageState = {
   users: User[]

@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { FormData, authAPI, securityAPI } from '../../api/api'
-import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
+import { authAPI, securityAPI } from '../../api/api'
+import { errorHandler } from '../../utils/errorHandler'
 import { t } from 'i18next'
+import { DataForm } from '../../api/types'
 
 export const setUserData = createAsyncThunk('auth/setUserData', async () => {
   const response = await authAPI.me()
@@ -11,9 +12,9 @@ export const setUserData = createAsyncThunk('auth/setUserData', async () => {
     return { isAuth: false }
   }
 })
-export const login = createAsyncThunk<void, FormData>(
+export const login = createAsyncThunk<void, DataForm>(
   'auth/login',
-  async (formData: FormData, { dispatch, rejectWithValue }) => {
+  async (formData: DataForm, { dispatch, rejectWithValue }) => {
     try {
       const response = await authAPI.login(formData)
       if (response.data.resultCode === 0) {

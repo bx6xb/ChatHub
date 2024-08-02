@@ -2,13 +2,13 @@ import { Navigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { authSelectors } from '../../store/authReducer'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { FormData } from '../../api/api'
 import { login } from '../../store/authReducer/asyncActions'
 import { ControlledInput } from '../../components/ControlledInput/ControlledInput'
 import s from './Login.module.scss'
 import { Button, Flex, Typography } from 'antd'
 import { setAppMessage } from '../../store/appReducer/appReducer'
 import { useTranslation } from 'react-i18next'
+import { DataForm } from '../../api/types'
 
 const createErrorElement = (text: string) => (
   <div className={s.error}>{text}</div>
@@ -32,9 +32,9 @@ export const Login = () => {
     reset,
     clearErrors,
     control
-  } = useForm<FormData>()
+  } = useForm<DataForm>()
 
-  const onSubmit: SubmitHandler<FormData> = async data => {
+  const onSubmit: SubmitHandler<DataForm> = async data => {
     const action = await dispatch(login(data))
     if (login.fulfilled.match(action)) {
       reset()

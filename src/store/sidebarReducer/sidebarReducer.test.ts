@@ -1,4 +1,4 @@
-import { User } from '../../api/api'
+import { User } from '../../api/types'
 import { getSidebarUsers } from './asyncActions'
 import { sidebarReducer } from './sidebarReducer'
 import { SidebarUsersArray } from './types'
