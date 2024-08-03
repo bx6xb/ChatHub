@@ -1,28 +1,35 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { profileAPI } from '../../api/api'
-import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
+import { errorHandler } from '../../utils/errorHandler'
 import { AppRootState } from '../store'
 import { t } from 'i18next'
 import { Photos, ProfileData, ProfileDomain } from '../../api/types'
+import { changeProfileStatus } from './profileReducer'
 
-export const getUserProfile = createAsyncThunk<ProfileDomain, number>(
-  'profile/getUserProfile',
-  async (userId, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await profileAPI.getUserProfile(userId)
-      return response.data
-    } catch {
-      errorHandler(dispatch, t('network_error'))
-      return rejectWithValue(null)
-    }
+export const getUserProfile = createAsyncThunk<
+  ProfileDomain,
+  number,
+  { rejectValue: null }
+>('profile/getUserProfile', async (userId, { rejectWithValue, dispatch }) => {
+  try {
+    const response = await profileAPI.getUserProfile(userId)
+    return response.data
+  } catch {
+    errorHandler(dispatch, t('network_error'))
+    return rejectWithValue(null)
   }
-)
-export const getProfileStatus = createAsyncThunk(
+})
+export const getProfileStatus = createAsyncThunk<
+  string,
+  number,
+  { rejectValue: null }
+>(
   'profile/getProfileStatus',
   async (userId: number, { dispatch, rejectWithValue }) => {
     try {
-      const response = await profileAPI.getProfileStatus(userId)
-      return response.data
+      const status = (await profileAPI.getProfileStatus(userId)).data
+      dispatch(changeProfileStatus(status))
+      return status
     } catch {
       errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
@@ -32,13 +39,14 @@ export const getProfileStatus = createAsyncThunk(
 export const setProfileStatus = createAsyncThunk<
   string,
   string,
-  { state: AppRootState }
+  { rejectValue: null; state: AppRootState }
 >(
   'profile/setProfileStatus',
   async (status: string, { dispatch, rejectWithValue }) => {
     try {
       const response = await profileAPI.setProfileStatus(status)
       if (response.data.resultCode === 0) {
+        dispatch(changeProfileStatus(status))
         return status
       } else {
         errorHandler(dispatch, t('status_error'))
@@ -71,7 +79,7 @@ export const setProfilePhoto = createAsyncThunk<
 export const setProfileData = createAsyncThunk<
   void,
   ProfileData,
-  { state: AppRootState }
+  { rejectValue: null; state: AppRootState }
 >(
   'profile/setProfileData',
   async (profileData: ProfileData, { dispatch, getState, rejectWithValue }) => {

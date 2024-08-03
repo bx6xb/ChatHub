@@ -8,3 +8,9 @@ export type UsersPageState = {
   isFetching: boolean
   isFollowingInProgress: number[]
 }
+export type GetUsersReturn = {
+  users: User[]
+  totalCount: number
+  currentPage: number
+}
+export type GetUsersArgs = { pageSize: number; currentPage: number }

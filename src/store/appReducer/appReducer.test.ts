@@ -14,11 +14,13 @@ test('isAppInitialized value should be changed', () => {
 
   expect(newState.isAppInitialized).toBeTruthy()
 })
+
 test('isError value should be changed', () => {
   const newState = appReducer(initialState, setIsError(true))
 
   expect(newState.isError).toBeTruthy()
 })
+
 test('app message should be changed', () => {
   const appMessage = 'Network error'
   const newState = appReducer(initialState, setAppMessage(appMessage))

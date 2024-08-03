@@ -6,8 +6,8 @@ import {
   setProfilePhoto,
   setProfileStatus
 } from './asyncActions'
-import { Languages, randomPosts } from '../../utils/randomPosts'
-import { getRandomNumber } from '../../utils/randomNumber'
+import { Languages, getRandomPosts } from '../../utils/getRandomPosts'
+import { getRandomNumber } from '../../utils/getRandomNumber'
 
 const slice = createSlice({
   name: 'profile',
@@ -18,7 +18,7 @@ const slice = createSlice({
   } as ProfileState,
   reducers: {
     generatePosts(state, action: PayloadAction<Languages>) {
-      const randomPostsArray = randomPosts(action.payload)
+      const randomPostsArray = getRandomPosts(action.payload)
       return {
         ...state,
         posts: randomPostsArray.map((message, i) => ({
@@ -29,13 +29,13 @@ const slice = createSlice({
         }))
       }
     },
-    addPost(state, action: PayloadAction<{ message: string }>) {
+    addPost(state, action: PayloadAction<string>) {
       return {
         ...state,
         posts: [
           {
             id: state.posts.length + 1,
-            message: action.payload.message,
+            message: action.payload,
             likesCount: 0,
             dislikesCount: 0
           },
@@ -61,6 +61,12 @@ const slice = createSlice({
             : p
         )
       }
+    },
+    changeProfileStatus(state, action: PayloadAction<string>) {
+      return {
+        ...state,
+        profileStatus: action.payload
+      }
     }
   },
   extraReducers: builder => {
@@ -69,18 +75,6 @@ const slice = createSlice({
         return {
           ...state,
           userProfile: action.payload
-        }
-      })
-      .addCase(getProfileStatus.fulfilled, (state, action) => {
-        return {
-          ...state,
-          profileStatus: action.payload
-        }
-      })
-      .addCase(setProfileStatus.fulfilled, (state, action) => {
-        return {
-          ...state,
-          profileStatus: action.payload
         }
       })
       .addCase(setProfilePhoto.fulfilled, (state, action) => {
@@ -100,4 +94,5 @@ const slice = createSlice({
 })
 
 export const profileReducer = slice.reducer
-export const { generatePosts, addPost, changePostData } = slice.actions
+export const { generatePosts, addPost, changePostData, changeProfileStatus } =
+  slice.actions

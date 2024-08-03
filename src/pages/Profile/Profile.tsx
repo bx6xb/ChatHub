@@ -5,7 +5,7 @@ import s from './Profile.module.scss'
 import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
 import { authSelectors } from '../../store/authReducer'
 import { profileSelectors } from '../../store/profileReducer'
-import { randomProfileBg } from '../../utils/randomProfileBg'
+import { getRandomProfileBg } from '../../utils/getRandomProfileBg'
 import { generatePosts } from '../../store/profileReducer/profileReducer'
 import { ProfileInfo } from './ProfileInfo/ProfileInfo'
 import { ProfileCard } from './ProfileCard/ProfileCard'
@@ -17,7 +17,7 @@ import {
   getUserProfile
 } from '../../store/profileReducer/asyncActions'
 import { useTranslation } from 'react-i18next'
-import { Languages } from '../../utils/randomPosts'
+import { Languages } from '../../utils/getRandomPosts'
 
 export const Profile = withAuthRedirect(() => {
   // get data from the state
@@ -31,7 +31,7 @@ export const Profile = withAuthRedirect(() => {
   const { i18n } = useTranslation()
 
   // local state
-  const [profileBg] = useState<string>(randomProfileBg())
+  const [profileBg] = useState<string>(getRandomProfileBg())
 
   // get uri params from url
   const urlParams = useParams<{

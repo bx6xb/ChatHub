@@ -38,7 +38,7 @@ export const PostsForm = () => {
 
   // callbacks
   const onSubmit: SubmitHandler<PostsDataForm> = data => {
-    dispatch(addPost({ message: data.message }))
+    dispatch(addPost(data.message))
     reset()
   }
 

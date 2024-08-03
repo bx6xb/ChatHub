@@ -49,6 +49,7 @@ test('user should be followed', () => {
   expect(newState.users).not.toBe(initialState.users)
   expect(newState.users[0].followed).toBeTruthy()
 })
+
 test('user should be unfollowed', () => {
   const userId = 30992
   const newState = usersReducer(
@@ -60,6 +61,7 @@ test('user should be unfollowed', () => {
   expect(newState.users).not.toBe(initialState.users)
   expect(newState.users[1].followed).toBeFalsy()
 })
+
 test('users should be added', () => {
   const thunkReturnValue = {
     users: initialState.users,
@@ -79,23 +81,23 @@ test('users should be added', () => {
   expect(newState.currentPage).toBe(thunkReturnValue.currentPage)
   expect(newState.totalUsersCount).toBe(thunkReturnValue.totalCount)
 })
+
 test('page size should be changed', () => {
   const pageSize = 10
-  const newState = usersReducer(initialState, changePageSize({ pageSize }))
+  const newState = usersReducer(initialState, changePageSize(pageSize))
 
   expect(newState).not.toBe(initialState)
   expect(newState.users).toBe(initialState.users)
   expect(newState.pageSize).toBe(pageSize)
 })
+
 test('property isFetching should be changed', () => {
-  const newState = usersReducer(
-    initialState,
-    changeIsFetching({ isFetching: true })
-  )
+  const newState = usersReducer(initialState, changeIsFetching(true))
 
   expect(newState).not.toBe(initialState)
   expect(newState.isFetching).toBeTruthy()
 })
+
 test('property isFollowingInProgress should be changed', () => {
   const userId = 66
   const newState = usersReducer(

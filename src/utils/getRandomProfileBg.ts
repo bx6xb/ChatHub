@@ -8,7 +8,7 @@ import profileBg7 from '../assets/profileBgs/7.jpg'
 import profileBg8 from '../assets/profileBgs/8.jpg'
 import profileBg9 from '../assets/profileBgs/9.jpg'
 import profileBg10 from '../assets/profileBgs/10.jpg'
-import { getRandomNumber } from './randomNumber'
+import { getRandomNumber } from './getRandomNumber'
 
 const bgs = [
   profileBg1,
@@ -23,4 +23,4 @@ const bgs = [
   profileBg10
 ]
 
-export const randomProfileBg = () => bgs[getRandomNumber(0, bgs.length - 1)]
+export const getRandomProfileBg = () => bgs[getRandomNumber(0, bgs.length - 1)]

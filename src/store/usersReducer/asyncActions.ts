@@ -1,16 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { changeIsFetching, changeIsFollowingInProgress } from './usersReducer'
 import { followAPI, usersAPI } from '../../api/api'
-import { errorHandler, networkErrorHandler } from '../../utils/errorHandler'
+import { errorHandler } from '../../utils/errorHandler'
 import { t } from 'i18next'
+import { GetUsersArgs, GetUsersReturn } from './types'
 
-export const getUsers = createAsyncThunk(
+export const getUsers = createAsyncThunk<
+  GetUsersReturn,
+  GetUsersArgs,
+  { rejectValue: null }
+>(
   'users/getUsers',
-  async (
-    { pageSize, currentPage }: { pageSize: number; currentPage: number },
-    { dispatch, rejectWithValue }
-  ) => {
-    dispatch(changeIsFetching({ isFetching: true }))
+  async ({ pageSize, currentPage }, { dispatch, rejectWithValue }) => {
+    dispatch(changeIsFetching(true))
 
     try {
       const response = await usersAPI.getUsers(pageSize, currentPage)
@@ -23,11 +25,11 @@ export const getUsers = createAsyncThunk(
       errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     } finally {
-      dispatch(changeIsFetching({ isFetching: false }))
+      dispatch(changeIsFetching(false))
     }
   }
 )
-export const follow = createAsyncThunk(
+export const follow = createAsyncThunk<number, number, { rejectValue: null }>(
   'users/follow',
   async (userId: number, { dispatch, rejectWithValue }) => {
     dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))
@@ -48,7 +50,7 @@ export const follow = createAsyncThunk(
     }
   }
 )
-export const unfollow = createAsyncThunk(
+export const unfollow = createAsyncThunk<number, number, { rejectValue: null }>(
   'users/unfollow',
   async (userId: number, { dispatch, rejectWithValue }) => {
     dispatch(changeIsFollowingInProgress({ isFetching: true, userId }))

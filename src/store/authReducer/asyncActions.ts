@@ -2,9 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authAPI, securityAPI } from '../../api/api'
 import { errorHandler } from '../../utils/errorHandler'
 import { t } from 'i18next'
-import { DataForm } from '../../api/types'
+import { DataForm, UserDataDomain } from '../../api/types'
 
-export const setUserData = createAsyncThunk('auth/setUserData', async () => {
+export const setUserData = createAsyncThunk<
+  UserDataDomain | { isAuth: boolean },
+  void
+>('auth/setUserData', async () => {
   const response = await authAPI.me()
   if (response.data.resultCode === 0) {
     return { ...response.data.data, isAuth: true }
@@ -12,7 +15,7 @@ export const setUserData = createAsyncThunk('auth/setUserData', async () => {
     return { isAuth: false }
   }
 })
-export const login = createAsyncThunk<void, DataForm>(
+export const login = createAsyncThunk<void, DataForm, { rejectValue: null }>(
   'auth/login',
   async (formData: DataForm, { dispatch, rejectWithValue }) => {
     try {
@@ -33,14 +36,12 @@ export const login = createAsyncThunk<void, DataForm>(
     }
   }
 )
-export const logout = createAsyncThunk(
+export const logout = createAsyncThunk<undefined, void, { rejectValue: null }>(
   'auth/logout',
-  async (payload, { dispatch, fulfillWithValue, rejectWithValue }) => {
+  async (payload, { dispatch, rejectWithValue }) => {
     try {
       const response = await authAPI.logout()
-      if (response.data.resultCode === 0) {
-        return fulfillWithValue({})
-      } else {
+      if (response.data.resultCode !== 0) {
         errorHandler(dispatch, t('logout_error'))
         return rejectWithValue(null)
       }
@@ -50,15 +51,16 @@ export const logout = createAsyncThunk(
     }
   }
 )
-export const getCaptchaUrl = createAsyncThunk(
-  'auth/getCaptchaUrl',
-  async (payload, { dispatch, rejectWithValue }) => {
-    try {
-      const response = await securityAPI.getCaptcha()
-      return response.data.url
-    } catch {
-      errorHandler(dispatch, t('network_error'))
-      return rejectWithValue(null)
-    }
+export const getCaptchaUrl = createAsyncThunk<
+  string,
+  void,
+  { rejectValue: null }
+>('auth/getCaptchaUrl', async (payload, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await securityAPI.getCaptcha()
+    return response.data.url
+  } catch {
+    errorHandler(dispatch, t('network_error'))
+    return rejectWithValue(null)
   }
-)
+})

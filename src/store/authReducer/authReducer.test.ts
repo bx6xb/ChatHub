@@ -25,6 +25,7 @@ test('user data should be set', () => {
   expect(newState.email).toBe(userData.email)
   expect(newState.isAuth).toBeTruthy()
 })
+
 test('user data should be deleted', () => {
   const state = {
     id: 30880,
@@ -34,7 +35,7 @@ test('user data should be deleted', () => {
     captchaUrl: null
   } as AuthState
 
-  const newState = authReducer(state, logout.fulfilled({}, 'requestiId'))
+  const newState = authReducer(state, logout.fulfilled(undefined, 'requestiId'))
 
   expect(newState).not.toBe(initialState)
   expect(newState.id).toBe(null)
@@ -42,6 +43,7 @@ test('user data should be deleted', () => {
   expect(newState.email).toBe(null)
   expect(newState.isAuth).toBeFalsy()
 })
+
 test('captcha url should be set', () => {
   const url = 'url'
   const newState = authReducer(
@@ -51,6 +53,7 @@ test('captcha url should be set', () => {
 
   expect(newState.captchaUrl).toBe(url)
 })
+
 test('user photo should be set', () => {
   const photo = 'url/to/photo'
   const newState = authReducer(initialState, setAuthorizedUserPhoto(photo))

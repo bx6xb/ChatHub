@@ -26,16 +26,16 @@ const slice = createSlice({
             )
       }
     },
-    changeIsFetching(state, action: PayloadAction<{ isFetching: boolean }>) {
+    changeIsFetching(state, action: PayloadAction<boolean>) {
       return {
         ...state,
-        isFetching: action.payload.isFetching
+        isFetching: action.payload
       }
     },
-    changePageSize(state, action: PayloadAction<{ pageSize: number }>) {
+    changePageSize(state, action: PayloadAction<number>) {
       return {
         ...state,
-        pageSize: action.payload.pageSize
+        pageSize: action.payload
       }
     }
   },
@@ -62,9 +62,6 @@ const slice = createSlice({
   }
 })
 
-// reducer
 export const usersReducer = slice.reducer
-
-// actions
 export const { changeIsFollowingInProgress, changeIsFetching, changePageSize } =
   slice.actions

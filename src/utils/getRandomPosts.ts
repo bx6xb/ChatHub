@@ -1,5 +1,4 @@
-import i18n from '../i18n/i18n'
-import { getRandomNumber } from './randomNumber'
+import { getRandomNumber } from './getRandomNumber'
 
 const enPosts = [
   'Exploring new hiking trails today! 🌲🏞️',
@@ -214,8 +213,8 @@ const ruPosts = [
   'Изучаю чудеса ночного неба. 🌌🌠'
 ]
 
-export const randomPosts = (language: Languages) => {
-  const quantity = getRandomNumber(0, 7)
+export const getRandomPosts = (language: Languages) => {
+  const quantity = getRandomNumber(1, 7)
   const numArr: number[] = []
   while (numArr.length !== quantity) {
     let number = getRandomNumber(0, enPosts.length)

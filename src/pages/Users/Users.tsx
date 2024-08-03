@@ -57,7 +57,7 @@ const Users = withAuthRedirect(() => {
     dispatch(unfollow(userId))
   }
   const onShowSizeChange = (currentPage: number, pageSize: number) => {
-    dispatch(changePageSize({ pageSize }))
+    dispatch(changePageSize(pageSize))
   }
 
   return (
