@@ -1,6 +1,6 @@
 import { Button, Divider, Flex, Menu, Switch } from 'antd'
-import { useAppDispatch } from '../../../utils/reduxUtils'
-import { logout } from '../../../store/authReducer/asyncActions'
+import { useAppDispatch } from '../../../utils/reduxUtils/reduxUtils'
+import { logout } from '../../../store/auth/asyncActions'
 import { EditOutlined, UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'

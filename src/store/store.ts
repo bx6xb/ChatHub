@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import { profileReducer } from './profileReducer/profileReducer'
-import { sidebarReducer } from './sidebarReducer/sidebarReducer'
-import { usersReducer } from './usersReducer/usersReducer'
-import { authReducer } from './authReducer/authReducer'
+import { profileReducer } from './profile/reducer'
+import { sidebarReducer } from './sidebar/reducer'
+import { usersReducer } from './users/reducer'
+import { authReducer } from './auth/reducer'
 import { thunk } from 'redux-thunk'
-import { appReducer } from './appReducer/appReducer'
+import { appReducer } from './app/reducer'
 import { configureStore } from '@reduxjs/toolkit'
 
 const rootReducer = combineReducers({

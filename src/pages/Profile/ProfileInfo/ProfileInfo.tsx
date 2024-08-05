@@ -1,15 +1,16 @@
 import { Flex, Typography } from 'antd'
-import { useAppSelector } from '../../../utils/reduxUtils'
-import { profileSelectors } from '../../../store/profileReducer'
+import { useAppSelector } from '../../../utils/reduxUtils/reduxUtils'
 import { ReactElement } from 'react'
 import { Contact } from './Contact/Contact'
 import s from './ProfileInfo.module.scss'
 import { useTranslation } from 'react-i18next'
 import { ContactValues } from '../../../api/types'
+import { selectUserProfile } from '../../../store/profile/selectors'
+import { ContactsFilled } from '@ant-design/icons'
 
 export const ProfileInfo = () => {
   // get data from the state
-  const userProfile = useAppSelector(profileSelectors.selectUserProfile)
+  const userProfile = useAppSelector(selectUserProfile)
 
   // localization
   const { t } = useTranslation()
@@ -19,7 +20,7 @@ export const ProfileInfo = () => {
     return null
   }
 
-  let mappedContacts: ReactElement[] = Object.entries(userProfile.contacts)
+  let mappedContacts: ReactElement[] = Object.entries(ContactsFilled)
     .filter(c => c[1])
     .map(([contact, link]) => (
       <Contact key={contact} contact={contact as ContactValues} link={link!} />

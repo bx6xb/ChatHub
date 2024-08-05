@@ -1,13 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { PostData, ProfileState } from './types'
+import { getUserProfile, setProfilePhoto } from './asyncActions'
 import {
-  getProfileStatus,
-  getUserProfile,
-  setProfilePhoto,
-  setProfileStatus
-} from './asyncActions'
-import { Languages, getRandomPosts } from '../../utils/getRandomPosts'
-import { getRandomNumber } from '../../utils/getRandomNumber'
+  getRandomPosts,
+  Languages
+} from '../../utils/randomData/getRandomPosts'
+import { getRandomNumber } from '../../utils/randomData/getRandomNumber'
 
 const slice = createSlice({
   name: 'profile',

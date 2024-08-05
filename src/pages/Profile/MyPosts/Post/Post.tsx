@@ -1,13 +1,13 @@
 import s from './Post.module.scss'
-import { Post as PostType } from '../../../../store/profileReducer/types'
+import { Post as PostType } from '../../../../store/profile/types'
 import {
   DislikeFilled,
   DislikeOutlined,
   LikeFilled,
   LikeOutlined
 } from '@ant-design/icons'
-import { useAppDispatch } from '../../../../utils/reduxUtils'
-import { changePostData } from '../../../../store/profileReducer/profileReducer'
+import { useAppDispatch } from '../../../../utils/reduxUtils/reduxUtils'
+import { changePostData } from '../../../../store/profile/reducer'
 import { useState } from 'react'
 import { Avatar, Flex, Typography } from 'antd'
 

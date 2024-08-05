@@ -10,19 +10,18 @@ import {
   Pagination,
   Skeleton
 } from 'antd'
-import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
-import { usersSelectors } from '../../store/usersReducer'
-import { useEffect } from 'react'
 import {
-  follow,
-  getUsers,
-  unfollow
-} from '../../store/usersReducer/asyncActions'
+  useAppDispatch,
+  useAppSelector
+} from '../../utils/reduxUtils/reduxUtils'
+import { useEffect } from 'react'
+import { follow, getUsers, unfollow } from '../../store/users/asyncActions'
 import { Link } from 'react-router-dom'
 import { Typography } from 'antd'
-import { changePageSize } from '../../store/usersReducer/usersReducer'
+import { changePageSize } from '../../store/users/reducer'
 import { Colors } from '../../styles/Colors'
 import { useTranslation } from 'react-i18next'
+import { selectUsersState } from '../../store/users/selectors'
 
 const Users = withAuthRedirect(() => {
   // get data from the state
@@ -33,7 +32,7 @@ const Users = withAuthRedirect(() => {
     isFollowingInProgress,
     isFetching,
     users
-  } = useAppSelector(usersSelectors.selectUsersState)
+  } = useAppSelector(selectUsersState)
 
   // dispatch
   const dispatch = useAppDispatch()

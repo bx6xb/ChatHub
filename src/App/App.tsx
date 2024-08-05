@@ -1,8 +1,8 @@
 import { Suspense, useEffect } from 'react'
 import { ConfigProvider, Layout, ThemeConfig } from 'antd'
-import { useAppDispatch, useAppSelector } from '../utils/reduxUtils'
-import { setUserData } from '../store/authReducer/asyncActions'
-import { getSidebarUsers } from '../store/sidebarReducer/asyncActions'
+import { useAppDispatch, useAppSelector } from '../utils/reduxUtils/reduxUtils'
+import { setUserData } from '../store/auth/asyncActions'
+import { getSidebarUsers } from '../store/sidebar/asyncActions'
 import s from './App.module.scss'
 import { Header } from '../layout/Header/Header'
 import { Sidebar } from '../layout/Sidebar/Sidebar'
@@ -14,14 +14,11 @@ import { Page404 } from '../pages/Page404/Page404'
 import { Colors } from '../styles/Colors'
 import { ProfileForm } from '../pages/ProfileForm/ProfileForm'
 import { Loading } from '../components/Loading/Loading'
-import {
-  getProfileStatus,
-  getUserProfile
-} from '../store/profileReducer/asyncActions'
-import { authSelectors } from '../store/authReducer'
-import { setAuthorizedUserPhoto } from '../store/authReducer/authReducer'
-import { appSelectors } from '../store/appReducer'
+import { getProfileStatus, getUserProfile } from '../store/profile/asyncActions'
+import { setAuthorizedUserPhoto } from '../store/auth/reducer'
 import { SnackbarContainer } from './SnackbarContainer/SnackbarContainer'
+import { selectIsAppInitialized } from '../store/app/selectors'
+import { selectId } from '../store/auth/selectors'
 
 const antDesignTheme: ThemeConfig = {
   components: {
@@ -54,8 +51,8 @@ const antDesignTheme: ThemeConfig = {
 
 const App = () => {
   // get data from the state
-  const isAppInitialized = useAppSelector(appSelectors.selectIsAppInitialized)
-  const authorizedUserId = useAppSelector(authSelectors.selectId)!
+  const isAppInitialized = useAppSelector(selectIsAppInitialized)
+  const authorizedUserId = useAppSelector(selectId)!
 
   // dispatch
   const dispatch = useAppDispatch()

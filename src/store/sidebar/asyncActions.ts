@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { usersAPI } from '../../api/api'
-import { getRandomNumber } from '../../utils/getRandomNumber'
 import { SidebarUsersArray } from './types'
-import { errorHandler } from '../../utils/errorHandler'
+import { errorHandler } from '../../utils/errorHandling/errorHandler'
 import { t } from 'i18next'
+import { getRandomNumber } from '../../utils/randomData/getRandomNumber'
 
 export const getSidebarUsers = createAsyncThunk<
   SidebarUsersArray,

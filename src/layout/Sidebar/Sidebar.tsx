@@ -1,6 +1,4 @@
-import { useAppSelector } from '../../utils/reduxUtils'
-import { authSelectors } from '../../store/authReducer'
-import { sidebarSelectors } from '../../store/sidebarReducer'
+import { useAppSelector } from '../../utils/reduxUtils/reduxUtils'
 import { Avatar, Flex, Layout, Menu, Typography } from 'antd'
 import { TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
@@ -9,11 +7,13 @@ import s from './Sidebar.module.scss'
 import { useEffect, useState } from 'react'
 import { ItemType } from 'antd/es/menu/interface'
 import { useTranslation } from 'react-i18next'
+import { selectIsAuth } from '../../store/auth/selectors'
+import { selectUsers } from '../../store/sidebar/selectors'
 
 export const Sidebar = () => {
   // get data from the state
-  const users = useAppSelector(sidebarSelectors.selectUsers)
-  const isAuth = useAppSelector(authSelectors.selectIsAuth)
+  const users = useAppSelector(selectUsers)
+  const isAuth = useAppSelector(selectIsAuth)
 
   // local state
   const [isCollapsed, setIsCollapsed] = useState(true)

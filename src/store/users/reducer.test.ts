@@ -5,7 +5,7 @@ import {
   changeIsFollowingInProgress,
   usersReducer,
   changePageSize
-} from './usersReducer'
+} from './reducer'
 
 export const initialState: UsersPageState = {
   users: [

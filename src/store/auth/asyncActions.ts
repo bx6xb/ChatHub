@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authAPI, securityAPI } from '../../api/api'
-import { errorHandler } from '../../utils/errorHandler'
+import { errorHandler } from '../../utils/errorHandling/errorHandler'
 import { t } from 'i18next'
 import { DataForm, UserDataDomain } from '../../api/types'
 

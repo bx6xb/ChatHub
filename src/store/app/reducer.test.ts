@@ -1,5 +1,5 @@
-import { setUserData } from '../authReducer/asyncActions'
-import { appReducer, addAppMessage, slice } from './appReducer'
+import { setUserData } from '../auth/asyncActions'
+import { appReducer, addAppMessage, slice } from './reducer'
 import { AppMessage } from './types'
 
 const initialState = slice.getInitialState()

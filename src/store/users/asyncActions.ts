@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { changeIsFetching, changeIsFollowingInProgress } from './usersReducer'
+import { changeIsFetching, changeIsFollowingInProgress } from './reducer'
 import { followAPI, usersAPI } from '../../api/api'
-import { errorHandler } from '../../utils/errorHandler'
+import { errorHandler } from '../../utils/errorHandling/errorHandler'
 import { t } from 'i18next'
 import { GetUsersArgs, GetUsersReturn } from './types'
 

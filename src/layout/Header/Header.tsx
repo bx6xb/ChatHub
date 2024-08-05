@@ -1,17 +1,18 @@
-import { useAppSelector } from '../../utils/reduxUtils'
-import { authSelectors } from '../../store/authReducer'
+import { useAppSelector } from '../../utils/reduxUtils/reduxUtils'
 import userDefaultPhoto from '../../assets/images/userDefaultPhoto.png'
 import { Avatar, Flex, Layout, Popover } from 'antd'
 import { HeaderPopoverContent } from './HeaderPopoverContent/HeaderPopoverContent'
 import s from './Header.module.scss'
 import { Icon } from '../../components/Icon/Icon'
+import {
+  selectAuthorizedUserPhoto,
+  selectIsAuth
+} from '../../store/auth/selectors'
 
 export const Header = () => {
   // get data from the state
-  const isAuth = useAppSelector(authSelectors.selectIsAuth)
-  const authorizedUserAvatar = useAppSelector(
-    authSelectors.selectAuthorizedUserPhoto
-  )
+  const isAuth = useAppSelector(selectIsAuth)
+  const authorizedUserAvatar = useAppSelector(selectAuthorizedUserPhoto)
 
   return (
     <Layout.Header className={s.header}>

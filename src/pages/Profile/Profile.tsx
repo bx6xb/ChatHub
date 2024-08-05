@@ -2,11 +2,11 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import s from './Profile.module.scss'
-import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
-import { authSelectors } from '../../store/authReducer'
-import { profileSelectors } from '../../store/profileReducer'
-import { getRandomProfileBg } from '../../utils/getRandomProfileBg'
-import { generatePosts } from '../../store/profileReducer/profileReducer'
+import {
+  useAppDispatch,
+  useAppSelector
+} from '../../utils/reduxUtils/reduxUtils'
+import { generatePosts } from '../../store/profile/reducer'
 import { ProfileInfo } from './ProfileInfo/ProfileInfo'
 import { ProfileCard } from './ProfileCard/ProfileCard'
 import { MyPosts } from './MyPosts/MyPosts'
@@ -15,14 +15,17 @@ import { Loading } from '../../components/Loading/Loading'
 import {
   getProfileStatus,
   getUserProfile
-} from '../../store/profileReducer/asyncActions'
+} from '../../store/profile/asyncActions'
 import { useTranslation } from 'react-i18next'
-import { Languages } from '../../utils/getRandomPosts'
+import { getRandomProfileBg } from '../../utils/randomData/getRandomProfileBg'
+import { Languages } from '../../utils/randomData/getRandomPosts'
+import { selectId } from '../../store/auth/selectors'
+import { selectUserProfile } from '../../store/profile/selectors'
 
 export const Profile = withAuthRedirect(() => {
   // get data from the state
-  const userProfile = useAppSelector(profileSelectors.selectUserProfile)
-  const authorizedUserId = useAppSelector(authSelectors.selectId)!
+  const userProfile = useAppSelector(selectUserProfile)
+  const authorizedUserId = useAppSelector(selectId)!
 
   // dispatch
   const dispatch = useAppDispatch()

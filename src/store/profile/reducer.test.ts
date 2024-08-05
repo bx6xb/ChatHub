@@ -10,7 +10,7 @@ import {
   changeProfileStatus,
   generatePosts,
   profileReducer
-} from './profileReducer'
+} from './reducer'
 import { ProfileState } from './types'
 
 let state: ProfileState

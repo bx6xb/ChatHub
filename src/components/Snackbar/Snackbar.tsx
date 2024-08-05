@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import s from './Snackbar.module.scss'
 import { Alert } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { AppMessage } from '../../store/appReducer/types'
+import { AppMessage } from '../../store/app/types'
 
 type SnackbarProps = {
   appMessage: AppMessage

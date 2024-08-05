@@ -1,19 +1,24 @@
 import { Avatar, Button, Flex, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import userDefaultPhoto from '../../../assets/images/userDefaultPhoto.png'
-import { profileSelectors } from '../../../store/profileReducer'
-import { useAppSelector } from '../../../utils/reduxUtils'
-import { authSelectors } from '../../../store/authReducer'
+import { useAppSelector } from '../../../utils/reduxUtils/reduxUtils'
 import s from './ProfileCard.module.scss'
 import { useTranslation } from 'react-i18next'
+import { selectId } from '../../../store/auth/selectors'
+import {
+  selectFullName,
+  selectPhoto,
+  selectProfileStatus,
+  selectUserId
+} from '../../../store/profile/selectors'
 
 export const ProfileCard = () => {
   // get data from the state
-  const fullName = useAppSelector(profileSelectors.selectFullName)
-  const userPhoto = useAppSelector(profileSelectors.selectPhoto)
-  const profileStatus = useAppSelector(profileSelectors.selectProfileStatus)
-  const userId = useAppSelector(profileSelectors.selectUserId)
-  const authorizedUserId = useAppSelector(authSelectors.selectId)
+  const fullName = useAppSelector(selectFullName)
+  const userPhoto = useAppSelector(selectPhoto)
+  const profileStatus = useAppSelector(selectProfileStatus)
+  const userId = useAppSelector(selectUserId)
+  const authorizedUserId = useAppSelector(selectId)
 
   // localization
   const { t } = useTranslation()

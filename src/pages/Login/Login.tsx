@@ -1,15 +1,18 @@
 import { Navigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
-import { authSelectors } from '../../store/authReducer'
+import {
+  useAppDispatch,
+  useAppSelector
+} from '../../utils/reduxUtils/reduxUtils'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { login } from '../../store/authReducer/asyncActions'
+import { login } from '../../store/auth/asyncActions'
 import { ControlledInput } from '../../components/ControlledInput/ControlledInput'
 import s from './Login.module.scss'
 import { Button, Flex, Typography } from 'antd'
-import { addAppMessage } from '../../store/appReducer/appReducer'
+import { addAppMessage } from '../../store/app/reducer'
 import { useTranslation } from 'react-i18next'
 import { DataForm } from '../../api/types'
 import { v4 } from 'uuid'
+import { selectCaptchaUrl, selectIsAuth } from '../../store/auth/selectors'
 
 const createErrorElement = (text: string) => (
   <div className={s.error}>{text}</div>
@@ -17,8 +20,8 @@ const createErrorElement = (text: string) => (
 
 export const Login = () => {
   // get data from the state
-  const isAuth = useAppSelector(authSelectors.selectIsAuth)
-  const captchaUrl = useAppSelector(authSelectors.selectCaptchaUrl)
+  const isAuth = useAppSelector(selectIsAuth)
+  const captchaUrl = useAppSelector(selectCaptchaUrl)
 
   // dispatch
   const dispatch = useAppDispatch()

@@ -1,5 +1,5 @@
 import { TypedUseSelectorHook } from 'react-redux'
-import { AppRootState } from '../store/store'
+import { AppRootState } from '../../store/store'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { useSelector } from 'react-redux'

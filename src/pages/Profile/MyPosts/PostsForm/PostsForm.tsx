@@ -1,6 +1,6 @@
 import { SubmitHandler, useController, useForm } from 'react-hook-form'
-import { addPost } from '../../../../store/profileReducer/profileReducer'
-import { useAppDispatch } from '../../../../utils/reduxUtils'
+import { addPost } from '../../../../store/profile/reducer'
+import { useAppDispatch } from '../../../../utils/reduxUtils/reduxUtils'
 import { Button, Flex, Input, Space } from 'antd'
 import s from './PostsForm.module.scss'
 import { useTranslation } from 'react-i18next'

@@ -1,13 +1,16 @@
 import { Flex } from 'antd'
 import { Snackbar } from '../../components/Snackbar/Snackbar'
-import { appSelectors } from '../../store/appReducer'
-import { removeAppMessage } from '../../store/appReducer/appReducer'
-import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
+import { removeAppMessage } from '../../store/app/reducer'
+import {
+  useAppDispatch,
+  useAppSelector
+} from '../../utils/reduxUtils/reduxUtils'
 import s from './SnackbarContainer.module.scss'
+import { selectAppMessages } from '../../store/app/selectors'
 
 export const SnackbarContainer = () => {
   // get data from the state
-  const appMessages = useAppSelector(appSelectors.selectAppMessages)
+  const appMessages = useAppSelector(selectAppMessages)
 
   // dispatch
   const dispatch = useAppDispatch()

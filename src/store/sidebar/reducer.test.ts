@@ -1,6 +1,6 @@
 import { User } from '../../api/types'
 import { getSidebarUsers } from './asyncActions'
-import { sidebarReducer } from './sidebarReducer'
+import { sidebarReducer } from './reducer'
 import { SidebarUsersArray } from './types'
 
 test('sidebar users should be set', () => {

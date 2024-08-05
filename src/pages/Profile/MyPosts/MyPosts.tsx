@@ -2,14 +2,14 @@ import { Flex, Typography } from 'antd'
 import { PostsForm } from './PostsForm/PostsForm'
 import { Post } from './Post/Post'
 import userDefaultPhoto from '../../../assets/images/userDefaultPhoto.png'
-import { profileSelectors } from '../../../store/profileReducer'
-import { useAppSelector } from '../../../utils/reduxUtils'
+import { useAppSelector } from '../../../utils/reduxUtils/reduxUtils'
 import { useTranslation } from 'react-i18next'
+import { selectPhoto, selectPosts } from '../../../store/profile/selectors'
 
 export const MyPosts = () => {
   // get data from the state
-  const posts = useAppSelector(profileSelectors.selectPosts)
-  const userPhoto = useAppSelector(profileSelectors.selectPhoto)
+  const posts = useAppSelector(selectPosts)
+  const userPhoto = useAppSelector(selectPhoto)
 
   // localization
   const { t } = useTranslation()

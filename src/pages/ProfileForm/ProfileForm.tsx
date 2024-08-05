@@ -1,11 +1,13 @@
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
-import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
-import { profileSelectors } from '../../store/profileReducer'
+import {
+  useAppDispatch,
+  useAppSelector
+} from '../../utils/reduxUtils/reduxUtils'
 import {
   setProfileData,
   setProfilePhoto,
   setProfileStatus
-} from '../../store/profileReducer/asyncActions'
+} from '../../store/profile/asyncActions'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { Loading } from '../../components/Loading/Loading'
 import {
@@ -14,12 +16,16 @@ import {
 } from '../../components/ControlledInput/ControlledInput'
 import s from './ProfileForm.module.scss'
 import { Avatar, Button, Flex } from 'antd'
-import { addAppMessage } from '../../store/appReducer/appReducer'
-import { setAuthorizedUserPhoto } from '../../store/authReducer/authReducer'
+import { addAppMessage } from '../../store/app/reducer'
+import { setAuthorizedUserPhoto } from '../../store/auth/reducer'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Photos, ProfileData, ProfileDataValues } from '../../api/types'
 import { v4 } from 'uuid'
+import {
+  selectProfileStatus,
+  selectUserProfile
+} from '../../store/profile/selectors'
 
 type ControlledInputProps = ControlledInputPropsWithoutGeneric<FormValues>
 
@@ -42,8 +48,8 @@ export type FormValues = ProfileData & {
 
 export const ProfileForm = withAuthRedirect(() => {
   // get data from the state
-  const userProfile = useAppSelector(profileSelectors.selectUserProfile)
-  const profileStatus = useAppSelector(profileSelectors.selectProfileStatus)
+  const userProfile = useAppSelector(selectUserProfile)
+  const profileStatus = useAppSelector(selectProfileStatus)
 
   // dispatch
   const dispatch = useAppDispatch()
@@ -165,7 +171,8 @@ export const ProfileForm = withAuthRedirect(() => {
         justify="space-between"
         align="center"
         key={i}
-        className={s.inputWrapper}>
+        className={s.inputWrapper}
+      >
         <ControlledInput {...componentProps} />
       </Flex>
     )

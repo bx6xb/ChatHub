@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { AppState, AppMessage } from './types'
-import { setUserData } from '../authReducer/asyncActions'
+import { setUserData } from '../auth/asyncActions'
 
 export const slice = createSlice({
   name: 'app',

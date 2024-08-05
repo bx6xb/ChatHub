@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { addAppMessage, removeAppMessage } from '../store/appReducer/appReducer'
+import { addAppMessage, removeAppMessage } from '../../store/app/reducer'
 import { v4 } from 'uuid'
 
 export const errorHandler = (dispatch: Dispatch, message: string) => {
