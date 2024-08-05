@@ -46,7 +46,7 @@ export type FormValues = ProfileData & {
   }
 }
 
-export const ProfileForm = withAuthRedirect(() => {
+const ProfileForm = withAuthRedirect(() => {
   // get data from the state
   const userProfile = useAppSelector(selectUserProfile)
   const profileStatus = useAppSelector(selectProfileStatus)
@@ -199,3 +199,5 @@ export const ProfileForm = withAuthRedirect(() => {
     </form>
   )
 })
+
+export default ProfileForm

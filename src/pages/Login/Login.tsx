@@ -18,7 +18,7 @@ const createErrorElement = (text: string) => (
   <div className={s.error}>{text}</div>
 )
 
-export const Login = () => {
+const Login = () => {
   // get data from the state
   const isAuth = useAppSelector(selectIsAuth)
   const captchaUrl = useAppSelector(selectCaptchaUrl)
@@ -126,3 +126,5 @@ export const Login = () => {
     </Flex>
   )
 }
+
+export default Login

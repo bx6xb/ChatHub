@@ -1,5 +1,5 @@
-import { Suspense, useEffect } from 'react'
-import { ConfigProvider, Layout, ThemeConfig } from 'antd'
+import { lazy, Suspense, useEffect } from 'react'
+import { ConfigProvider, Layout } from 'antd'
 import { useAppDispatch, useAppSelector } from '../utils/reduxUtils/reduxUtils'
 import { setUserData } from '../store/auth/asyncActions'
 import { getSidebarUsers } from '../store/sidebar/asyncActions'
@@ -7,47 +7,20 @@ import s from './App.module.scss'
 import { Header } from '../layout/Header/Header'
 import { Sidebar } from '../layout/Sidebar/Sidebar'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { Profile } from '../pages/Profile/Profile'
-import Users from '../pages/Users/Users'
-import { Login } from '../pages/Login/Login'
-import { Page404 } from '../pages/Page404/Page404'
-import { Colors } from '../styles/Colors'
-import { ProfileForm } from '../pages/ProfileForm/ProfileForm'
 import { Loading } from '../components/Loading/Loading'
 import { getProfileStatus, getUserProfile } from '../store/profile/asyncActions'
 import { setAuthorizedUserPhoto } from '../store/auth/reducer'
 import { SnackbarContainer } from './SnackbarContainer/SnackbarContainer'
 import { selectIsAppInitialized } from '../store/app/selectors'
 import { selectId } from '../store/auth/selectors'
+import { antDesignTheme } from './antDesignTheme'
 
-const antDesignTheme: ThemeConfig = {
-  components: {
-    Menu: {
-      itemSelectedBg: Colors.transparent,
-      activeBarBorderWidth: 0,
-      itemSelectedColor: Colors.black,
-      itemColor: Colors.black
-    },
-    Button: {
-      // default
-      defaultBg: Colors.primary,
-      defaultColor: Colors.white,
-      defaultBorderColor: Colors.primary,
-      // hover
-      defaultHoverBg: Colors.secondary,
-      defaultHoverColor: Colors.white,
-      defaultHoverBorderColor: Colors.white,
-      // active
-      defaultActiveBg: Colors.secondary,
-      defaultActiveColor: Colors.primary,
-      defaultActiveBorderColor: Colors.primary
-    },
-    Typography: {
-      colorTextHeading: Colors.white,
-      colorText: Colors.white
-    }
-  }
-}
+// lazy loading components
+const Profile = lazy(() => import('../pages/Profile/Profile'))
+const ProfileForm = lazy(() => import('../pages/ProfileForm/ProfileForm'))
+const Users = lazy(() => import('../pages/Users/Users'))
+const Login = lazy(() => import('../pages/Login/Login'))
+const Page404 = lazy(() => import('../pages/Page404/Page404'))
 
 const App = () => {
   // get data from the state

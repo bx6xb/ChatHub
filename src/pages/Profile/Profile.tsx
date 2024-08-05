@@ -22,7 +22,7 @@ import { Languages } from '../../utils/randomData/getRandomPosts'
 import { selectId } from '../../store/auth/selectors'
 import { selectUserProfile } from '../../store/profile/selectors'
 
-export const Profile = withAuthRedirect(() => {
+const Profile = withAuthRedirect(() => {
   // get data from the state
   const userProfile = useAppSelector(selectUserProfile)
   const authorizedUserId = useAppSelector(selectId)!
@@ -68,3 +68,5 @@ export const Profile = withAuthRedirect(() => {
     </>
   )
 })
+
+export default Profile

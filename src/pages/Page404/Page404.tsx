@@ -1,8 +1,8 @@
-import { Button, ConfigProvider, Result } from 'antd'
+import { ConfigProvider, Result } from 'antd'
 import { Colors } from '../../styles/Colors'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 
-export const Page404 = withAuthRedirect(() => {
+const Page404 = withAuthRedirect(() => {
   return (
     <ConfigProvider
       theme={{
@@ -20,3 +20,5 @@ export const Page404 = withAuthRedirect(() => {
     </ConfigProvider>
   )
 })
+
+export default Page404
