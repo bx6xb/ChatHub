@@ -14,11 +14,12 @@ import {
 } from '../../components/ControlledInput/ControlledInput'
 import s from './ProfileForm.module.scss'
 import { Avatar, Button, Flex } from 'antd'
-import { setAppMessage, setIsError } from '../../store/appReducer/appReducer'
+import { addAppMessage } from '../../store/appReducer/appReducer'
 import { setAuthorizedUserPhoto } from '../../store/authReducer/authReducer'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Photos, ProfileData, ProfileDataValues } from '../../api/types'
+import { v4 } from 'uuid'
 
 type ControlledInputProps = ControlledInputPropsWithoutGeneric<FormValues>
 
@@ -93,8 +94,13 @@ export const ProfileForm = withAuthRedirect(() => {
 
     // if there are no errors, display publication information
     if (!isError) {
-      dispatch(setAppMessage(t('ProfileForm_data_updated')))
-      dispatch(setIsError(false))
+      dispatch(
+        addAppMessage({
+          id: v4(),
+          message: t('ProfileForm_data_updated'),
+          isError: false
+        })
+      )
     }
   }
 
@@ -159,8 +165,7 @@ export const ProfileForm = withAuthRedirect(() => {
         justify="space-between"
         align="center"
         key={i}
-        className={s.inputWrapper}
-      >
+        className={s.inputWrapper}>
         <ControlledInput {...componentProps} />
       </Flex>
     )

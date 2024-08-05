@@ -1,6 +1,9 @@
 export type AppState = {
   isAppInitialized: boolean
-  appMessage: AppMessage
+  appMessages: AppMessage[]
+}
+export type AppMessage = {
+  id: string
+  message: string
   isError: boolean
 }
-export type AppMessage = string | null

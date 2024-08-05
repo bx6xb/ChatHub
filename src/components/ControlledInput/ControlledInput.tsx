@@ -7,10 +7,10 @@ import {
   Upload,
   UploadProps
 } from 'antd'
-import { useId } from 'react'
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
 import s from './ControlledInput.module.scss'
 import { UploadOutlined } from '@ant-design/icons'
+import { v4 } from 'uuid'
 
 type WithoutValueAndOnChange<T> = Omit<T, 'onChange' | 'value'>
 
@@ -52,7 +52,7 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
   } = props
 
   // create id
-  const id = useId()
+  const id = v4()
 
   // controller for custom inputs
   const {

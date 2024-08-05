@@ -1,11 +1,16 @@
 import { Dispatch } from 'redux'
-import { setAppMessage, setIsError } from '../store/appReducer/appReducer'
+import { addAppMessage, removeAppMessage } from '../store/appReducer/appReducer'
+import { v4 } from 'uuid'
 
 export const errorHandler = (dispatch: Dispatch, message: string) => {
-  dispatch(setIsError(true))
-  dispatch(setAppMessage(message))
+  dispatch(
+    addAppMessage({
+      id: v4(),
+      message,
+      isError: true
+    })
+  )
 }
-export const resetAppMessageAndError = (dispatch: Dispatch) => {
-  dispatch(setIsError(false))
-  dispatch(setAppMessage(null))
+export const resetAppMessageAndError = (dispatch: Dispatch, id: string) => {
+  dispatch(removeAppMessage(id))
 }

@@ -6,20 +6,19 @@ export const slice = createSlice({
   name: 'app',
   initialState: {
     isAppInitialized: false,
-    appMessage: null,
-    isError: false
+    appMessages: []
   } as AppState,
   reducers: {
-    setIsError(state, action: PayloadAction<boolean>) {
+    addAppMessage(state, action: PayloadAction<AppMessage>) {
       return {
         ...state,
-        isError: action.payload
+        appMessages: [...state.appMessages, action.payload]
       }
     },
-    setAppMessage(state, action: PayloadAction<AppMessage>) {
+    removeAppMessage(state, action: PayloadAction<string>) {
       return {
         ...state,
-        appMessage: action.payload
+        appMessages: state.appMessages.filter(m => m.id !== action.payload)
       }
     }
   },
@@ -32,4 +31,4 @@ export const slice = createSlice({
 })
 
 export const appReducer = slice.reducer
-export const { setIsError, setAppMessage } = slice.actions
+export const { addAppMessage, removeAppMessage } = slice.actions

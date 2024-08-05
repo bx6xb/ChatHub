@@ -1,14 +1,4 @@
 .snackbar {
-  max-width: 400px;
-  width: 90%;
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 20px;
   background-color: var(--white-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: black;
-  z-index: 10;
 }

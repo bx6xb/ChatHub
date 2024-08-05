@@ -1,5 +1,6 @@
 import { setUserData } from '../authReducer/asyncActions'
-import { appReducer, setAppMessage, setIsError, slice } from './appReducer'
+import { appReducer, addAppMessage, slice } from './appReducer'
+import { AppMessage } from './types'
 
 const initialState = slice.getInitialState()
 
@@ -15,15 +16,16 @@ test('isAppInitialized value should be changed', () => {
   expect(newState.isAppInitialized).toBeTruthy()
 })
 
-test('isError value should be changed', () => {
-  const newState = appReducer(initialState, setIsError(true))
-
-  expect(newState.isError).toBeTruthy()
-})
-
 test('app message should be changed', () => {
-  const appMessage = 'Network error'
-  const newState = appReducer(initialState, setAppMessage(appMessage))
+  const appMessage: AppMessage = {
+    id: 'id1',
+    isError: true,
+    message: 'Nertwork error'
+  }
+  const newState = appReducer(initialState, addAppMessage(appMessage))
 
-  expect(newState.appMessage).toBe(appMessage)
+  expect(newState.appMessages[0]).toEqual(appMessage)
+  expect(newState.appMessages[0].id).toBe(appMessage.id)
+  expect(newState.appMessages[0].isError).toBeTruthy()
+  expect(newState.appMessages[0].message).toBe(appMessage.message)
 })

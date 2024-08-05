@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react'
 import s from './Snackbar.module.scss'
-import { useAppDispatch, useAppSelector } from '../../utils/reduxUtils'
-import { appSelectors } from '../../store/appReducer'
 import { Alert } from 'antd'
-import { resetAppMessageAndError } from '../../utils/errorHandler'
 import { useTranslation } from 'react-i18next'
+import { AppMessage } from '../../store/appReducer/types'
 
-export const Snackbar = () => {
-  // get data from the state
-  const isError = useAppSelector(appSelectors.selectIsError)
-  const appMessage = useAppSelector(appSelectors.selectAppMessage)
+type SnackbarProps = {
+  appMessage: AppMessage
+  onClose: (id: string) => void
+}
 
-  // dispatch
-  const dispatch = useAppDispatch()
+export const Snackbar = (props: SnackbarProps) => {
+  const {
+    appMessage: { id, isError, message }
+  } = props
 
-  // localization
-  const { t, i18n } = useTranslation()
+  // localizations
+  const { t } = useTranslation()
 
   // local state
   const [isOpen, setOpen] = useState(false)
@@ -23,26 +23,26 @@ export const Snackbar = () => {
 
   // callbacks
   const onClose = () => {
-    resetAppMessageAndError(dispatch)
+    props.onClose(id)
     setOpen(false)
   }
 
   // to show and hide snackbar
   useEffect(() => {
-    if (appMessage) {
+    if (message) {
       setOpen(true)
-      setTimeoutId(+setTimeout(onClose, 4000))
+      setTimeoutId(+setTimeout(onClose, 2500))
     }
 
     return () => clearTimeout(timeoutId)
-  }, [appMessage])
+  }, [message])
 
   return (
     <>
       {isOpen && (
         <Alert
           message={isError ? t('Snackbar_error') : t('Snackbar_message')}
-          description={appMessage}
+          description={message}
           type={isError ? 'error' : 'success'}
           showIcon
           closable
