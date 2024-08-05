@@ -6,7 +6,6 @@ import s from './ProfileInfo.module.scss'
 import { useTranslation } from 'react-i18next'
 import { ContactValues } from '../../../api/types'
 import { selectUserProfile } from '../../../store/profile/selectors'
-import { ContactsFilled } from '@ant-design/icons'
 
 export const ProfileInfo = () => {
   // get data from the state
@@ -20,7 +19,8 @@ export const ProfileInfo = () => {
     return null
   }
 
-  let mappedContacts: ReactElement[] = Object.entries(ContactsFilled)
+  // jsx variables
+  let mappedContacts: ReactElement[] = Object.entries(userProfile.contacts)
     .filter(c => c[1])
     .map(([contact, link]) => (
       <Contact key={contact} contact={contact as ContactValues} link={link!} />
