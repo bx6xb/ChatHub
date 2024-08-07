@@ -3,12 +3,14 @@ import { useAppDispatch } from '../../../utils/reduxUtils/reduxUtils'
 import { logout } from '../../../store/auth/asyncActions'
 import { EditOutlined, UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-import i18n from '../../../i18n/i18n'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 export const HeaderPopoverContent = () => {
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t, i18n } = useTranslation()
 
   // callbacks
   const logoutOnClick = () => {

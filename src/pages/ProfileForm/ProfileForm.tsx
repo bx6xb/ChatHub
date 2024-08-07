@@ -15,7 +15,7 @@ import {
 import { FormValues } from './types'
 import { ProfileDataInputs } from './ProfileDataInputs/ProfileDataInputs'
 import { handleFormSubmit } from '../../utils/handleFormSubmit/handleFormSubmit'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 const ProfileForm = withAuthRedirect(() => {
   // get data from the state
@@ -24,6 +24,9 @@ const ProfileForm = withAuthRedirect(() => {
 
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t } = useTranslation()
 
   // local state
   const [photoPreview, setPhotoPreview] = useState<string>()

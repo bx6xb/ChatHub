@@ -10,7 +10,7 @@ import { follow, unfollow } from '../../../store/users/asyncActions'
 import { User } from '../../../api/types'
 import userPhoto from '../../../assets/images/userDefaultPhoto.png'
 import s from './UserItem.module.scss'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 type UserItemProps = {
   item: User
@@ -22,6 +22,9 @@ export const UserItem = ({ item }: UserItemProps) => {
 
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t } = useTranslation()
 
   // callbacks
   const followOnClick = (userId: number) => {

@@ -10,7 +10,7 @@ import {
   selectProfileStatus,
   selectUserId
 } from '../../../store/profile/selectors'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 export const ProfileCard = () => {
   // get data from the state
@@ -19,6 +19,9 @@ export const ProfileCard = () => {
   const profileStatus = useAppSelector(selectProfileStatus)
   const userId = useAppSelector(selectUserId)
   const authorizedUserId = useAppSelector(selectId)
+
+  // localization
+  const { t } = useTranslation()
 
   // jsx variables
   const isOwner = userId === authorizedUserId

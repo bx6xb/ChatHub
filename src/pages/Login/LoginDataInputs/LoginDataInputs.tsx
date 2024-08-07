@@ -6,7 +6,7 @@ import { Flex } from 'antd'
 import s from './LoginDataInputs.module.scss'
 import { useAppSelector } from '../../../utils/reduxUtils/reduxUtils'
 import { selectCaptchaUrl } from '../../../store/auth/selectors'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 type LoginDataInputsProps = {
   control: Control<LoginFormData>
@@ -18,6 +18,9 @@ export const LoginDataInputs = (props: LoginDataInputsProps) => {
 
   // get data from the state
   const captchaUrl = useAppSelector(selectCaptchaUrl)
+
+  // localization
+  const { t } = useTranslation()
 
   return (
     <>

@@ -3,7 +3,7 @@ import { addPost } from '../../../../store/profile/reducer'
 import { useAppDispatch } from '../../../../utils/reduxUtils/reduxUtils'
 import { Button, Flex, Input, Space } from 'antd'
 import s from './PostsForm.module.scss'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 type PostsLoginFormData = {
   message: string
@@ -12,6 +12,9 @@ type PostsLoginFormData = {
 export const PostsForm = () => {
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t } = useTranslation()
 
   // form init
   const {

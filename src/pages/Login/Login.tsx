@@ -11,7 +11,7 @@ import { LoginFormData } from '../../api/types'
 import { login } from '../../store/auth/asyncActions'
 import { addAppMessage } from '../../store/app/reducer'
 import { v4 } from 'uuid'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 const Login = () => {
   // get data from the state
@@ -19,6 +19,9 @@ const Login = () => {
 
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t } = useTranslation()
 
   // form init
   const {

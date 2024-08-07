@@ -10,8 +10,7 @@ import { selectPhoto, selectPosts } from '../../../store/profile/selectors'
 import { useEffect } from 'react'
 import { generatePosts } from '../../../store/profile/reducer'
 import { Languages } from '../../../utils/randomData/getRandomPosts'
-import { t } from 'i18next'
-import i18n from '../../../i18n/i18n'
+import { useTranslation } from 'react-i18next'
 
 export const MyPosts = () => {
   // get data from the state
@@ -20,6 +19,9 @@ export const MyPosts = () => {
 
   // dispatch
   const dispatch = useAppDispatch()
+
+  // localization
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
     dispatch(generatePosts(i18n.language as Languages))

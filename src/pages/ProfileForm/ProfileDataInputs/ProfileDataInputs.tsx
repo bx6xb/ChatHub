@@ -1,10 +1,10 @@
-import { t } from 'i18next'
 import { ControlledInputProps, FormValues } from '../types'
 import { Flex } from 'antd'
 import { ControlledInput } from '../../../components/ControlledInput/ControlledInput'
 import s from './ProfileDataInputs.module.scss'
 import { Control } from 'react-hook-form'
 import { ProfileDataValues, ProfileDomain } from '../../../api/types'
+import { useTranslation } from 'react-i18next'
 
 type ProfileDataInputsProps = {
   control: Control<FormValues>
@@ -17,6 +17,9 @@ export const ProfileDataInputs = ({
   userProfile,
   profileStatus
 }: ProfileDataInputsProps) => {
+  // localization
+  const { t } = useTranslation()
+
   const inputsData: ControlledInputProps[] = [
     {
       name: 'photo',

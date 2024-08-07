@@ -5,11 +5,14 @@ import { Contact } from './Contact/Contact'
 import s from './ProfileInfo.module.scss'
 import { ContactValues } from '../../../api/types'
 import { selectUserProfile } from '../../../store/profile/selectors'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 export const ProfileInfo = () => {
   // get data from the state
   const userProfile = useAppSelector(selectUserProfile)
+
+  // localization
+  const { t } = useTranslation()
 
   if (!userProfile) {
     return null
