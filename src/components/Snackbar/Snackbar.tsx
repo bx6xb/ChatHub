@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import s from './Snackbar.module.scss'
 import { Alert } from 'antd'
-import { useTranslation } from 'react-i18next'
 import { AppMessage } from '../../store/app/types'
+import { t } from 'i18next'
 
 type SnackbarProps = {
   appMessage: AppMessage
@@ -13,9 +13,6 @@ export const Snackbar = (props: SnackbarProps) => {
   const {
     appMessage: { id, isError, message }
   } = props
-
-  // localizations
-  const { t } = useTranslation()
 
   // local state
   const [isOpen, setOpen] = useState(false)

@@ -6,6 +6,7 @@ import {
   Languages
 } from '../../utils/randomData/getRandomPosts'
 import { getRandomNumber } from '../../utils/randomData/getRandomNumber'
+import { v4 } from 'uuid'
 
 const slice = createSlice({
   name: 'profile',
@@ -20,7 +21,7 @@ const slice = createSlice({
       return {
         ...state,
         posts: randomPostsArray.map((message, i) => ({
-          id: i + 1,
+          id: v4(),
           message,
           likesCount: getRandomNumber(0, 10),
           dislikesCount: getRandomNumber(0, 2)
@@ -32,7 +33,7 @@ const slice = createSlice({
         ...state,
         posts: [
           {
-            id: state.posts.length + 1,
+            id: v4(),
             message: action.payload,
             likesCount: 0,
             dislikesCount: 0
@@ -44,7 +45,7 @@ const slice = createSlice({
     changePostData(
       state,
       action: PayloadAction<{
-        id: number
+        id: string
         data: Partial<PostData>
       }>
     ) {

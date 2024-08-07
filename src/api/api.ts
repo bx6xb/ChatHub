@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {
-  DataForm,
+  LoginFormData,
   GetUsersResponse,
   Photos,
   ProfileData,
@@ -23,7 +23,7 @@ export const authAPI = {
   me() {
     return instance.get<ResponseType<UserDataDomain>>('auth/me')
   },
-  login(formData: DataForm) {
+  login(formData: LoginFormData) {
     return instance.post<ResponseType<{ userId: number }>>(
       'auth/login',
       formData

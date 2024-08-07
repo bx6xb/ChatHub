@@ -3,9 +3,9 @@ import { addPost } from '../../../../store/profile/reducer'
 import { useAppDispatch } from '../../../../utils/reduxUtils/reduxUtils'
 import { Button, Flex, Input, Space } from 'antd'
 import s from './PostsForm.module.scss'
-import { useTranslation } from 'react-i18next'
+import { t } from 'i18next'
 
-type PostsDataForm = {
+type PostsLoginFormData = {
   message: string
 }
 
@@ -13,16 +13,13 @@ export const PostsForm = () => {
   // dispatch
   const dispatch = useAppDispatch()
 
-  // localization
-  const { t } = useTranslation()
-
   // form init
   const {
     handleSubmit,
     formState: { errors },
     reset,
     control
-  } = useForm<PostsDataForm>()
+  } = useForm<PostsLoginFormData>()
 
   // controller for custom input
   const {
@@ -37,7 +34,7 @@ export const PostsForm = () => {
   })
 
   // callbacks
-  const onSubmit: SubmitHandler<PostsDataForm> = data => {
+  const onSubmit: SubmitHandler<PostsLoginFormData> = data => {
     dispatch(addPost(data.message))
     reset()
   }

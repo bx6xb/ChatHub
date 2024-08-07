@@ -6,7 +6,6 @@ import {
   useAppDispatch,
   useAppSelector
 } from '../../utils/reduxUtils/reduxUtils'
-import { generatePosts } from '../../store/profile/reducer'
 import { ProfileInfo } from './ProfileInfo/ProfileInfo'
 import { ProfileCard } from './ProfileCard/ProfileCard'
 import { MyPosts } from './MyPosts/MyPosts'
@@ -16,9 +15,7 @@ import {
   getProfileStatus,
   getUserProfile
 } from '../../store/profile/asyncActions'
-import { useTranslation } from 'react-i18next'
 import { getRandomProfileBg } from '../../utils/randomData/getRandomProfileBg'
-import { Languages } from '../../utils/randomData/getRandomPosts'
 import { selectId } from '../../store/auth/selectors'
 import { selectUserProfile } from '../../store/profile/selectors'
 
@@ -29,9 +26,6 @@ const Profile = withAuthRedirect(() => {
 
   // dispatch
   const dispatch = useAppDispatch()
-
-  // localization
-  const { i18n } = useTranslation()
 
   // local state
   const [profileBg] = useState<string>(getRandomProfileBg())
@@ -46,10 +40,6 @@ const Profile = withAuthRedirect(() => {
     dispatch(getUserProfile(userId))
     dispatch(getProfileStatus(userId))
   }, [userId]) // get data for profile
-
-  useEffect(() => {
-    dispatch(generatePosts(i18n.language as Languages))
-  }, [i18n.language]) // generate posts
 
   // loading while fetching data
   if (!userProfile) {

@@ -1,4 +1,4 @@
-import { setUserData } from '../auth/asyncActions'
+import { getUserData } from '../auth/asyncActions'
 import { appReducer, addAppMessage, slice } from './reducer'
 import { AppMessage } from './types'
 
@@ -7,7 +7,7 @@ const initialState = slice.getInitialState()
 test('isAppInitialized value should be changed', () => {
   const newState = appReducer(
     initialState,
-    setUserData.fulfilled(
+    getUserData.fulfilled(
       { email: 'example@gmail.com', id: 1, login: 'login', isAuth: true },
       'requestId'
     )

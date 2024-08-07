@@ -6,9 +6,9 @@ import defaultUserPhoto from '../../assets/images/userDefaultPhoto.png'
 import s from './Sidebar.module.scss'
 import { useEffect, useState } from 'react'
 import { ItemType } from 'antd/es/menu/interface'
-import { useTranslation } from 'react-i18next'
 import { selectIsAuth } from '../../store/auth/selectors'
 import { selectUsers } from '../../store/sidebar/selectors'
+import { t } from 'i18next'
 
 export const Sidebar = () => {
   // get data from the state
@@ -17,9 +17,6 @@ export const Sidebar = () => {
 
   // local state
   const [isCollapsed, setIsCollapsed] = useState(true)
-
-  // localization
-  const { t } = useTranslation()
 
   // add swipe listeners on first init
   useEffect(() => {

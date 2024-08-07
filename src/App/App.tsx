@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react'
 import { ConfigProvider, Layout } from 'antd'
 import { useAppDispatch, useAppSelector } from '../utils/reduxUtils/reduxUtils'
-import { setUserData } from '../store/auth/asyncActions'
+import { getUserData } from '../store/auth/asyncActions'
 import { getSidebarUsers } from '../store/sidebar/asyncActions'
 import s from './App.module.scss'
 import { Header } from '../layout/Header/Header'
@@ -13,7 +13,7 @@ import { setAuthorizedUserPhoto } from '../store/auth/reducer'
 import { SnackbarContainer } from './SnackbarContainer/SnackbarContainer'
 import { selectIsAppInitialized } from '../store/app/selectors'
 import { selectId } from '../store/auth/selectors'
-import { antDesignTheme } from './antDesignTheme'
+import { AppTheme } from './AppTheme'
 
 // lazy loading components
 const Profile = lazy(() => import('../pages/Profile/Profile'))
@@ -31,13 +31,14 @@ const App = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(setUserData())
+    dispatch(getUserData())
     dispatch(getSidebarUsers())
   }, [])
 
   useEffect(() => {
     // get authorized user data to set user photo for pop over header
     if (authorizedUserId) {
+      // set set authorized user photo
       dispatch(getUserProfile(authorizedUserId)).then(data => {
         if (getUserProfile.fulfilled.match(data)) {
           const userPhoto = data.payload.photos.large
@@ -55,7 +56,7 @@ const App = () => {
   }
 
   return (
-    <ConfigProvider theme={antDesignTheme}>
+    <ConfigProvider theme={AppTheme}>
       <Layout className={s.app}>
         <SnackbarContainer />
         <Header />

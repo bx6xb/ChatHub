@@ -2,17 +2,28 @@ import { Flex, Typography } from 'antd'
 import { PostsForm } from './PostsForm/PostsForm'
 import { Post } from './Post/Post'
 import userDefaultPhoto from '../../../assets/images/userDefaultPhoto.png'
-import { useAppSelector } from '../../../utils/reduxUtils/reduxUtils'
-import { useTranslation } from 'react-i18next'
+import {
+  useAppDispatch,
+  useAppSelector
+} from '../../../utils/reduxUtils/reduxUtils'
 import { selectPhoto, selectPosts } from '../../../store/profile/selectors'
+import { useEffect } from 'react'
+import { generatePosts } from '../../../store/profile/reducer'
+import { Languages } from '../../../utils/randomData/getRandomPosts'
+import { t } from 'i18next'
+import i18n from '../../../i18n/i18n'
 
 export const MyPosts = () => {
   // get data from the state
   const posts = useAppSelector(selectPosts)
   const userPhoto = useAppSelector(selectPhoto)
 
-  // localization
-  const { t } = useTranslation()
+  // dispatch
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(generatePosts(i18n.language as Languages))
+  }, []) // generate posts
 
   // jsx variables
   let mappedPosts = posts.map(p => (

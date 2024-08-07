@@ -3,18 +3,14 @@ import { useAppSelector } from '../../../utils/reduxUtils/reduxUtils'
 import { ReactElement } from 'react'
 import { Contact } from './Contact/Contact'
 import s from './ProfileInfo.module.scss'
-import { useTranslation } from 'react-i18next'
 import { ContactValues } from '../../../api/types'
 import { selectUserProfile } from '../../../store/profile/selectors'
+import { t } from 'i18next'
 
 export const ProfileInfo = () => {
   // get data from the state
   const userProfile = useAppSelector(selectUserProfile)
 
-  // localization
-  const { t } = useTranslation()
-
-  // for ts
   if (!userProfile) {
     return null
   }
@@ -26,7 +22,14 @@ export const ProfileInfo = () => {
       <Contact key={contact} contact={contact as ContactValues} link={link!} />
     ))
 
-  return (
+  // remove space between profile card and posts if information is missing
+  const shouldShow =
+    userProfile.aboutMe ||
+    userProfile.lookingForAJob ||
+    userProfile.lookingForAJobDescription ||
+    mappedContacts.length
+
+  return shouldShow ? (
     <Flex wrap gap={5}>
       <div className={s.profileInfo}>
         {userProfile.aboutMe && (
@@ -56,5 +59,5 @@ export const ProfileInfo = () => {
         </Flex>
       )}
     </Flex>
-  )
+  ) : null
 }

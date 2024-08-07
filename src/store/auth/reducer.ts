@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthState } from './types'
-import { getCaptchaUrl, logout, setUserData } from './asyncActions'
+import { getCaptchaUrl, logout, getUserData } from './asyncActions'
 
 export const initialState = {
   id: null,
@@ -24,7 +24,7 @@ const slice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(setUserData.fulfilled, (state, action) => ({
+      .addCase(getUserData.fulfilled, (state, action) => ({
         ...state,
         ...action.payload
       }))

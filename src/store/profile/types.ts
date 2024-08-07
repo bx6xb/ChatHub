@@ -6,7 +6,7 @@ export type PostData = {
   dislikesCount: number
 }
 export type Post = {
-  id: number
+  id: string
 } & PostData
 export type ProfileState = {
   posts: Post[]

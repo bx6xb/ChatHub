@@ -1,7 +1,7 @@
 export type ResponseType<D = {}> = {
   resultCode: number
   messages: string[]
-  fieldsErrors: { field: FormFields; error: string }[]
+  fieldsErrors: { field: LoginFormDataFields; error: string }[]
   data: D
 }
 export type Photos = {
@@ -36,13 +36,13 @@ export type UserDataDomain = {
   email: string
   login: string
 }
-export interface DataForm {
+export interface LoginFormData {
   email: string
   password: string
   rememberMe: boolean
   captcha: string | null
 }
-export type FormFields = keyof DataForm
+export type LoginFormDataFields = keyof LoginFormData
 export type User = {
   name: string
   id: number

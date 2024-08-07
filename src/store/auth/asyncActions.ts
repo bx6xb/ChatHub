@@ -2,12 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authAPI, securityAPI } from '../../api/api'
 import { errorHandler } from '../../utils/errorHandling/errorHandler'
 import { t } from 'i18next'
-import { DataForm, UserDataDomain } from '../../api/types'
+import { LoginFormData, UserDataDomain } from '../../api/types'
 
-export const setUserData = createAsyncThunk<
+export const getUserData = createAsyncThunk<
   UserDataDomain | { isAuth: boolean },
   void
->('auth/setUserData', async () => {
+>('auth/getUserData', async () => {
   const response = await authAPI.me()
   if (response.data.resultCode === 0) {
     return { ...response.data.data, isAuth: true }
@@ -15,13 +15,17 @@ export const setUserData = createAsyncThunk<
     return { isAuth: false }
   }
 })
-export const login = createAsyncThunk<void, DataForm, { rejectValue: null }>(
+export const login = createAsyncThunk<
+  void,
+  LoginFormData,
+  { rejectValue: null }
+>(
   'auth/login',
-  async (formData: DataForm, { dispatch, rejectWithValue }) => {
+  async (formData: LoginFormData, { dispatch, rejectWithValue }) => {
     try {
       const response = await authAPI.login(formData)
       if (response.data.resultCode === 0) {
-        dispatch(setUserData())
+        dispatch(getUserData())
       } else if (response.data.resultCode === 10) {
         dispatch(getCaptchaUrl())
         errorHandler(dispatch, t('captcha_error'))

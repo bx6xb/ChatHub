@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { AppState, AppMessage } from './types'
-import { setUserData } from '../auth/asyncActions'
+import { getUserData } from '../auth/asyncActions'
 
 export const slice = createSlice({
   name: 'app',
@@ -23,7 +23,7 @@ export const slice = createSlice({
     }
   },
   extraReducers: builder => {
-    builder.addCase(setUserData.fulfilled, state => ({
+    builder.addCase(getUserData.fulfilled, state => ({
       ...state,
       isAppInitialized: true
     }))

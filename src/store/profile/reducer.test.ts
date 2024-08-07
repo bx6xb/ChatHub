@@ -1,4 +1,4 @@
-import { Photos } from '../../api/types'
+import { Photos, ProfileDomain } from '../../api/types'
 import {
   getUserProfile,
   setProfilePhoto,
@@ -13,29 +13,49 @@ import {
 } from './reducer'
 import { ProfileState } from './types'
 
-let state: ProfileState
-
-beforeEach(() => {
-  state = {
-    posts: [
-      { id: 1, message: 'Hi, how are you?', likesCount: 12, dislikesCount: 0 },
-      {
-        id: 2,
-        message: "It's my first post",
-        likesCount: 11,
-        dislikesCount: 1
-      },
-      { id: 3, message: 'Blabla', likesCount: 10, dislikesCount: 2 },
-      { id: 4, message: 'Dada', likesCount: 9, dislikesCount: 3 }
-    ],
-    userProfile: {},
-    profileStatus: 'love zenow'
-  } as ProfileState
-})
+// variables
+const initialState: ProfileState = {
+  posts: [
+    {
+      id: 'id1',
+      message: 'Hi, how are you?',
+      likesCount: 12,
+      dislikesCount: 0
+    },
+    {
+      id: 'id2',
+      message: "It's my first post",
+      likesCount: 11,
+      dislikesCount: 1
+    },
+    { id: 'id3', message: 'Blabla', likesCount: 10, dislikesCount: 2 },
+    { id: 'id4', message: 'Dada', likesCount: 9, dislikesCount: 3 }
+  ],
+  userProfile: null,
+  profileStatus: 'love zenow'
+}
+const userProfile: ProfileDomain = {
+  aboutMe: null,
+  contacts: {
+    facebook: null,
+    website: null,
+    vk: null,
+    twitter: null,
+    instagram: null,
+    youtube: null,
+    github: null,
+    mainLink: null
+  },
+  lookingForAJob: false,
+  lookingForAJobDescription: null,
+  fullName: 'Rusya',
+  userId: 31140,
+  photos: { small: null, large: null }
+}
 
 // tests
 test('posts should be generated', () => {
-  const newState = profileReducer(state, generatePosts('en'))
+  const newState = profileReducer(initialState, generatePosts('en'))
 
   expect(newState.posts.length).toBeGreaterThanOrEqual(1)
   expect(newState.posts.length).toBeLessThanOrEqual(7)
@@ -44,9 +64,9 @@ test('posts should be generated', () => {
 test('new post should be added', () => {
   const message = 'zenow'
 
-  const newState = profileReducer(state, addPost(message))
+  const newState = profileReducer(initialState, addPost(message))
 
-  expect(newState).not.toBe(state)
+  expect(newState).not.toBe(initialState)
   expect(newState.posts.length).toBe(5)
   expect(newState.posts[0].message).toBe(message)
 })
@@ -56,8 +76,8 @@ test('post data should be changed', () => {
   const dislikesCount = 0
 
   const newState = profileReducer(
-    state,
-    changePostData({ id: 2, data: { likesCount, dislikesCount } })
+    initialState,
+    changePostData({ id: 'id2', data: { likesCount, dislikesCount } })
   )
 
   expect(newState.posts[1].likesCount).toBe(likesCount)
@@ -67,37 +87,18 @@ test('post data should be changed', () => {
 test('profile status should be changed', () => {
   const status = 'status'
 
-  const newState = profileReducer(state, changeProfileStatus(status))
+  const newState = profileReducer(initialState, changeProfileStatus(status))
 
   expect(newState.profileStatus).toBe(status)
 })
 
 test('user profile should be set', () => {
-  const userProfile = {
-    aboutMe: null,
-    contacts: {
-      facebook: null,
-      website: null,
-      vk: null,
-      twitter: null,
-      instagram: null,
-      youtube: null,
-      github: null,
-      mainLink: null
-    },
-    lookingForAJob: false,
-    lookingForAJobDescription: null,
-    fullName: 'Rusya',
-    userId: 31140,
-    photos: { small: null, large: null }
-  }
-
   const newState = profileReducer(
-    state,
+    initialState,
     getUserProfile.fulfilled(userProfile, 'requestId', 2)
   )
 
-  expect(newState).not.toBe(state)
+  expect(newState).not.toBe(initialState)
   expect(newState.userProfile).toBe(userProfile)
 })
 
@@ -107,8 +108,14 @@ test('profile photo should be set', () => {
     type: 'text/plain'
   })
 
+  // firstly set user profile
+  const transitState = profileReducer(
+    initialState,
+    getUserProfile.fulfilled(userProfile, 'requestId', 2)
+  )
+
   const newState = profileReducer(
-    state,
+    transitState,
     setProfilePhoto.fulfilled(photos, 'requestId', file)
   )
 

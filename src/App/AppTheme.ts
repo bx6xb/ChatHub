@@ -1,7 +1,7 @@
 import { ThemeConfig } from 'antd'
 import { Colors } from '../styles/Colors'
 
-export const antDesignTheme: ThemeConfig = {
+export const AppTheme: ThemeConfig = {
   components: {
     Menu: {
       itemSelectedBg: Colors.transparent,

@@ -52,6 +52,9 @@
   "Login_remember_me": "Remember me",
   "Login_button": "Login",
 
+  "component": "Page404",
+  "Page404_text": "Sorry, the page you visited does not exist.",
+
   "__comment__": "Snackbar messages",
   "network_error": "Network error",
   "captcha_error": "Incorrect anti-bot symbols",

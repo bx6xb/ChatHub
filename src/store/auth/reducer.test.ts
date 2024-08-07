@@ -1,4 +1,4 @@
-import { getCaptchaUrl, logout, setUserData } from './asyncActions'
+import { getCaptchaUrl, logout, getUserData } from './asyncActions'
 import { authReducer, initialState, setAuthorizedUserPhoto } from './reducer'
 import { AuthState } from './types'
 
@@ -12,7 +12,7 @@ test('user data should be set', () => {
 
   const newState = authReducer(
     initialState,
-    setUserData.fulfilled(userData, 'requestId')
+    getUserData.fulfilled(userData, 'requestId')
   )
 
   expect(newState).not.toBe(initialState)

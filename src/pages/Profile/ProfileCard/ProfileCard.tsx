@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import userDefaultPhoto from '../../../assets/images/userDefaultPhoto.png'
 import { useAppSelector } from '../../../utils/reduxUtils/reduxUtils'
 import s from './ProfileCard.module.scss'
-import { useTranslation } from 'react-i18next'
 import { selectId } from '../../../store/auth/selectors'
 import {
   selectFullName,
@@ -11,6 +10,7 @@ import {
   selectProfileStatus,
   selectUserId
 } from '../../../store/profile/selectors'
+import { t } from 'i18next'
 
 export const ProfileCard = () => {
   // get data from the state
@@ -19,9 +19,6 @@ export const ProfileCard = () => {
   const profileStatus = useAppSelector(selectProfileStatus)
   const userId = useAppSelector(selectUserId)
   const authorizedUserId = useAppSelector(selectId)
-
-  // localization
-  const { t } = useTranslation()
 
   // jsx variables
   const isOwner = userId === authorizedUserId
