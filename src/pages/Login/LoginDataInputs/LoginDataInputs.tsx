@@ -16,6 +16,7 @@ export const LoginDataInputs = (props: LoginDataInputsProps) => {
   // localization
   const { t } = useTranslation()
 
+  // variables
   const inputData: InputData[] = [
     {
       type: 'email',

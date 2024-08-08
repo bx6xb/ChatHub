@@ -20,6 +20,7 @@ export const ProfileFormDataInputs = ({
   // localization
   const { t } = useTranslation()
 
+  // variables
   const inputsData: ControlledInputProps[] = [
     {
       name: 'photo',
