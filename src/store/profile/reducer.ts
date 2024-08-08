@@ -61,6 +61,12 @@ const slice = createSlice({
         )
       }
     },
+    removePost(state, action: PayloadAction<string>) {
+      return {
+        ...state,
+        posts: state.posts.filter(p => p.id !== action.payload)
+      }
+    },
     changeProfileStatus(state, action: PayloadAction<string>) {
       return {
         ...state,
@@ -93,5 +99,10 @@ const slice = createSlice({
 })
 
 export const profileReducer = slice.reducer
-export const { generatePosts, addPost, changePostData, changeProfileStatus } =
-  slice.actions
+export const {
+  generatePosts,
+  addPost,
+  changePostData,
+  removePost,
+  changeProfileStatus
+} = slice.actions

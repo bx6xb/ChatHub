@@ -23,7 +23,8 @@ export const Sidebar = () => {
         justify="space-between"
         vertical
         className={s.hamburger}
-        onClick={toggleIsCollapsed}>
+        onClick={toggleIsCollapsed}
+      >
         <span />
         <span />
         <span />
@@ -31,7 +32,8 @@ export const Sidebar = () => {
 
       <Layout.Sider
         trigger={null}
-        className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}>
+        className={`${s.sidebar} ${isCollapsed ? s.collapsed : ''}`}
+      >
         <Typography.Title level={4}>{t('Sidebar_navigation')}</Typography.Title>
         <Menu
           className={s.menu}

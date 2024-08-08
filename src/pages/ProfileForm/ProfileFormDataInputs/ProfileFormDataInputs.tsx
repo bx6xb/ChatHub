@@ -82,7 +82,8 @@ export const ProfileFormDataInputs = ({
         justify="space-between"
         align="center"
         key={i}
-        className={s.inputWrapper}>
+        className={s.inputWrapper}
+      >
         <ControlledInput {...componentProps} />
       </Flex>
     )

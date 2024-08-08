@@ -23,7 +23,7 @@ export const ProfileCard = () => {
   // localization
   const { t } = useTranslation()
 
-  // jsx variables
+  // variables
   const isOwner = userId === authorizedUserId
 
   return (
