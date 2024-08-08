@@ -33,7 +33,8 @@ export const LoginDataInputs = (props: LoginDataInputsProps) => {
           ? t('Login_email_required')
           : errors.email?.type === 'pattern'
             ? t('Login_email_incorrect')
-            : null
+            : null,
+      autoComplete: 'email'
     },
     {
       type: 'password',
@@ -45,7 +46,8 @@ export const LoginDataInputs = (props: LoginDataInputsProps) => {
       errorMessage:
         errors.password?.type === 'required'
           ? t('Login_password_incorrect')
-          : null
+          : null,
+      autoComplete: 'current-password'
     },
     {
       name: 'captcha',
