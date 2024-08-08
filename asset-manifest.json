@@ -1,7 +1,20 @@
 {
   "files": {
-    "main.css": "/ChatHub/static/css/main.5ca318c4.css",
-    "main.js": "/ChatHub/static/js/main.54d62f44.js",
+    "main.css": "/ChatHub/static/css/main.18653b33.css",
+    "main.js": "/ChatHub/static/js/main.f8aed5f4.js",
+    "static/css/599.3f633e79.chunk.css": "/ChatHub/static/css/599.3f633e79.chunk.css",
+    "static/js/599.1034fa2f.chunk.js": "/ChatHub/static/js/599.1034fa2f.chunk.js",
+    "static/css/147.029149c3.chunk.css": "/ChatHub/static/css/147.029149c3.chunk.css",
+    "static/js/147.4e7043e9.chunk.js": "/ChatHub/static/js/147.4e7043e9.chunk.js",
+    "static/css/132.15c21d8a.chunk.css": "/ChatHub/static/css/132.15c21d8a.chunk.css",
+    "static/js/132.8f6772e3.chunk.js": "/ChatHub/static/js/132.8f6772e3.chunk.js",
+    "static/css/681.4f147b44.chunk.css": "/ChatHub/static/css/681.4f147b44.chunk.css",
+    "static/js/681.3f61b5f1.chunk.js": "/ChatHub/static/js/681.3f61b5f1.chunk.js",
+    "static/js/410.4eb321ee.chunk.js": "/ChatHub/static/js/410.4eb321ee.chunk.js",
+    "static/js/23.0257624e.chunk.js": "/ChatHub/static/js/23.0257624e.chunk.js",
+    "static/js/291.186f13f1.chunk.js": "/ChatHub/static/js/291.186f13f1.chunk.js",
+    "static/js/334.60ee93cd.chunk.js": "/ChatHub/static/js/334.60ee93cd.chunk.js",
+    "static/js/716.a8663c56.chunk.js": "/ChatHub/static/js/716.a8663c56.chunk.js",
     "static/media/1.jpg": "/ChatHub/static/media/1.3487c6e65e51f4155259.jpg",
     "static/media/7.jpg": "/ChatHub/static/media/7.195e2fef734709c124c8.jpg",
     "static/media/6.jpg": "/ChatHub/static/media/6.e002b941c51c1ebb32fe.jpg",
@@ -30,11 +43,24 @@
     "static/media/inter-vietnamese-400-normal.woff2": "/ChatHub/static/media/inter-vietnamese-400-normal.5952d3d3c5df5a2f8e09.woff2",
     "index.html": "/ChatHub/index.html",
     "static/media/getFetch.cjs": "/ChatHub/static/media/getFetch.c4cca45e22bc1b2c7d0d.cjs",
-    "main.5ca318c4.css.map": "/ChatHub/static/css/main.5ca318c4.css.map",
-    "main.54d62f44.js.map": "/ChatHub/static/js/main.54d62f44.js.map"
+    "main.18653b33.css.map": "/ChatHub/static/css/main.18653b33.css.map",
+    "main.f8aed5f4.js.map": "/ChatHub/static/js/main.f8aed5f4.js.map",
+    "599.3f633e79.chunk.css.map": "/ChatHub/static/css/599.3f633e79.chunk.css.map",
+    "599.1034fa2f.chunk.js.map": "/ChatHub/static/js/599.1034fa2f.chunk.js.map",
+    "147.029149c3.chunk.css.map": "/ChatHub/static/css/147.029149c3.chunk.css.map",
+    "147.4e7043e9.chunk.js.map": "/ChatHub/static/js/147.4e7043e9.chunk.js.map",
+    "132.15c21d8a.chunk.css.map": "/ChatHub/static/css/132.15c21d8a.chunk.css.map",
+    "132.8f6772e3.chunk.js.map": "/ChatHub/static/js/132.8f6772e3.chunk.js.map",
+    "681.4f147b44.chunk.css.map": "/ChatHub/static/css/681.4f147b44.chunk.css.map",
+    "681.3f61b5f1.chunk.js.map": "/ChatHub/static/js/681.3f61b5f1.chunk.js.map",
+    "410.4eb321ee.chunk.js.map": "/ChatHub/static/js/410.4eb321ee.chunk.js.map",
+    "23.0257624e.chunk.js.map": "/ChatHub/static/js/23.0257624e.chunk.js.map",
+    "291.186f13f1.chunk.js.map": "/ChatHub/static/js/291.186f13f1.chunk.js.map",
+    "334.60ee93cd.chunk.js.map": "/ChatHub/static/js/334.60ee93cd.chunk.js.map",
+    "716.a8663c56.chunk.js.map": "/ChatHub/static/js/716.a8663c56.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5ca318c4.css",
-    "static/js/main.54d62f44.js"
+    "static/css/main.18653b33.css",
+    "static/js/main.f8aed5f4.js"
   ]
 }

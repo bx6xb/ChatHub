@@ -51,6 +51,9 @@
   "Login_remember_me": "Запомнить меня",
   "Login_button": "Войти",
 
+  "component": "Page404",
+  "Page404_text": "К сожалению, страница, которую вы посетили, не существует",
+
   "__comment__": "Сообщения Snackbar",
   "network_error": "Ошибка сети",
   "captcha_error": "Некорректные символы в капче",
