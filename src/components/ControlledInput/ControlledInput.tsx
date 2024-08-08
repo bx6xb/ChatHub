@@ -25,6 +25,7 @@ export type ControlledInputProps<TFieldValues extends FieldValues> =
       label?: string
       labelPosition?: 'left' | 'right'
       uploadButtonText?: string
+      errorMessage?: string | null
     }
 
 type ComponentProps = {
@@ -48,6 +49,7 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
     disabled,
     shouldUnregister,
     uploadButtonText,
+    errorMessage,
     ...rest
   } = props
 
@@ -99,6 +101,7 @@ export const ControlledInput = <TFieldValues extends FieldValues>(
         // input
         <Input {...ComponentProps} id={id} />
       )}
+      {errorMessage && <div className={s.error}>{errorMessage}</div>}
 
       {/* right label */}
       {label && labelPosition === 'right' && (

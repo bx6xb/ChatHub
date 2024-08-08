@@ -1,22 +1,22 @@
-import { ControlledInputProps, FormValues } from '../types'
+import { ControlledInputProps, ProfileFormData } from '../types'
 import { Flex } from 'antd'
 import { ControlledInput } from '../../../components/ControlledInput/ControlledInput'
-import s from './ProfileDataInputs.module.scss'
+import s from './ProfileFormDataInputs.module.scss'
 import { Control } from 'react-hook-form'
 import { ProfileDataValues, ProfileDomain } from '../../../api/types'
 import { useTranslation } from 'react-i18next'
 
-type ProfileDataInputsProps = {
-  control: Control<FormValues>
+type ProfileFormDataInputsProps = {
+  control: Control<ProfileFormData>
   userProfile: ProfileDomain
   profileStatus: string
 }
 
-export const ProfileDataInputs = ({
+export const ProfileFormDataInputs = ({
   control,
   userProfile,
   profileStatus
-}: ProfileDataInputsProps) => {
+}: ProfileFormDataInputsProps) => {
   // localization
   const { t } = useTranslation()
 
@@ -81,8 +81,7 @@ export const ProfileDataInputs = ({
         justify="space-between"
         align="center"
         key={i}
-        className={s.inputWrapper}
-      >
+        className={s.inputWrapper}>
         <ControlledInput {...componentProps} />
       </Flex>
     )

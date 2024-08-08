@@ -12,10 +12,10 @@ import {
   selectProfileStatus,
   selectUserProfile
 } from '../../store/profile/selectors'
-import { FormValues } from './types'
-import { ProfileDataInputs } from './ProfileDataInputs/ProfileDataInputs'
+import { ProfileFormData } from './types'
 import { handleFormSubmit } from '../../utils/handleFormSubmit/handleFormSubmit'
 import { useTranslation } from 'react-i18next'
+import { ProfileFormDataInputs } from './ProfileFormDataInputs/ProfileFormDataInputs'
 
 const ProfileForm = withAuthRedirect(() => {
   // get data from the state
@@ -32,7 +32,7 @@ const ProfileForm = withAuthRedirect(() => {
   const [photoPreview, setPhotoPreview] = useState<string>()
 
   // form init
-  const { handleSubmit, control } = useForm<FormValues>()
+  const { handleSubmit, control } = useForm<ProfileFormData>()
 
   // watch photo
   const photoFromForm = useWatch({ control, name: 'photo.file.originFileObj' })
@@ -48,7 +48,7 @@ const ProfileForm = withAuthRedirect(() => {
     return <Loading />
   }
 
-  const onSubmit: SubmitHandler<FormValues> = async data => {
+  const onSubmit: SubmitHandler<ProfileFormData> = async data => {
     handleFormSubmit(dispatch, data)
   }
 
@@ -62,7 +62,7 @@ const ProfileForm = withAuthRedirect(() => {
           </Flex>
         )}
 
-        <ProfileDataInputs
+        <ProfileFormDataInputs
           control={control}
           userProfile={userProfile}
           profileStatus={profileStatus}

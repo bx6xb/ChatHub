@@ -7,13 +7,13 @@ import { Photos } from '../../api/types'
 import { setAuthorizedUserPhoto } from '../../store/auth/reducer'
 import { addAppMessage } from '../../store/app/reducer'
 import { v4 } from 'uuid'
-import { FormValues } from '../../pages/ProfileForm/types'
+import { ProfileFormData } from '../../pages/ProfileForm/types'
 import { t } from 'i18next'
 import { DispatchType } from '../reduxUtils/types'
 
 export const handleFormSubmit = async (
   dispatch: DispatchType,
-  data: FormValues
+  data: ProfileFormData
 ) => {
   const { photo, profileStatus, ...profileData } = data
 

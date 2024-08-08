@@ -1,17 +1,11 @@
-import { Control, FieldErrors } from 'react-hook-form'
 import { ControlledInput } from '../../../components/ControlledInput/ControlledInput'
-import { LoginFormData } from '../../../api/types'
-import { ErrorElement } from './ErrorElement/ErrorElement'
 import { Flex } from 'antd'
 import s from './LoginDataInputs.module.scss'
 import { useAppSelector } from '../../../utils/reduxUtils/reduxUtils'
 import { selectCaptchaUrl } from '../../../store/auth/selectors'
 import { useTranslation } from 'react-i18next'
-
-type LoginDataInputsProps = {
-  control: Control<LoginFormData>
-  errors: FieldErrors
-}
+import React from 'react'
+import { InputData, LoginDataInputsProps } from './types'
 
 export const LoginDataInputs = (props: LoginDataInputsProps) => {
   const { control, errors } = props
@@ -22,64 +16,87 @@ export const LoginDataInputs = (props: LoginDataInputsProps) => {
   // localization
   const { t } = useTranslation()
 
-  return (
-    <>
-      {/* Email input */}
-      <ControlledInput
-        type="email"
-        name="email"
-        placeholder="Email"
-        control={control}
-        rules={{
-          required: true,
-          pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-        }}
-        className={s.input}
-      />
-      {/* Email error */}
-      {errors.email?.type === 'required' ? (
-        <ErrorElement text={t('Login_email_required')} />
-      ) : errors.email?.type === 'pattern' ? (
-        <ErrorElement text={t('Login_email_incorrect')} />
-      ) : null}
+  const inputData: InputData[] = [
+    {
+      type: 'email',
+      name: 'email',
+      placeholder: 'Email',
+      control: control,
+      rules: {
+        required: true,
+        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+      },
+      className: s.input,
+      errorMessage:
+        errors.email?.type === 'required'
+          ? t('Login_email_required')
+          : errors.email?.type === 'pattern'
+            ? t('Login_email_incorrect')
+            : null
+    },
+    {
+      type: 'password',
+      name: 'password',
+      placeholder: t('Login_password_placeholder'),
+      control: control,
+      rules: { required: true },
+      className: s.input,
+      errorMessage:
+        errors.password?.type === 'required'
+          ? t('Login_password_incorrect')
+          : null
+    },
+    {
+      name: 'captcha',
+      control: control,
+      placeholder: 'Captcha',
+      flexWrapper: {
+        children: null,
+        gap: 3,
+        vertical: true
+      },
+      additionalComponent: <img src={captchaUrl!} alt="captcha" />,
+      isHidden: !captchaUrl
+    },
+    {
+      as: 'checkbox',
+      type: 'checkbox',
+      name: 'rememberMe',
+      control: control,
+      label: t('Login_remember_me'),
+      labelPosition: 'right',
+      flexWrapper: {
+        children: null,
+        gap: 3,
+        align: 'center'
+      }
+    }
+  ]
 
-      {/* Password input */}
-      <ControlledInput
-        type="password"
-        name="password"
-        placeholder={t('Login_password_placeholder')}
-        control={control}
-        rules={{ required: true }}
-        className={s.input}
-      />
-      {/* Password error */}
-      {errors.password?.type === 'required' && (
-        <ErrorElement text={t('Login_password_incorrect')} />
-      )}
+  // jsx variables
+  const mappedInputs = inputData.map((data, i) => {
+    const {
+      flexWrapper,
+      additionalComponent,
+      isHidden,
+      ...controlledInputProps
+    } = data
 
-      {/* Captcha input */}
-      {captchaUrl && (
-        <Flex gap={3} vertical>
-          <img src={captchaUrl} alt="captcha" />
-          <ControlledInput
-            name="captcha"
-            control={control}
-            placeholder="Captcha"
-          />
-        </Flex>
-      )}
+    const ControlledInputComponent = (
+      <React.Fragment key={i}>
+        {additionalComponent}
+        <ControlledInput {...controlledInputProps} />
+      </React.Fragment>
+    )
 
-      {/* Remember me checkbox */}
-      <Flex gap={3} align="center">
-        <ControlledInput
-          as="checkbox"
-          type="checkbox"
-          name="rememberMe"
-          control={control}
-          label={t('Login_remember_me')}
-          labelPosition="right"
-        />
+    return isHidden ? null : flexWrapper ? (
+      <Flex key={i} {...flexWrapper}>
+        {ControlledInputComponent}
       </Flex>
-    </>
-  )
+    ) : (
+      ControlledInputComponent
+    )
+  })
+
+  return <>{mappedInputs}</>
 }
