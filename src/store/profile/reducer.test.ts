@@ -1,15 +1,12 @@
 import { Photos, ProfileDomain } from '../../api/types'
-import {
-  getUserProfile,
-  setProfilePhoto,
-  setProfileStatus
-} from './asyncActions'
+import { getUserProfile, setProfilePhoto } from './asyncActions'
 import {
   addPost,
   changePostData,
   changeProfileStatus,
   generatePosts,
-  profileReducer
+  profileReducer,
+  removePost
 } from './reducer'
 import { ProfileState } from './types'
 
@@ -82,6 +79,15 @@ test('post data should be changed', () => {
 
   expect(newState.posts[1].likesCount).toBe(likesCount)
   expect(newState.posts[1].dislikesCount).toBe(dislikesCount)
+})
+
+test('post should be removed', () => {
+  const id = 'id3'
+  const newState = profileReducer(initialState, removePost(id))
+
+  const filteredPosts = newState.posts.filter(post => post.id !== id)
+
+  expect(filteredPosts.length).toBe(3)
 })
 
 test('profile status should be changed', () => {
