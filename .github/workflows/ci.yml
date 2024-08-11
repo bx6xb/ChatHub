@@ -27,11 +27,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build project
-        run: pnpm build
-
-      - name: Run tests
-        run: pnpm test
-
       - name: Run formatter
         run: pnpm format
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Build project
+        env:
+            CI: false
+        run: pnpm build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
