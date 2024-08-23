@@ -8,10 +8,9 @@ import {
   profileReducer,
   removePost
 } from './reducer'
-import { ProfileState } from './types'
 
 // variables
-const initialState: ProfileState = {
+const initialState = {
   posts: [
     {
       id: 'id1',

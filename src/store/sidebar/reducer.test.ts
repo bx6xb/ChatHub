@@ -13,7 +13,7 @@ test('sidebar users should be set', () => {
     status: 'status',
     followed: false
   }
-  const sidebarUsersArray = [user, user, user] as SidebarUsersArray
+  const sidebarUsersArray: SidebarUsersArray = [user, user, user]
 
   const newState = sidebarReducer(
     { users: null },
