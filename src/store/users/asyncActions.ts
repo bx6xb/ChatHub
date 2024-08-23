@@ -4,6 +4,7 @@ import { followAPI, usersAPI } from '../../api/api'
 import { errorHandler } from '../../utils/errorHandling/errorHandler'
 import { t } from 'i18next'
 import { GetUsersArgs, GetUsersReturn } from './types'
+import { AxiosError } from 'axios'
 
 export const getUsers = createAsyncThunk<
   GetUsersReturn,
@@ -36,14 +37,20 @@ export const follow = createAsyncThunk<number, number, { rejectValue: null }>(
 
     try {
       const response = await followAPI.follow(userId)
+      console.log(response)
       if (response.data.resultCode === 0) {
         return userId
       } else {
-        errorHandler(dispatch, t('follow_error'))
         return rejectWithValue(null)
       }
-    } catch {
-      errorHandler(dispatch, t('network_error'))
+    } catch (e) {
+      const error = e as AxiosError
+      if (error.response?.status === 403) {
+        errorHandler(dispatch, t('follow_error'))
+      } else {
+        errorHandler(dispatch, t('network_error'))
+      }
+
       return rejectWithValue(null)
     } finally {
       dispatch(changeIsFollowingInProgress({ isFetching: false, userId }))
@@ -60,10 +67,16 @@ export const unfollow = createAsyncThunk<number, number, { rejectValue: null }>(
       if (response.data.resultCode === 0) {
         return userId
       } else {
-        errorHandler(dispatch, t('unfollow_error'))
         return rejectWithValue(null)
       }
-    } catch {
+    } catch (e) {
+      const error = e as AxiosError
+      if (error.response?.status === 403) {
+        errorHandler(dispatch, t('unfollow_error'))
+      } else {
+        errorHandler(dispatch, t('network_error'))
+      }
+
       errorHandler(dispatch, t('network_error'))
       return rejectWithValue(null)
     } finally {
