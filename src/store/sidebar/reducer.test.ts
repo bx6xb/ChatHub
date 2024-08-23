@@ -4,7 +4,7 @@ import { sidebarReducer } from './reducer'
 import { SidebarUsersArray } from './types'
 
 test('sidebar users should be set', () => {
-  const user = {
+  const user: User = {
     name: 'Yan',
     id: 2,
     photos: {
@@ -13,7 +13,7 @@ test('sidebar users should be set', () => {
     },
     status: 'status',
     followed: false
-  } as User
+  }
   const sidebarUsersArray = [user, user, user] as SidebarUsersArray
 
   const newState = sidebarReducer(
