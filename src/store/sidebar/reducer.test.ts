@@ -13,11 +13,14 @@ test('sidebar users should be set', () => {
     status: 'status',
     followed: false
   }
-  const sidebarUsersArray: SidebarUsersArray = [user, user, user]
+  const sidebarUsersArray = [user, user, user]
 
   const newState = sidebarReducer(
     { users: null },
-    getSidebarUsers.fulfilled(sidebarUsersArray, 'requestId')
+    getSidebarUsers.fulfilled(
+      sidebarUsersArray as SidebarUsersArray,
+      'requestId'
+    )
   )
 
   expect(newState.users?.length).toBe(3)

@@ -1,4 +1,4 @@
-import { Photos, ProfileDomain } from '../../api/types'
+import { Photos } from '../../api/types'
 import { getUserProfile, setProfilePhoto } from './asyncActions'
 import {
   addPost,
@@ -30,7 +30,7 @@ const initialState = {
   userProfile: null,
   profileStatus: 'love zenow'
 }
-const userProfile: ProfileDomain = {
+const userProfile = {
   aboutMe: null,
   contacts: {
     facebook: null,

@@ -1,6 +1,5 @@
 import { getUserData } from '../auth/asyncActions'
 import { appReducer, addAppMessage, slice } from './reducer'
-import { AppMessage } from './types'
 
 const initialState = slice.getInitialState()
 
@@ -17,7 +16,7 @@ test('isAppInitialized value should be changed', () => {
 })
 
 test('app message should be changed', () => {
-  const appMessage: AppMessage = {
+  const appMessage = {
     id: 'id1',
     isError: true,
     message: 'Nertwork error'
