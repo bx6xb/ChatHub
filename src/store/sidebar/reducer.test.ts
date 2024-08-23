@@ -1,10 +1,9 @@
-import { User } from '../../api/types'
 import { getSidebarUsers } from './asyncActions'
 import { sidebarReducer } from './reducer'
 import { SidebarUsersArray } from './types'
 
 test('sidebar users should be set', () => {
-  const user: User = {
+  const user = {
     name: 'Yan',
     id: 2,
     photos: {
